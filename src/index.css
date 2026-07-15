@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@400;500;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-heading: "Outfit", "Satoshi", "General Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  background-color: transparent;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  overflow-x: hidden;
+  letter-spacing: 0.01em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+.premium-glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+  border-radius: 28px;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-glass-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 60px rgba(65,145,255,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+  border-color: rgba(65,145,255,0.3);
+}
+
+.premium-icon-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 20px rgba(65,145,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.premium-heading {
+  font-size: clamp(56px, 5vw, 72px);
+  font-weight: 700;
+  text-shadow: 0 0 30px rgba(0,0,0,0.45);
+}
+
+.adaptive-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(0,0,0,0.25) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
