@@ -13,7 +13,7 @@
 }
 
 html, body, #root {
-  background-color: transparent;
+  background-color: #06070a;
   color: #ffffff;
   font-family: var(--font-sans);
   margin: 0;
