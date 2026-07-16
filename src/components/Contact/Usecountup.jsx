@@ -4,13 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * useCountUp
- * ----------
- * Animates a number from 0 to `target` once its trigger element
- * scrolls into view. Returns [displayValue, ref] — attach ref to
- * the element that should act as the ScrollTrigger.
- */
 export function useCountUp(target, { suffix = '', duration = 1.6 } = {}) {
   const [display, setDisplay] = useState(`0${suffix}`);
   const ref = useRef(null);
