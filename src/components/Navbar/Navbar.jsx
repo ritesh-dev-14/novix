@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.png";
+
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const tabs = [
@@ -31,14 +32,14 @@ export default function Navbar() {
         borderRadius: '999px',
         zIndex: 100
       }} className="flex items-center justify-between px-6 py-3">
-        {/* Logo */}
-        <NavLink id="navbar-logo-link" to="/" className="flex flex-col items-start leading-none cursor-pointer">
-          <span className="font-extrabold tracking-[0.25em] text-3xl text-white font-sans">
-            NOVIX
-          </span>
-          <span className="font-medium tracking-[0.4em] text-[13px] text-white/50 font-sans mt-0.5">
-            Health Care
-          </span>
+        
+        {/* Logo Layer: Replaced raw text with your imported graphic asset */}
+        <NavLink id="navbar-logo-link" to="/" className="flex items-center justify-start cursor-pointer transition-opacity hover:opacity-90">
+          <img 
+            src={logo} 
+            alt="NOVIX Health Care Logo" 
+            className="h-9 w-auto object-contain" 
+          />
         </NavLink>
 
         {/* Navigation Tabs (Desktop) */}
@@ -88,13 +89,13 @@ export default function Navbar() {
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between">
-              <div className="flex flex-col items-start leading-none">
-                <span className="font-extrabold tracking-[0.25em] text-xl text-white font-sans">
-                  NOVIX
-                </span>
-                <span className="font-medium tracking-[0.4em] text-[9px] text-white/50 font-sans mt-0.5">
-                  PHARMA
-                </span>
+              {/* Logo Layer: Mobile view integration */}
+              <div className="flex items-center justify-start">
+                <img 
+                  src={logo} 
+                  alt="NOVIX Pharma Logo" 
+                  className="h-7 w-auto object-contain" 
+                />
               </div>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}

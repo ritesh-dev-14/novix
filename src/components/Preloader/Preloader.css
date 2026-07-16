@@ -1,3 +1,24 @@
+/* ============================================================
+   NOVIX Preloader — design tokens
+   A quiet, clinical-precision palette: near-black base, a single
+   cool "monitor glow" blue used sparingly. Nothing here borrows
+   the warm-cream / neon-on-black defaults — this is instrument
+   panel, not marketing hero.
+   ============================================================ */
+:root {
+  --novix-bg-0: #06070a;
+  --novix-bg-1: #0d1015;
+  --novix-ink: #f4f7fa;
+  --novix-ink-dim: rgba(244, 247, 250, 0.52);
+  --novix-accent: #7fc4ff;
+  --novix-accent-soft: rgba(127, 196, 255, 0.28);
+  --novix-line: rgba(244, 247, 250, 0.07);
+
+  --novix-font-display: -apple-system, "SF Pro Display", "Inter", "Helvetica Neue",
+    system-ui, sans-serif;
+  --novix-font-body: -apple-system, "SF Pro Text", "Inter", system-ui, sans-serif;
+}
+
 .preloader-master-container {
   position: fixed;
   inset: 0;
@@ -5,52 +26,48 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(0, 120, 255, 0.16),
-      transparent 38%
+  background: radial-gradient(
+      120% 140% at 50% 38%,
+      var(--novix-bg-1) 0%,
+      var(--novix-bg-0) 62%
     ),
-    linear-gradient(135deg, #020617 0%, #030712 60%, #01040a 100%);
-  color: #f8fafc;
+    var(--novix-bg-0);
+  overflow: hidden;
 }
 
+/* Soft instrument-panel glow behind the wordmark — the one place
+   the accent color is allowed to breathe. */
 .preloader-glow {
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(96, 165, 250, 0.16),
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(14, 165, 233, 0.18),
-      transparent 30%
-    );
-  filter: blur(30px);
-  opacity: 0.95;
+  top: 50%;
+  left: 50%;
+  width: min(60vw, 640px);
+  height: min(60vw, 640px);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--novix-accent-soft) 0%, transparent 68%);
+  filter: blur(40px);
+  opacity: 0.55;
+  pointer-events: none;
 }
 
+/* Faint calibration grid — nods to a diagnostic display without
+   spelling it out literally. */
 .preloader-grid {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 95%);
-  opacity: 0.35;
+  background-image: linear-gradient(var(--novix-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--novix-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 0%, transparent 75%);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .preloader-mask-layer {
   position: absolute;
   inset: 0;
-  background: #020617;
-  clip-path: circle(0% at 50% 50%);
+  background: var(--novix-bg-0);
+  pointer-events: none;
 }
 
 .preloader-artistic-wrapper {
@@ -59,10 +76,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: min(92vw, 760px);
-  padding: 2rem 0;
-  transform-origin: center;
+  gap: 20px;
+  will-change: transform, opacity;
 }
 
 .preloader-word-viewport {
@@ -70,73 +85,101 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: clamp(72px, 12vw, 140px);
-  width: 100%;
-  perspective: 1400px;
+  perspective: 900px;
 }
 
 .preloader-txt {
-  font-family: "Satoshi", "General Sans", "Inter", sans-serif;
-  font-weight: 800;
-  font-size: clamp(3rem, 7vw, 5.75rem);
-  letter-spacing: 0.24em;
-  line-height: 0.95;
-  text-transform: uppercase;
-  color: #f8fafc;
-  text-shadow: 0 0 30px rgba(96, 165, 250, 0.12);
+  font-family: var(--novix-font-display);
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--novix-ink);
+  line-height: 1;
   white-space: nowrap;
 }
 
+/* Invisible sizing anchor so the animated word never causes the
+   viewport to reflow between scripts of different width. */
 .anchor-ghost {
-  opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
 .precise-absolute-word {
   position: absolute;
-  inset: 0 auto auto 0;
-  transform-style: preserve-3d;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
 }
 
 .preloader-char-wrapper {
-  display: inline-flex;
+  display: inline-block;
   overflow: hidden;
-  will-change: transform, opacity, filter;
 }
 
 .preloader-char {
   display: inline-block;
-  transform-origin: center bottom;
-  will-change: transform, opacity, filter;
+  transform-origin: 50% 100%;
 }
 
 .preloader-subtext {
-  margin-top: 0.95rem;
-  font-family: "Satoshi", "General Sans", "Inter", sans-serif;
-  font-size: clamp(0.9rem, 1.8vw, 1.15rem);
-  font-weight: 600;
-  letter-spacing: 0.38em;
+  font-family: var(--novix-font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
   text-transform: uppercase;
-  color: rgba(248, 250, 252, 0.76);
-  background: linear-gradient(90deg, #f8fafc 0%, #90cdf9 45%, #f8fafc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--novix-ink-dim);
 }
 
-@media (max-width: 768px) {
+/* A single, restrained loading read-out — the signature element.
+   No percentage number, no spinner cliché: just a thin line that
+   fills, like a monitor trace settling. */
+.preloader-progress {
+  width: 132px;
+}
+
+.preloader-progress-track {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: var(--novix-line);
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.preloader-progress-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: linear-gradient(
+    90deg,
+    var(--novix-accent) 0%,
+    var(--novix-ink) 100%
+  );
+  box-shadow: 0 0 8px var(--novix-accent-soft);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 480px) {
   .preloader-artistic-wrapper {
-    width: min(90vw, 100%);
-    padding: 1.4rem 0;
+    gap: 16px;
   }
-
-  .preloader-txt {
-    letter-spacing: 0.18em;
-  }
-
   .preloader-subtext {
-    margin-top: 0.75rem;
-    letter-spacing: 0.24em;
+    font-size: 0.64rem;
+  }
+  .preloader-progress {
+    width: 104px;
   }
 }
