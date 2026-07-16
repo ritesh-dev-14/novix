@@ -1,4 +1,4 @@
-import { useCountUp } from './useCountUp';
+import { useCountUp } from './UseCountUp';
 
 export default function StatItem({ target, suffix = '+', label, isText = false }) {
   const [display, ref] = useCountUp(isText ? 0 : target, { suffix: isText ? '' : suffix });
