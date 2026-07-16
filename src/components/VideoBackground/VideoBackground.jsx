@@ -122,7 +122,7 @@ export default function VideoBackground() {
           objectFit: 'cover'
         }}
       />
-      <div className="fixed inset-0 bg-black/10 z-[-1]" />
+
     </>
   );
 }
