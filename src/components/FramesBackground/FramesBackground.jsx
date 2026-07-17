@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,7 +16,8 @@ export default function FramesBackground() {
     canvas.height = 1080;
 
     const frameCount = 190;
-    const currentFrame = index => `/products-jpg/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
+    const currentFrame = (index) =>
+      `/products-jpg/ezgif-frame-${(index + 1).toString().padStart(3, "0")}.jpg`;
 
     const images = [];
     const seq = { frame: 0 };
@@ -32,7 +33,17 @@ export default function FramesBackground() {
       const ratio = Math.max(hRatio, vRatio);
       const centerShift_x = (canvas.width - img.width * ratio) / 2;
       const centerShift_y = (canvas.height - img.height * ratio) / 2;
-      context.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
+      context.drawImage(
+        img,
+        0,
+        0,
+        img.width,
+        img.height,
+        centerShift_x,
+        centerShift_y,
+        img.width * ratio,
+        img.height * ratio,
+      );
     };
 
     const renderInitial = () => {
@@ -69,7 +80,7 @@ export default function FramesBackground() {
           end: "bottom top",
           scrub: 1.5,
         },
-        onUpdate: render
+        onUpdate: render,
       });
     });
 
@@ -78,8 +89,10 @@ export default function FramesBackground() {
 
   return (
     <div className="fixed inset-0 z-[-1] pointer-events-none w-full h-full overflow-hidden bg-black">
-      <canvas ref={canvasRef} className="w-full h-full object-cover opacity-100" />
-     
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full object-cover opacity-100"
+      />
     </div>
   );
 }

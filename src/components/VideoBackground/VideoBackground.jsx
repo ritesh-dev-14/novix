@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import Lenis from '@studio-freight/lenis';
+import { useState, useEffect, useRef } from "react";
+import Lenis from "@studio-freight/lenis";
 
 const frameCount = 271;
-const getFrameUrl = (index) => `/frames/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+const getFrameUrl = (index) =>
+  `/frames/ezgif-frame-${index.toString().padStart(3, "0")}.jpg`;
 
 export default function VideoBackground() {
   const canvasRef = useRef(null);
@@ -12,8 +13,8 @@ export default function VideoBackground() {
     const lenis = new Lenis({
       duration: 2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
+      direction: "vertical",
+      gestureDirection: "vertical",
       smooth: true,
       mouseMultiplier: 1,
       smoothTouch: false,
@@ -62,7 +63,7 @@ export default function VideoBackground() {
     const canvas = canvasRef.current;
     if (!canvas || !imgs[frameIndex] || !imgs[frameIndex].complete) return;
 
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
     const img = imgs[frameIndex];
 
     const hRatio = canvas.width / img.width;
@@ -75,22 +76,29 @@ export default function VideoBackground() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(
       img,
-      0, 0, img.width, img.height,
-      centerShift_x, centerShift_y, img.width * ratio, img.height * ratio
+      0,
+      0,
+      img.width,
+      img.height,
+      centerShift_x,
+      centerShift_y,
+      img.width * ratio,
+      img.height * ratio,
     );
   };
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = document.documentElement.scrollTop;
-      const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+      const maxScrollTop =
+        document.documentElement.scrollHeight - window.innerHeight;
 
       if (maxScrollTop <= 0) return;
 
       const scrollFraction = scrollTop / maxScrollTop;
       const frameIndex = Math.min(
         frameCount - 1,
-        Math.max(0, Math.floor(scrollFraction * frameCount))
+        Math.max(0, Math.floor(scrollFraction * frameCount)),
       );
 
       requestAnimationFrame(() => updateCanvas(frameIndex));
@@ -104,14 +112,14 @@ export default function VideoBackground() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
 
     handleResize();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, [images]);
 
@@ -120,16 +128,15 @@ export default function VideoBackground() {
       <canvas
         ref={canvasRef}
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
-          width: '100vw',
-          height: '100vh',
+          width: "100vw",
+          height: "100vh",
           zIndex: -2,
-          objectFit: 'cover'
+          objectFit: "cover",
         }}
       />
-
     </>
   );
 }
