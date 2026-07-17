@@ -268,7 +268,7 @@ export default function Contact() {
             <ShieldCheck className="h-3.5 w-3.5 text-cyan-300" />
           </div>
           <p className="text-[11px] tracking-wide text-slate-500">
-            © 2025 Novix Pharmaceuticals. All Rights Reserved.
+            © 2025 Novix Healthcare. All Rights Reserved.
           </p>
         </div>
       </div>

@@ -1,22 +1,34 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import Navbar from '../components/Navbar/Navbar';
-import Footer from '../components/Footer/Footer';
-import VideoBackground from '../components/VideoBackground/VideoBackground';
-import FramesBackground from '../components/FramesBackground/FramesBackground';
-import contactBg from '../../contact.mp4';
+import { Outlet, useLocation } from "react-router-dom";
+import { useLayoutEffect } from 'react';
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
+import VideoBackground from "../components/VideoBackground/VideoBackground";
+import FramesBackground from "../components/FramesBackground/FramesBackground";
+import contactBg from "../../contact.mp4";
 
 export default function MainLayout() {
   const { pathname } = useLocation();
 
-  const isHome = pathname === '/';
-  const isContact = pathname === '/contact';
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    const target = document.scrollingElement || document.documentElement || document.body;
+    if (target) {
+      target.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  }, [pathname]);
+
+  const isHome = pathname === "/";
+  const isAbout = pathname === "/about";
 
   return (
     <>
       {/* Background */}
       {isHome ? (
         <VideoBackground />
-      ) : isContact ? (
+      ) : isAbout ? (
         <video
           className="fixed inset-0 w-full h-full object-cover -z-0"
           autoPlay
@@ -31,8 +43,8 @@ export default function MainLayout() {
         <FramesBackground />
       )}
 
-      {/* Optional overlay only for Contact */}
-      {isContact && (
+      {/* Optional overlay only for About Us */}
+      {isAbout && (
         <div className="fixed inset-0 bg-black/55 -z-10 pointer-events-none" />
       )}
 

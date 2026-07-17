@@ -1,8 +1,8 @@
-import { Routes, Route } from 'react-router-dom';
-import MainLayout from '../layouts/MainLayout';
-import Home from '../pages/Home';
-import Products from '../pages/Products';
-import Contact from '../pages/Contact';
+import { Routes, Route } from "react-router-dom";
+import MainLayout from "../layouts/MainLayout";
+import Home from "../pages/Home";
+import Products from "../pages/Products";
+import AboutPage from "../pages/Contact";
 
 export default function AppRoutes() {
   return (
@@ -10,7 +10,7 @@ export default function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<AboutPage />} />
       </Route>
     </Routes>
   );

@@ -1,27 +1,22 @@
 import { motion } from 'motion/react';
-import { Microscope, Pill, Globe, Users } from 'lucide-react';
+import { Target, Eye, Handshake } from 'lucide-react';
 
 export default function About() {
   const cardData = [
     {
-      icon: Microscope,
-      title: 'India-first manufacturing',
-      desc: 'Manufactured and packaged in India for the needs of Indian patients, doctors and clinics.',
+      icon: Target,
+      title: 'Mission',
+      desc: 'To manufacture and deliver world-class critical care injectables meeting the highest standards of safety, efficacy, and quality for every patient.',
     },
     {
-      icon: Pill,
-      title: 'Focused product range',
-      desc: 'A sleek portfolio of high-impact therapies across critical categories.',
+      icon: Eye,
+      title: 'Vision',
+      desc: 'To become India’s most trusted hospital-sector pharmaceutical brand, serving every ICU and critical care unit with reliable, affordable medicines.',
     },
     {
-      icon: Globe,
-      title: 'Local trust, modern scale',
-      desc: 'A trusted partner to distributors, chemists and hospitals across 28 states.',
-    },
-    {
-      icon: Users,
-      title: 'Patient-centred care',
-      desc: 'We deliver clarity, support and quality at every touchpoint.',
+      icon: Handshake,
+      title: 'Values',
+      desc: 'Quality • Integrity • Patient First • Innovation • Accessibility — the pillars of every decision we make at Novix Healthcare.',
     },
   ];
 
@@ -33,20 +28,20 @@ export default function About() {
       <div className="relative z-10 grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-start">
         <div className="max-w-3xl space-y-8 text-white">
           <span className="block text-sm uppercase tracking-[0.32em] text-sky-300/80">
-            About Novix Pharma
+            About Novix Healthcare
           </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Modern pharmaceutical precision grounded in India’s healthcare story.
+            Driven by Science. <span className="text-sky-300">Guided by Compassion.</span>
           </h2>
           <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-            Novix Pharma is built for Indian healthcare delivery — combining rigorous manufacturing, trusted approvals, and a confident promise to patients and providers nationwide.
+            Novix Healthcare is committed to delivering healthcare excellence in India. Combining rigorous science with genuine care, we manufacture and distribute high-impact therapies, with a strong emphasis on critical care. Our experienced leadership team brings diverse expertise across the biopharmaceutical ecosystem, united by a singular purpose: improving patient outcomes.
           </p>
           <p className="text-sm uppercase tracking-[0.28em] text-slate-400">
-            Our promise: clarity, compliance, and care.
+            Our guiding philosophy: precision, passion, and partnership.
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
           {cardData.map((card, index) => {
             const Icon = card.icon;
             return (
@@ -69,24 +64,26 @@ export default function About() {
         </div>
       </div>
 
+      {/* Add a simplified placeholder section below that reflects the bottom half of the image's purpose if needed, or simply style the existing 'impact' card to be more aligned with the image's clean white card aesthetic in the other section of the page. Given the image has contact and team info below, let's keep the impact card but make it match the design language. */}
+
       <div className="relative z-10 mt-16 rounded-[32px] border border-white/10 bg-white/5 p-10 shadow-[0_35px_90px_rgba(0,0,0,0.15)] backdrop-blur-xl">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
           <div>
             <p className="text-sm uppercase tracking-[0.32em] text-sky-300/80 mb-3">Our impact</p>
-            <h3 className="text-3xl font-bold text-white">Trusted by partners across India.</h3>
+            <h3 className="text-3xl font-bold text-white">Serving partners nationwide.</h3>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="rounded-3xl bg-slate-950/70 p-5 text-center">
-              <p className="text-3xl font-semibold text-white">120+</p>
-              <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">SKUs</p>
+              <p className="text-3xl font-semibold text-white">20+</p>
+              <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">Therapies</p>
             </div>
             <div className="rounded-3xl bg-slate-950/70 p-5 text-center">
               <p className="text-3xl font-semibold text-white">28</p>
               <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">States served</p>
             </div>
             <div className="rounded-3xl bg-slate-950/70 p-5 text-center">
-              <p className="text-3xl font-semibold text-white">1,200+</p>
-              <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">partners</p>
+              <p className="text-3xl font-semibold text-white">800+</p>
+              <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">Hospitals</p>
             </div>
           </div>
         </div>

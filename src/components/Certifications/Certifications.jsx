@@ -87,7 +87,7 @@ export default function Certifications() {
           Built to earn trust at every step.
         </h2>
         <p className="mt-6 text-base md:text-lg text-slate-300 leading-relaxed">
-          Novix Pharma operates with a modern quality system that aligns manufacturing excellence with local Indian standards.
+          Novix Healthcare operates with a modern quality system that aligns manufacturing excellence with local Indian standards.
         </p>
       </div>
 

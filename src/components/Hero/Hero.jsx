@@ -67,7 +67,7 @@ export default function Hero() {
           </h1>
 
           <p className="hero-element mx-auto max-w-3xl text-lg md:text-xl text-slate-300 leading-relaxed">
-            Novix Pharma combines clinical-grade science, trusted approvals and a modern Indian supply chain to deliver medicines that stay true to comfort, compliance and care.
+            Novix Healthcare combines clinical-grade science, trusted approvals and a modern Indian supply chain to deliver medicines that stay true to comfort, compliance and care.
           </p>
 
           <div className="hero-element flex flex-col items-center justify-center gap-4 sm:flex-row">

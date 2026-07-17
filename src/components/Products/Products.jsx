@@ -265,7 +265,7 @@ export default function Products() {
       {/* HEADER */}
       <div className="relative z-10 mx-auto mb-24 flex w-full max-w-[1400px] flex-col items-center text-center">
         <span className="prod-eyebrow mb-6 block font-mono text-[11px] uppercase tracking-[0.32em] text-[#7FD8D0]/70">
-          Novix Pharmaceuticals — Formulary
+          Novix Healthcare — Formulary
         </span>
         <h2 className="prod-header-text mb-7 max-w-4xl text-[56px] font-semibold leading-[1.02] tracking-[-0.03em] text-[#E7ECF3] md:text-[72px] lg:text-[84px]">
           Precision, in every dose.

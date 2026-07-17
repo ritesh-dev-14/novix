@@ -88,7 +88,7 @@ export default function Features() {
 
       <div ref={headingRef} className="relative z-10 mx-auto max-w-4xl text-center mb-14">
         <p className="feature-heading text-sm uppercase tracking-[0.3em] text-sky-300/80 mb-4">
-          Why Novix Pharma?
+          Why Novix Healthcare?
         </p>
         <h2 className="feature-heading text-4xl md:text-5xl font-bold tracking-tight text-white">
           A premium Indian pharmaceutical partner with modern precision.
