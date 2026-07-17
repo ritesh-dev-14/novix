@@ -36,16 +36,23 @@ export default function VideoBackground() {
   useEffect(() => {
     const loadedImages = [];
     let loadedCount = 0;
+    let initialRendered = false;
+
+    const tryRenderInitial = (frameIndex) => {
+      if (initialRendered) return;
+      initialRendered = true;
+      requestAnimationFrame(() => updateCanvas(frameIndex, loadedImages));
+    };
 
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
-      img.src = getFrameUrl(i);
       img.onload = () => {
         loadedCount++;
-        if (loadedCount === 1) {
-          requestAnimationFrame(() => updateCanvas(0, loadedImages));
+        if (!initialRendered) {
+          tryRenderInitial(i - 1);
         }
       };
+      img.src = getFrameUrl(i);
       loadedImages.push(img);
     }
     setImages(loadedImages);

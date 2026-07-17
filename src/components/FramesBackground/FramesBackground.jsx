@@ -21,13 +21,9 @@ export default function FramesBackground() {
     const images = [];
     const seq = { frame: 0 };
 
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      images.push(img);
-    }
+    let initialRendered = false;
 
-    function render() {
+    const render = () => {
       const img = images[seq.frame];
       if (!img || !img.complete) return;
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -37,9 +33,30 @@ export default function FramesBackground() {
       const centerShift_x = (canvas.width - img.width * ratio) / 2;
       const centerShift_y = (canvas.height - img.height * ratio) / 2;
       context.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
+    };
+
+    const renderInitial = () => {
+      if (initialRendered) return;
+      const img = images.find((image) => image.complete);
+      if (!img) return;
+      initialRendered = true;
+      const index = images.indexOf(img);
+      seq.frame = index >= 0 ? index : 0;
+      render();
+    };
+
+    for (let i = 0; i < frameCount; i++) {
+      const img = new Image();
+      img.onload = () => {
+        renderInitial();
+      };
+      img.src = currentFrame(i);
+      images.push(img);
     }
 
-    images[0].onload = render;
+    if (images[0]?.complete) {
+      renderInitial();
+    }
 
     const ctx = gsap.context(() => {
       gsap.to(seq, {
