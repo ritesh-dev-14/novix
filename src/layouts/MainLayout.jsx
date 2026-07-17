@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import VideoBackground from "../components/VideoBackground/VideoBackground";
@@ -10,13 +10,14 @@ export default function MainLayout() {
   const { pathname } = useLocation();
 
   useLayoutEffect(() => {
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
     }
 
-    const target = document.scrollingElement || document.documentElement || document.body;
+    const target =
+      document.scrollingElement || document.documentElement || document.body;
     if (target) {
-      target.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      target.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     }
   }, [pathname]);
 
