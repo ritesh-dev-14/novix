@@ -28,18 +28,27 @@ import img12 from "../../Images/sulbactum.png";
 import img13 from "../../Images/hepa.png";
 import img14 from "../../Images/infussion.png";
 import img15 from "../../Images/amo.png";
+import img16 from "../../Images/nora2.png";
 
 const FONT_ID = "novix-font-import";
 
-const categories = ["All", "Injectable Antibiotics", "Critical Care", "Gastrointestinal", "Pain & Fever", "Supportive Care"];
+const categories = [
+  "All",
+  "Injectable Antibiotics",
+  "Critical Care",
+  "Gastrointestinal",
+  "Pain & Fever",
+  "Supportive Care",
+];
 
 const productData = [
   {
     id: 1,
     category: "Injectable Antibiotics",
     name: "LBPC",
-    generic: "NORARENAKINE INJECTION",
-    strength: "4MG/2ML",
+    generic:
+      "NORADRENALINE BITARTRATE INJECTION IP (STERILE NORADRENALINE CONCENTRATE 4mg)",
+    strength: "4MG",
     image: img1,
     description:
       "Used in emergency care to quickly stabilise blood pressure. Made under strict sterile conditions so hospitals can trust every vial.",
@@ -147,7 +156,7 @@ const productData = [
   {
     id: 12,
     category: "Injectable Antibiotics",
-    name: "NFEVO",
+    name: "CEFVIX-SB",
     generic: "CEFTRIXONE + SULBACTUM 1.5GM",
     strength: "1.5GM",
     image: img12,
@@ -184,6 +193,17 @@ const productData = [
     description:
       "A trusted broad-spectrum antibiotic, manufactured to WHO-GMP purity standards you can rely on.",
   },
+  {
+    id: 16,
+    category: "Injectable Antibiotics",
+    name: "LBPC",
+    generic:
+      "NORADRENALINE BITARTRATE INJECTION IP (STERILE NORADRENALINE CONCENTRATE 2ml)",
+    strength: "2ML",
+    image: img16,
+    description:
+      "Used in emergency care to quickly stabilise blood pressure. Made under strict sterile conditions so hospitals can trust every vial.",
+  },
 ];
 
 const STATS = [
@@ -194,10 +214,26 @@ const STATS = [
 ];
 
 const TRUST_ITEMS = [
-  { icon: ShieldCheck, title: "WHO-GMP Certified", text: "Our facility meets WHO Good Manufacturing Practice standards, checked and re-checked." },
-  { icon: Microscope, title: "Every Batch Tested", text: "No batch leaves our facility without passing quality and sterility testing." },
-  { icon: Building2, title: "Built for Hospitals", text: "Packaging, dosing and supply designed around how hospitals actually work." },
-  { icon: Truck, title: "Reliable Delivery", text: "We plan supply in advance so wards never run short when it matters." },
+  {
+    icon: ShieldCheck,
+    title: "WHO-GMP Certified",
+    text: "Our facility meets WHO Good Manufacturing Practice standards, checked and re-checked.",
+  },
+  {
+    icon: Microscope,
+    title: "Every Batch Tested",
+    text: "No batch leaves our facility without passing quality and sterility testing.",
+  },
+  {
+    icon: Building2,
+    title: "Built for Hospitals",
+    text: "Packaging, dosing and supply designed around how hospitals actually work.",
+  },
+  {
+    icon: Truck,
+    title: "Reliable Delivery",
+    text: "We plan supply in advance so wards never run short when it matters.",
+  },
 ];
 
 function useFonts() {
@@ -248,12 +284,13 @@ export default function NovixProductsPage() {
               Novix Healthcare · Product Portfolio
             </p>
             <h1 className="font-['Fraunces'] font-light text-[42px] sm:text-[56px] md:text-[68px] leading-[1.05] text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)] mb-6">
-              Medicines hospitals <span className="italic text-[#69B6FF]">count on.</span>
+              Medicines hospitals{" "}
+              <span className="italic text-[#69B6FF]">count on.</span>
             </h1>
             <p className="text-lg text-white/90 max-w-xl leading-relaxed mb-8">
               We manufacture sterile injectables for hospitals and clinics
-              across India — tested carefully, packed with care, and
-              delivered on time, every time.
+              across India — tested carefully, packed with care, and delivered
+              on time, every time.
             </p>
             <div className="flex flex-wrap gap-4">
               <a
@@ -277,20 +314,27 @@ export default function NovixProductsPage() {
                 <ShieldCheck size={20} className="text-[#69B6FF]" />
               </div>
               <div>
-                <p className="text-white font-bold text-[14px] leading-tight">WHO-GMP Certified</p>
-                <p className="text-white/60 text-[12px]">Manufacturing facility</p>
+                <p className="text-white font-bold text-[14px] leading-tight">
+                  WHO-GMP Certified
+                </p>
+                <p className="text-white/60 text-[12px]">
+                  Manufacturing facility
+                </p>
               </div>
             </div>
             <div className="h-px bg-white/10 mb-5" />
             <ul className="space-y-3">
               <li className="flex items-center gap-2.5 text-[13px] text-white/85">
-                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" /> Batch-tested for purity and sterility
+                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" />{" "}
+                Batch-tested for purity and sterility
               </li>
               <li className="flex items-center gap-2.5 text-[13px] text-white/85">
-                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" /> Proudly made in India
+                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" />{" "}
+                Proudly made in India
               </li>
               <li className="flex items-center gap-2.5 text-[13px] text-white/85">
-                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" /> Trusted by 500+ hospitals & clinics
+                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" />{" "}
+                Trusted by 500+ hospitals & clinics
               </li>
             </ul>
           </div>
@@ -305,8 +349,12 @@ export default function NovixProductsPage() {
                 <div key={s.label} className="flex items-center gap-3">
                   <Icon size={20} className="text-[#69B6FF] shrink-0" />
                   <div>
-                    <p className="font-['Fraunces'] text-lg text-white leading-none mb-1">{s.value}</p>
-                    <p className="text-[11px] text-white/65 leading-snug">{s.label}</p>
+                    <p className="font-['Fraunces'] text-lg text-white leading-none mb-1">
+                      {s.value}
+                    </p>
+                    <p className="text-[11px] text-white/65 leading-snug">
+                      {s.label}
+                    </p>
                   </div>
                 </div>
               );
@@ -394,7 +442,10 @@ export default function NovixProductsPage() {
                   className="group/btn w-full inline-flex items-center justify-center gap-2 py-3 rounded-full border border-white/30 text-[12px] font-bold uppercase tracking-[0.1em] text-white hover:bg-[#69B6FF] hover:text-[#07111D] hover:border-[#69B6FF] transition-colors duration-300"
                 >
                   View Details
-                  <ArrowRight size={13} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                  <ArrowRight
+                    size={13}
+                    className="transition-transform duration-300 group-hover/btn:translate-x-1"
+                  />
                 </button>
               </div>
             </div>
@@ -426,7 +477,9 @@ export default function NovixProductsPage() {
                   <h3 className="font-['Fraunces'] text-[18px] text-white mb-2 leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/70 leading-relaxed">{item.text}</p>
+                  <p className="text-[13px] text-white/70 leading-relaxed">
+                    {item.text}
+                  </p>
                 </div>
               );
             })}
