@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-
+import factory from "../../assets/factory.png"
 /* ---------- hooks ---------- */
 
 function useFonts() {
@@ -110,7 +110,7 @@ export default function About() {
           <Reveal delay={0.15}>
             <div className="rounded-[20px] overflow-hidden border border-[rgba(255,255,255,0.08)]">
               <img
-                src="/assets/novix-facility.jpg"
+                src={factory}
                 alt="Novix Healthcare manufacturing facility"
                 className="w-full h-[380px] md:h-[460px] object-cover"
               />
@@ -403,8 +403,8 @@ export default function About() {
           <Reveal>
             <div className="space-y-8">
               {[
-                { icon: MapPin, label: "Office Address", value: "Plot 000, Industrial Area, Your City, India" },
-                { icon: Phone, label: "Phone", value: "+91 00000 00000" },
+                { icon: MapPin, label: "Office Address", value: "India" },
+                { icon: Phone, label: "Phone", value: "+91 8053868387" },
                 { icon: Mail, label: "Email", value: "info@novixhealthcare.com" },
                 { icon: Clock, label: "Business Hours", value: "Mon – Sat, 9:00 AM – 6:00 PM" },
                 { icon: Globe, label: "Website", value: "www.novixhealthcare.com" },

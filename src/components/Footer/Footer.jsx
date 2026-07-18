@@ -46,7 +46,7 @@ export default function Footer() {
           </div>
 
           {/* Products */}
-          <div className="col-span-1 flex flex-col gap-4">
+          {/* <div className="col-span-1 flex flex-col gap-4">
             <h4 className="text-white font-bold text-sm tracking-widest uppercase mb-2 font-sans">
               Products
             </h4>
@@ -62,7 +62,7 @@ export default function Footer() {
             <span className="text-white/60 text-sm font-sans cursor-pointer hover:text-white transition-colors">
               R&D Capabilities
             </span>
-          </div>
+          </div> */}
 
           {/* Contact */}
           <div className="col-span-1 flex flex-col gap-4">
@@ -75,10 +75,10 @@ India
 
             </span>
             <span className="text-white/60 text-sm font-sans">
-novixhealthcare@gmail.com
+info@novixhealthcare.com
             </span>
             <span className="text-white/60 text-sm font-sans">
-91 8053868387
++91 8053868387
 
             </span>
           </div>
