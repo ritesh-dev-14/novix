@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
-import Products from "../pages/Products";
+import Products from "../components/Products/Products";
 import AboutPage from "../pages/Contact";
 
 export default function AppRoutes() {

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import VideoBackground from "../components/VideoBackground/VideoBackground";
 import {
   motion,
   useScroll,
@@ -134,24 +135,7 @@ export default function PremiumPharmaHomepage() {
         { y: 120, opacity: 0, rotate: 2 },
         { y: 0, opacity: 1, rotate: 0, duration: 1.8, stagger: 0.2 },
       )
-      .fromTo(
-        ".hero-subtitle",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1.2 },
-        "-=1.2",
-      )
-      .fromTo(
-        ".hero-specimen",
-        { scale: 0.9, opacity: 0 },
-        { scale: 1, opacity: 0.8, duration: 2 },
-        "-=1.5",
-      )
-      .fromTo(
-        ".hero-stat",
-        { opacity: 0, x: -20 },
-        { opacity: 1, x: 0, duration: 0.8, stagger: 0.1 },
-        "-=1.0",
-      );
+    
 
     // 2. PINNED HORIZONTAL PRODUCT SHOWCASE
     const horizontalTrack = horizontalTrackRef.current;
@@ -170,33 +154,9 @@ export default function PremiumPharmaHomepage() {
       });
     }
 
-    // 3. MANUFACTURING TIMELINE: SVG Drawing Animation on Scroll
-    gsap.fromTo(
-      ".timeline-path",
-      { strokeDashoffset: 1000, strokeDasharray: 1000 },
-      {
-        strokeDashoffset: 0,
-        scrollTrigger: {
-          trigger: timelineRef.current,
-          start: "top 60%",
-          end: "bottom 40%",
-          scrub: 1,
-        },
-      },
-    );
 
-    // 4. SPOTLIGHT: Elegant continuous light sweep loop
-    gsap.fromTo(
-      ".light-sweep-bar",
-      { x: "-100%" },
-      {
-        x: "200%",
-        duration: 4,
-        repeat: -1,
-        ease: "power2.inOut",
-        repeatDelay: 1.5,
-      },
-    );
+
+
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -209,6 +169,7 @@ export default function PremiumPharmaHomepage() {
       className="relative min-h-screen w-full bg-transparent overflow-x-hidden selection:bg-white selection:text-black"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
+      <VideoBackground/>
       <section className="relative min-h-screen w-full flex flex-col justify-center px-8 md:px-24 pt-32 overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
           {/* Main Heading Section */}
@@ -218,17 +179,21 @@ export default function PremiumPharmaHomepage() {
                 Premium Healthcare Standards
               </span>
               <h1
-                className="text-5xl md:text-6xl lg:text-7xl font-light text-white leading-tight tracking-tight"
-                style={{ fontFamily: "'Cinzel', serif" }}
-              >
-                <span className="block overflow-hidden">Science That</span>
-                <span className="block overflow-hidden text-white/80 italic">
-                  Protects Lives.
-                </span>
-                <span className="block overflow-hidden">
-                  Quality You Can Trust.
-                </span>
-              </h1>
+  className="text-5xl md:text-6xl lg:text-7xl font-light text-white leading-tight tracking-tight"
+  style={{ fontFamily: "'Cinzel', serif" }}
+>
+  <span className="hero-title-line block overflow-hidden">
+    Science That
+  </span>
+
+  <span className="hero-title-line block overflow-hidden text-white/80 italic">
+    Protects Lives.
+  </span>
+
+  <span className="hero-title-line block overflow-hidden">
+    Quality You Can Trust.
+  </span>
+</h1>
             </TextShield>
           </div>
 
@@ -540,10 +505,10 @@ export default function PremiumPharmaHomepage() {
               <img
                 src="https://plus.unsplash.com/premium_photo-1661962958582-e30be4c3a2aa?w=900&auto=format&fit=crop&q=60"
                 alt="Pharmaceutical Manufacturing Facility"
-                className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity duration-700"
+                className="w-full h-full object-cover opacity-0  transition-opacity duration-700"
               />
               {/* Subtle Gradient Overlay for premium feel */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+
             </div>
           </div>
         </div>

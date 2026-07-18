@@ -40,6 +40,13 @@ export default function Navbar() {
         <NavLink
           id="navbar-logo-link"
           to="/"
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+
+              behavior: "smooth",
+            })
+          }
           className="flex items-center justify-start cursor-pointer transition-opacity hover:opacity-90"
         >
           <img
@@ -55,6 +62,13 @@ export default function Navbar() {
             <NavLink
               key={tab.name}
               to={tab.path}
+              onClick={() =>
+                window.scrollTo({
+                  top: 0,
+
+                  behavior: "smooth",
+                })
+              }
               className={({ isActive }) =>
                 `px-5 py-2 text-[14px] font-medium rounded-full transition-all duration-300 relative cursor-pointer ${
                   isActive
@@ -72,6 +86,13 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <NavLink
             to="/products"
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+
+                behavior: "smooth",
+              })
+            }
             className="hidden md:flex px-5 py-2.5 text-sm font-medium border border-white/20 rounded-full text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 cursor-pointer font-sans"
           >
             Explore Solutions
@@ -125,6 +146,13 @@ export default function Navbar() {
                 <NavLink
                   key={tab.name}
                   to={tab.path}
+                  onClick={() =>
+                    window.scrollTo({
+                      top: 0,
+
+                      behavior: "smooth",
+                    })
+                  }
                   onClick={handleTabClick}
                   className={({ isActive }) =>
                     `flex items-center justify-between w-full text-3xl font-medium tracking-tight text-left cursor-pointer font-sans ${isActive ? "text-white" : "text-white/40"}`

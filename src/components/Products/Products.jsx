@@ -1,376 +1,538 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ShieldCheck, Factory, Award, X } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import {
+  ShieldCheck,
+  Microscope,
+  CheckCircle2,
+  Building2,
+  X,
+  FileText,
+  Mail,
+  ArrowRight,
+  Award,
+  Users,
+  Truck,
+  Boxes,
+} from "lucide-react";
+import img1 from "../../Images/NORA.png";
+import img2 from "../../Images/AMIKA.png";
+import img3 from "../../Images/CEF1MG.png";
+import img4 from "../../Images/CEFO.png";
+import img5 from "../../Images/HEPARIN.png";
+import img6 from "../../Images/ONDA.png";
+import img7 from "../../Images/40mg.png";
+import img8 from "../../Images/DOXY.png";
+import img9 from "../../Images/paracetamol.png";
+import img10 from "../../Images/multivitamin.png";
+import img11 from "../../Images/trane.png";
+import img12 from "../../Images/sulbactum.png";
+import img13 from "../../Images/hepa.png";
+import img14 from "../../Images/infussion.png";
+import img15 from "../../Images/amo.png";
 
-import ProductsBackground from './ProductsBackground';
-import ProductCard, { TrustBadge } from './ProductCard';
-import { MOTION } from './Usescrollreveal';
+const FONT_ID = "novix-font-import";
 
-// Import product images
-import img1 from '../../Images/NORA.png';
-import img2 from '../../Images/AMIKA.png';
-import img3 from '../../Images/CEF1MG.png';
-import img4 from '../../Images/CEFO.png';
-import img5 from '../../Images/HEPARIN.png';
-import img6 from '../../Images/ONDA.png';
-import img7 from '../../Images/40mg.png';
-import img8 from '../../Images/DOXY.png';
-import img9 from '../../Images/paracetamol.png';
-import img10 from '../../Images/multivitamin.png';
-import img11 from '../../Images/trane.png';
-import img12 from '../../Images/sulbactum.png';
-import img13 from '../../Images/hepa.png';
-import img14 from '../../Images/infussion.png';
-import img15 from '../../Images/amo.png';
-
-gsap.registerPlugin(ScrollTrigger);
+const categories = ["All", "Injectable Antibiotics", "Critical Care", "Gastrointestinal", "Pain & Fever", "Supportive Care"];
 
 const productData = [
-  { id: 1, name: 'LBPC', generic: 'NORARENAKINE INJECTION', strength: '4MG/2ML', image: img1 },
-  { id: 2, name: 'MULTI-DR', generic: 'AMIKACIN INJECTION', strength: '500MG', image: img2 },
-  { id: 3, name: 'CEFVIX', generic: 'CEFTRIAXONE INJECTION', strength: '1GM', image: img3 },
-  { id: 4, name: 'CEFVIX-SB', generic: 'CEFTRIAXONE + SULBACTUM INJECTION', strength: '1.5 GM', image: img4 },
-  { id: 5, name: 'O-CLOT 25000 IU', generic: 'HEPARIN 25000 IU', strength: '25000 IU', image: img5 },
-  { id: 6, name: 'NOVISET', generic: 'ONDANSETRON INJECTION', strength: '2ML', image: img6 },
-  { id: 7, name: 'NOVPRA', generic: 'PANTAPRAZOLE 40 MG', strength: '40 MG', image: img7 },
-  { id: 8, name: 'DOXVIX', generic: 'DOXYCYCLINE 100 MG', strength: '100 MG', image: img8 },
-  { id: 9, name: 'NFEVO', generic: 'PARACETAMOL INJECTION', strength: '150MG/2ML', image: img9 },
-  { id: 10, name: 'N-VIT', generic: 'MULTIVITAMIN 10ML', strength: '10ML', image: img10 },
-  { id: 11, name: 'NOVIX-TX', generic: 'TRANEXAMIC ACID 500MG/5ML', strength: '500MG/5ML', image: img11 },
-  { id: 12, name: 'NFEVO', generic: 'CEFTRIXONE + SULBACTUM 1.5GM', strength: '1.5GM', image: img12 },
-  { id: 13, name: '0-CLOT', generic: 'HEPARIN 5000 IU', strength: '5000 IU', image: img13 },
-  { id: 14, name: 'NFEVO IV', generic: 'PARACETAMOL INFUSSION', strength: '100ML', image: img14 },
-  { id: 15, name: 'N-CLAV', generic: 'AMOXYCILLIN + CLAVULANATE', strength: '1.2 GM', image: img15 },
+  {
+    id: 1,
+    category: "Injectable Antibiotics",
+    name: "LBPC",
+    generic: "NORARENAKINE INJECTION",
+    strength: "4MG/2ML",
+    image: img1,
+    description:
+      "Used in emergency care to quickly stabilise blood pressure. Made under strict sterile conditions so hospitals can trust every vial.",
+  },
+  {
+    id: 2,
+    category: "Injectable Antibiotics",
+    name: "MULTI-DR",
+    generic: "AMIKACIN INJECTION",
+    strength: "500MG",
+    image: img2,
+    description:
+      "A dependable antibiotic for serious infections that don't respond to common treatments. Hospital-grade sterility, every batch.",
+  },
+  {
+    id: 3,
+    category: "Injectable Antibiotics",
+    name: "CEFVIX",
+    generic: "CEFTRIAXONE INJECTION",
+    strength: "1GM",
+    image: img3,
+    description:
+      "A widely trusted antibiotic for serious bacterial infections. Dissolves quickly, so it's ready when every minute counts.",
+  },
+  {
+    id: 4,
+    category: "Injectable Antibiotics",
+    name: "CEFVIX-SB",
+    generic: "CEFTRIAXONE + SULBACTUM INJECTION",
+    strength: "1.5 GM",
+    image: img4,
+    description:
+      "A stronger combination for infections that need extra support. Built for hospitals treating tougher cases.",
+  },
+  {
+    id: 5,
+    category: "Critical Care",
+    name: "O-CLOT 25000 IU",
+    generic: "HEPARIN 25000 IU",
+    strength: "25000 IU",
+    image: img5,
+    description:
+      "Helps prevent dangerous blood clots in critical care and surgery. Every batch is tested for consistent strength.",
+  },
+  {
+    id: 6,
+    category: "Gastrointestinal",
+    name: "NOVISET",
+    generic: "ONDANSETRON INJECTION",
+    strength: "2ML",
+    image: img6,
+    description:
+      "Gives fast relief from nausea after surgery or chemotherapy. Gentle, reliable, and easy to administer.",
+  },
+  {
+    id: 7,
+    category: "Gastrointestinal",
+    name: "NOVPRA",
+    generic: "PANTAPRAZOLE 40 MG",
+    strength: "40 MG",
+    image: img7,
+    description:
+      "Used for serious stomach bleeding and ulcers when a patient can't take tablets. A trusted IV option for doctors.",
+  },
+  {
+    id: 8,
+    category: "Injectable Antibiotics",
+    name: "DOXVIX",
+    generic: "DOXYCYCLINE 100 MG",
+    strength: "100 MG",
+    image: img8,
+    description:
+      "A well-established antibiotic for IV use, formulated for steady, reliable absorption in the body.",
+  },
+  {
+    id: 9,
+    category: "Pain & Fever",
+    name: "NFEVO",
+    generic: "PARACETAMOL INJECTION",
+    strength: "150MG/2ML",
+    image: img9,
+    description:
+      "Brings down fever and pain quickly for patients who need fast relief on the ward.",
+  },
+  {
+    id: 10,
+    category: "Supportive Care",
+    name: "N-VIT",
+    generic: "MULTIVITAMIN 10ML",
+    strength: "10ML",
+    image: img10,
+    description:
+      "A complete vitamin support shot to help patients recover strength during treatment.",
+  },
+  {
+    id: 11,
+    category: "Critical Care",
+    name: "NOVIX-TX",
+    generic: "TRANEXAMIC ACID 500MG/5ML",
+    strength: "500MG/5ML",
+    image: img11,
+    description:
+      "Helps control severe bleeding — an essential medicine for trauma and surgery teams.",
+  },
+  {
+    id: 12,
+    category: "Injectable Antibiotics",
+    name: "NFEVO",
+    generic: "CEFTRIXONE + SULBACTUM 1.5GM",
+    strength: "1.5GM",
+    image: img12,
+    description:
+      "A two-in-one antibiotic formula for serious infections, made in our dedicated manufacturing unit.",
+  },
+  {
+    id: 13,
+    category: "Critical Care",
+    name: "0-CLOT",
+    generic: "HEPARIN 5000 IU",
+    strength: "5000 IU",
+    image: img13,
+    description:
+      "A standard dose to prevent clots after surgery and keep IV lines working smoothly.",
+  },
+  {
+    id: 14,
+    category: "Pain & Fever",
+    name: "NFEVO IV",
+    generic: "PARACETAMOL INFUSSION",
+    strength: "100ML",
+    image: img14,
+    description:
+      "A ready-to-use IV drip for fast, effective pain and fever relief after surgery.",
+  },
+  {
+    id: 15,
+    category: "Injectable Antibiotics",
+    name: "N-CLAV",
+    generic: "AMOXYCILLIN + CLAVULANATE",
+    strength: "1.2 GM",
+    image: img15,
+    description:
+      "A trusted broad-spectrum antibiotic, manufactured to WHO-GMP purity standards you can rely on.",
+  },
 ];
 
-const CREDENTIALS = [
-  { icon: ShieldCheck, title: 'Trusted Quality', desc: 'WHO-GMP Certified' },
-  { icon: Factory, title: 'Advanced', desc: 'Manufacturing' },
-  { icon: Award, title: 'Affordable', desc: 'Healthcare' },
+const STATS = [
+  { icon: Boxes, value: "15+", label: "Formulations" },
+  { icon: Users, value: "500+", label: "Hospitals & clinics served" },
+  { icon: Award, value: "WHO-GMP", label: "Certified facility" },
+  { icon: Truck, value: "Pan-India", label: "Delivery network" },
 ];
 
-export default function Products() {
-  const containerRef = useRef(null);
-  const gridRef = useRef(null);
-  const cardRefs = useRef(new Map());
+const TRUST_ITEMS = [
+  { icon: ShieldCheck, title: "WHO-GMP Certified", text: "Our facility meets WHO Good Manufacturing Practice standards, checked and re-checked." },
+  { icon: Microscope, title: "Every Batch Tested", text: "No batch leaves our facility without passing quality and sterility testing." },
+  { icon: Building2, title: "Built for Hospitals", text: "Packaging, dosing and supply designed around how hospitals actually work." },
+  { icon: Truck, title: "Reliable Delivery", text: "We plan supply in advance so wards never run short when it matters." },
+];
 
+function useFonts() {
+  useEffect(() => {
+    if (document.getElementById(FONT_ID)) return;
+    const link = document.createElement("link");
+    link.id = FONT_ID;
+    link.rel = "stylesheet";
+    link.href =
+      "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap";
+    document.head.appendChild(link);
+  }, []);
+}
+
+export default function NovixProductsPage() {
+  useFonts();
+  const [activeCategory, setActiveCategory] = useState("All");
   const [activeProduct, setActiveProduct] = useState(null);
-  const [activeRect, setActiveRect] = useState(null);
-  const overlayCardRef = useRef(null);
-  const backdropRef = useRef(null);
-  const openTimeline = useRef(null);
 
-  const prefersReduced = useRef(false);
+  const filteredProducts =
+    activeCategory === "All"
+      ? productData
+      : productData.filter((p) => p.category === activeCategory);
 
-  useEffect(() => {
-    prefersReduced.current = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-  }, []);
-
-  // ---- Entrance choreography: one timeline, one language of motion ----
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (prefersReduced.current) {
-        gsap.set('[data-reveal]', { opacity: 1, y: 0, clearProps: 'all' });
-        return;
-      }
-
-      const introTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 82%',
-          toggleActions: 'play none none reverse',
-        },
-        defaults: { ease: MOTION.ease.reveal },
-      });
-
-      introTl
-        .fromTo(
-          '.prod-eyebrow',
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: MOTION.duration.base }
-        )
-        .fromTo(
-          '.prod-header-text',
-          { opacity: 0, y: 28 },
-          { opacity: 1, y: 0, duration: MOTION.duration.slow },
-          '-=0.45'
-        )
-        .fromTo(
-          '.prod-subhead',
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: MOTION.duration.base },
-          '-=0.6'
-        )
-        .fromTo(
-          '.prod-badge-item',
-          { opacity: 0, y: 14 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: MOTION.duration.base,
-            stagger: MOTION.stagger,
-          },
-          '-=0.4'
-        );
-
-      // Card reveals: batched, staggered, GPU-only properties.
-      gsap.set('.prod-card', { opacity: 0, y: 36, willChange: 'transform, opacity' });
-
-      ScrollTrigger.batch('.prod-card', {
-        start: 'top 92%',
-        onEnter: (batch) =>
-          gsap.to(batch, {
-            opacity: 1,
-            y: 0,
-            duration: MOTION.duration.base,
-            ease: MOTION.ease.reveal,
-            stagger: 0.06,
-            overwrite: true,
-          }),
-        once: true,
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // ---- Overlay open ----
-  const openProduct = useCallback((product, element) => {
-    if (activeProduct) return;
-    const rect = element.getBoundingClientRect();
-    setActiveRect(rect);
-    setActiveProduct(product);
-  }, [activeProduct]);
-
-  useEffect(() => {
-    if (!activeProduct || !activeRect || !overlayCardRef.current || !backdropRef.current) {
-      return;
-    }
-
-    const reduced = prefersReduced.current;
-    const tl = gsap.timeline();
-    openTimeline.current = tl;
-
-    tl.fromTo(
-      backdropRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: reduced ? 0.15 : 0.4, ease: MOTION.ease.soft }
-    );
-
-    gsap.set(overlayCardRef.current, {
-      position: 'fixed',
-      top: activeRect.top,
-      left: activeRect.left,
-      width: activeRect.width,
-      height: activeRect.height,
-      margin: 0,
-      zIndex: 60,
-      borderRadius: '28px',
-    });
-
-    if (reduced) {
-      gsap.set(overlayCardRef.current, {
-        top: '5vh',
-        left: '5vw',
-        width: '90vw',
-        height: '90vh',
-      });
-      gsap.set('.overlay-info-content', { opacity: 1 });
-    } else {
-      tl.to(
-        overlayCardRef.current,
-        {
-          top: '5vh',
-          left: '5vw',
-          width: '90vw',
-          height: '90vh',
-          duration: 0.65,
-          ease: MOTION.ease.snap,
-        },
-        '<'
-      ).to(
-        '.overlay-info-content',
-        { opacity: 1, duration: 0.4, ease: MOTION.ease.soft },
-        '-=0.25'
-      );
-    }
-
-    return () => {
-      tl.kill();
-    };
-  }, [activeProduct, activeRect]);
-
-  const closeOverlay = useCallback(() => {
-    if (!activeRect || !overlayCardRef.current) {
-      setActiveProduct(null);
-      setActiveRect(null);
-      return;
-    }
-
-    const reduced = prefersReduced.current;
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setActiveProduct(null);
-        setActiveRect(null);
-      },
-    });
-
-    tl.to('.overlay-info-content', {
-      opacity: 0,
-      duration: reduced ? 0.1 : 0.2,
-      ease: MOTION.ease.soft,
-    });
-
-    tl.to(
-      overlayCardRef.current,
-      {
-        top: activeRect.top,
-        left: activeRect.left,
-        width: activeRect.width,
-        height: activeRect.height,
-        duration: reduced ? 0.15 : 0.5,
-        ease: MOTION.ease.snap,
-      },
-      '<'
-    );
-
-    tl.to(
-      backdropRef.current,
-      { opacity: 0, duration: reduced ? 0.1 : 0.4, ease: MOTION.ease.soft },
-      '<0.1'
-    );
-  }, [activeRect]);
-
-  // Escape key closes overlay
   useEffect(() => {
     if (!activeProduct) return;
-    const onKey = (e) => {
-      if (e.key === 'Escape') closeOverlay();
+    const onKey = (e) => e.key === "Escape" && setActiveProduct(null);
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [activeProduct, closeOverlay]);
+  }, [activeProduct]);
 
   return (
-    <section
-      ref={containerRef}
-      id="novix-products-section"
-      className="relative flex w-full shrink-0 select-none flex-col overflow-hidden bg-transparent px-6 py-32 md:px-12"
-    >
-      {/* <ProductsBackground containerRef={containerRef} /> */}
+    // No bg-color on the outer div — your background frame stays visible,
+    // dimmed evenly by the scrim below so text is readable everywhere.
+    <div className="relative min-h-screen text-white font-['Inter'] selection:bg-[#69B6FF]/30 pb-24">
+      <div className="fixed inset-0 -z-10 bg-black/55" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
 
-      {/* HEADER */}
-      <div className="relative z-10 mx-auto mb-24 flex w-full max-w-[1400px] flex-col items-center text-center">
-        <span className="prod-eyebrow mb-6 block font-mono text-[11px] uppercase tracking-[0.32em] text-[#7FD8D0]/70">
-          Novix Healthcare — Formulary
-        </span>
-        <h2 className="prod-header-text mb-7 max-w-4xl text-[56px] font-semibold leading-[1.02] tracking-[-0.03em] text-[#E7ECF3] md:text-[72px] lg:text-[84px]">
-          Precision, in every dose.
-        </h2>
-        <p className="prod-subhead max-w-2xl text-lg font-light leading-relaxed text-[#94A2B8] md:text-xl">
-          Fifteen formulations manufactured under WHO-GMP protocols — each
-          one measured, verified, and released with the same clinical
-          rigor.
-        </p>
-
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 px-4">
-          {CREDENTIALS.map((item) => (
-            <TrustBadge key={item.title} {...item} />
-          ))}
-        </div>
-      </div>
-
-      {/* GRID */}
-      <div
-        ref={gridRef}
-        className="relative z-10 mx-auto grid w-full max-w-[1400px] grid-cols-1 gap-6 px-2 md:grid-cols-2 lg:grid-cols-3"
-      >
-        {productData.map((prod, index) => (
-          <ProductCard
-            key={prod.id}
-            ref={(el) => {
-              if (el) cardRefs.current.set(prod.id, el);
-            }}
-            product={prod}
-            index={index}
-            isActive={activeProduct?.id === prod.id}
-            onOpen={openProduct}
-          />
-        ))}
-      </div>
-
-      {/* OVERLAY */}
-      {activeProduct && activeRect && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div
-            ref={backdropRef}
-            role="presentation"
-            className="absolute inset-0 bg-[#05070C]/92 opacity-0 pointer-events-auto backdrop-blur-[2px]"
-            onClick={closeOverlay}
-          />
-
-          <div
-            ref={overlayCardRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label={activeProduct.name}
-            className="flex flex-col gap-8 overflow-hidden border border-[#1B2740] bg-[#0B1220] p-8 pointer-events-auto md:flex-row md:gap-16 md:p-16"
-          >
-            <div className="relative flex h-64 w-full items-center justify-center rounded-[20px] border border-white/[0.06] bg-gradient-to-b from-white/[0.03] to-transparent p-8 md:h-full md:w-1/2">
-              <img
-                src={activeProduct.image}
-                alt={activeProduct.name}
-                className="relative z-10 max-h-[85%] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
-              />
+      {/* ================= HERO ================= */}
+      <header className="relative border-b border-white/15">
+        <div className="max-w-7xl mx-auto px-6 pt-20 pb-16 grid lg:grid-cols-[1.3fr,1fr] gap-14 items-end">
+          <div>
+            <p className="text-[12px] font-bold tracking-[0.32em] uppercase text-[#9FD1FF] mb-5 mt-10">
+              Novix Healthcare · Product Portfolio
+            </p>
+            <h1 className="font-['Fraunces'] font-light text-[42px] sm:text-[56px] md:text-[68px] leading-[1.05] text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)] mb-6">
+              Medicines hospitals <span className="italic text-[#69B6FF]">count on.</span>
+            </h1>
+            <p className="text-lg text-white/90 max-w-xl leading-relaxed mb-8">
+              We manufacture sterile injectables for hospitals and clinics
+              across India — tested carefully, packed with care, and
+              delivered on time, every time.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="#catalogue"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#69B6FF] text-[#07111D] font-bold text-[12px] uppercase tracking-[0.1em] hover:bg-[#8EC7FF] transition-colors duration-300"
+              >
+                Browse Products
+                <ArrowRight size={14} />
+              </a>
+              <button className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/30 text-white font-bold text-[12px] uppercase tracking-[0.1em] hover:border-[#2ED3C6]/70 hover:text-[#2ED3C6] transition-colors duration-300">
+                <FileText size={14} />
+                Download Catalogue
+              </button>
             </div>
+          </div>
 
-            <div className="overlay-info-content flex w-full flex-col justify-center py-8 text-left opacity-0 md:w-1/2">
-              <div className="mb-4 flex items-start justify-between">
-                <h2 className="text-6xl font-semibold tracking-[-0.03em] text-[#E7ECF3] md:text-7xl">
-                  {activeProduct.name}
-                </h2>
+          {/* Certification seal panel — solid, high-contrast trust block */}
+          <div className="rounded-2xl border border-white/20 bg-[#0E1D31]/90 backdrop-blur-xl p-7">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-11 h-11 rounded-full bg-[#69B6FF]/15 border border-[#69B6FF]/40 flex items-center justify-center">
+                <ShieldCheck size={20} className="text-[#69B6FF]" />
+              </div>
+              <div>
+                <p className="text-white font-bold text-[14px] leading-tight">WHO-GMP Certified</p>
+                <p className="text-white/60 text-[12px]">Manufacturing facility</p>
+              </div>
+            </div>
+            <div className="h-px bg-white/10 mb-5" />
+            <ul className="space-y-3">
+              <li className="flex items-center gap-2.5 text-[13px] text-white/85">
+                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" /> Batch-tested for purity and sterility
+              </li>
+              <li className="flex items-center gap-2.5 text-[13px] text-white/85">
+                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" /> Proudly made in India
+              </li>
+              <li className="flex items-center gap-2.5 text-[13px] text-white/85">
+                <CheckCircle2 size={15} className="text-[#2ED3C6] shrink-0" /> Trusted by 500+ hospitals & clinics
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Stat strip */}
+        <div className="border-t border-white/15 bg-black/35">
+          <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+            {STATS.map((s) => {
+              const Icon = s.icon;
+              return (
+                <div key={s.label} className="flex items-center gap-3">
+                  <Icon size={20} className="text-[#69B6FF] shrink-0" />
+                  <div>
+                    <p className="font-['Fraunces'] text-lg text-white leading-none mb-1">{s.value}</p>
+                    <p className="text-[11px] text-white/65 leading-snug">{s.label}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </header>
+
+      {/* ================= CATALOGUE ================= */}
+      <main id="catalogue" className="max-w-7xl mx-auto px-6 py-20">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
+          <div>
+            <p className="text-[12px] font-bold tracking-[0.28em] uppercase text-[#9FD1FF] mb-3">
+              Our Range
+            </p>
+            <h2 className="font-['Fraunces'] font-light text-[32px] md:text-[42px] text-white leading-tight">
+              Browse by category
+            </h2>
+          </div>
+          <p className="text-sm text-white/70 max-w-sm">
+            Every product below is WHO-GMP manufactured and quality-tested
+            before it reaches you.
+          </p>
+        </div>
+
+        {/* Category filters */}
+        <div className="flex flex-wrap gap-3 mb-12">
+          {categories.map((cat) => {
+            const active = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-5 py-2.5 rounded-full text-[12px] font-bold uppercase tracking-[0.1em] border transition-all duration-300 ${
+                  active
+                    ? "bg-[#69B6FF] text-[#07111D] border-[#69B6FF]"
+                    : "bg-black/45 text-white border-white/25 hover:bg-black/60 hover:border-white/40"
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Product grid — premium 3-col cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="group relative flex flex-col rounded-[22px] border border-white/15 bg-[#0E1D31]/90 backdrop-blur-xl overflow-hidden shadow-[0_10px_34px_rgba(0,0,0,0.4)] transition-all duration-300 hover:border-[#69B6FF]/60 hover:-translate-y-1"
+            >
+              {/* WHO-GMP corner ribbon */}
+              <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 rounded-full bg-[#2ED3C6]/15 border border-[#2ED3C6]/40 px-3 py-1.5">
+                <ShieldCheck size={11} className="text-[#2ED3C6]" />
+                <span className="text-[9px] font-bold uppercase tracking-[0.12em] text-[#2ED3C6]">
+                  WHO-GMP
+                </span>
+              </div>
+
+              <div className="h-52 flex items-center justify-center bg-white p-4">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              <div className="p-6 flex flex-col flex-1">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/55 mb-2">
+                  {product.category}
+                </p>
+                <h3 className="font-['Fraunces'] text-[22px] text-white mb-1 leading-snug">
+                  {product.name}
+                </h3>
+                <p className="text-[12px] text-[#8FC9FF] font-bold uppercase tracking-[0.14em] mb-4">
+                  {product.generic} · {product.strength}
+                </p>
+                <p className="text-[13.5px] text-white/75 leading-relaxed mb-6 flex-1">
+                  {product.description}
+                </p>
+
                 <button
-                  onClick={closeOverlay}
-                  aria-label="Close product details"
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-[#E7ECF3] transition-colors duration-300 pointer-events-auto hover:bg-white/[0.1]"
+                  onClick={() => setActiveProduct(product)}
+                  className="group/btn w-full inline-flex items-center justify-center gap-2 py-3 rounded-full border border-white/30 text-[12px] font-bold uppercase tracking-[0.1em] text-white hover:bg-[#69B6FF] hover:text-[#07111D] hover:border-[#69B6FF] transition-colors duration-300"
                 >
-                  <X className="h-5 w-5" />
+                  View Details
+                  <ArrowRight size={13} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
                 </button>
               </div>
+            </div>
+          ))}
+        </div>
+      </main>
 
-              <p className="mb-9 font-mono text-sm uppercase tracking-[0.14em] text-[#7C8BA3]">
-                {activeProduct.generic.trim()}
-              </p>
+      {/* ================= WHY TRUST US ================= */}
+      <section className="border-t border-white/15 bg-black/35">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <p className="text-[12px] font-bold tracking-[0.28em] uppercase text-[#9FD1FF] mb-3">
+            Why Hospitals Choose Novix
+          </p>
+          <h2 className="font-['Fraunces'] font-light text-[32px] md:text-[42px] text-white leading-tight mb-14 max-w-2xl">
+            Quality you can check, every single time.
+          </h2>
 
-              <div className="mb-11 flex flex-wrap gap-3">
-                <div className="flex w-fit items-center gap-1.5 rounded-full border border-[#7FD8D0]/25 bg-[#7FD8D0]/[0.08] px-4 py-2 font-mono text-[12px] font-medium tracking-[0.04em] text-[#9FE6DF]">
-                  {activeProduct.strength}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {TRUST_ITEMS.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-white/15 bg-[#0E1D31]/85 backdrop-blur-xl p-7"
+                >
+                  <div className="w-11 h-11 rounded-full bg-[#69B6FF]/15 border border-[#69B6FF]/35 flex items-center justify-center mb-5">
+                    <Icon size={19} className="text-[#69B6FF]" />
+                  </div>
+                  <h3 className="font-['Fraunces'] text-[18px] text-white mb-2 leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="text-[13px] text-white/70 leading-relaxed">{item.text}</p>
                 </div>
-                <div className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-4 py-2 font-mono text-[12px] font-medium tracking-[0.04em] text-[#C7D2E0]">
-                  <ShieldCheck className="h-3.5 w-3.5" />
-                  WHO-GMP
-                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CTA ================= */}
+      <section className="border-t border-white/15">
+        <div className="max-w-7xl mx-auto px-6 py-20 text-center">
+          <p className="text-[12px] font-bold tracking-[0.28em] uppercase text-[#9FD1FF] mb-5">
+            Need Bulk Supply?
+          </p>
+          <h2 className="font-['Fraunces'] font-light text-[32px] sm:text-[42px] md:text-[52px] text-white leading-[1.1] max-w-2xl mx-auto mb-10">
+            Let's talk about your hospital's supply needs.
+          </h2>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#69B6FF] text-[#07111D] font-bold text-[12px] uppercase tracking-[0.1em] hover:bg-[#8EC7FF] transition-colors duration-300">
+              <FileText size={14} />
+              Download Catalogue
+            </button>
+            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/30 text-white font-bold text-[12px] uppercase tracking-[0.1em] hover:border-[#2ED3C6]/70 hover:text-[#2ED3C6] transition-colors duration-300">
+              <Mail size={14} />
+              Contact Sales Team
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= MODAL ================= */}
+      {activeProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/75 backdrop-blur-md"
+            onClick={() => setActiveProduct(null)}
+          />
+
+          <div className="relative w-full max-w-3xl rounded-3xl border border-white/15 bg-[#0E1D31]/95 backdrop-blur-2xl p-10 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.5)] max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setActiveProduct(null)}
+              className="absolute top-7 right-7 flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-black/40 text-white hover:border-[#69B6FF]/60 hover:text-[#69B6FF] transition-colors duration-300"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="grid md:grid-cols-2 gap-10 items-center">
+              <div className="rounded-2xl border border-white/10 bg-white p-8 flex items-center justify-center">
+                <img
+                  src={activeProduct.image}
+                  alt={activeProduct.name}
+                  className="w-full h-auto max-h-72 object-contain"
+                />
               </div>
 
-              <div className="mb-9 h-px w-full bg-white/[0.07]" />
+              <div>
+                <span className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#69B6FF]">
+                  {activeProduct.category}
+                </span>
+                <h2 className="font-['Fraunces'] text-3xl md:text-4xl text-white mt-2 mb-2 leading-tight">
+                  {activeProduct.name}
+                </h2>
+                <p className="text-[13px] text-white/70 font-semibold mb-6">
+                  {activeProduct.generic} &middot; {activeProduct.strength}
+                </p>
 
-              <h3 className="mb-5 font-mono text-[11px] uppercase tracking-[0.28em] text-[#7C8BA3]">
-                Product Details
-              </h3>
-              <p className="max-w-xl text-lg font-light leading-relaxed text-[#B7C1D1]">
-                {activeProduct.name} is formulated with{' '}
-                {activeProduct.generic.trim().toLowerCase()} (
-                {activeProduct.strength}), manufactured under WHO-GMP
-                protocols to ensure consistent clinical efficacy and
-                patient safety at every dose.
-              </p>
+                <p className="text-[15px] text-white/90 leading-relaxed mb-6">
+                  {activeProduct.description}
+                </p>
+
+                <div className="flex flex-col gap-2 mb-8">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={15} className="text-[#2ED3C6]" />
+                    <span className="text-[12px] font-semibold text-white/85">
+                      WHO-GMP certified manufacturing
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={15} className="text-[#2ED3C6]" />
+                    <span className="text-[12px] font-semibold text-white/85">
+                      Every batch quality-tested
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={15} className="text-[#2ED3C6]" />
+                    <span className="text-[12px] font-semibold text-white/85">
+                      Proudly made in India
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#69B6FF] text-[#07111D] font-bold text-[12px] uppercase tracking-[0.1em] hover:bg-[#8EC7FF] transition-colors duration-300">
+                    <Mail size={14} />
+                    Enquire Now
+                  </button>
+                  <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/30 text-white font-bold text-[12px] uppercase tracking-[0.1em] hover:border-[#2ED3C6]/70 hover:text-[#2ED3C6] transition-colors duration-300">
+                    <FileText size={14} />
+                    Spec Sheet
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
