@@ -1,4 +1,4 @@
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.png";
 
 export default function Footer() {
   return (
@@ -7,13 +7,26 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Logo & Description */}
           <div className="col-span-1 md:col-span-1 flex flex-col">
-            <div className="flex items-center mb-6">
+            
+            {/* Styled with a clean background container matching the navbar's look */}
+            <div 
+              style={{
+                background: "rgba(245, 247, 250, 0.9)",
+                backdropFilter: "blur(30px)",
+                WebkitBackdropFilter: "blur(30px)",
+                boxShadow: "0 10px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
+                border: "1px solid rgba(0, 0, 0, 0.12)",
+                borderRadius: "16px",
+              }}
+              className="flex items-center justify-start w-max px-4 py-2.5 mb-6"
+            >
               <img 
                 src={logo} 
                 alt="Novix Healthcare Logo" 
-                className="h-12 w-auto object-contain"
+                className="h-9 w-auto object-contain"
               />
             </div>
+
             <p className="text-white/60 text-sm leading-relaxed max-w-xs font-sans">
               Advancing health. Improving lives. Delivering high-quality
               pharmaceutical solutions globally.
@@ -70,16 +83,14 @@ export default function Footer() {
               Contact
             </h4>
             <span className="text-white/60 text-sm font-sans">
-India
+              India
               <br />
-
             </span>
             <span className="text-white/60 text-sm font-sans">
-info@novixhealthcare.com
+              info@novixhealthcare.com
             </span>
             <span className="text-white/60 text-sm font-sans">
-+91 8053868387
-
+              +91 8053868387
             </span>
           </div>
         </div>

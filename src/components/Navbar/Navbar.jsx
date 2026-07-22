@@ -14,6 +14,10 @@ export default function Navbar() {
 
   const handleTabClick = () => {
     setIsMobileMenuOpen(false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -26,38 +30,46 @@ export default function Navbar() {
           left: "50%",
           transform: "translateX(-50%)",
           width: "min(1280px, 92%)",
-          background: "rgba(8,12,18,.45)",
+          /* Original dark background as requested */
+          background: "rgba(18, 18, 22, 0.75)", 
           backdropFilter: "blur(30px)",
           WebkitBackdropFilter: "blur(30px)",
-          boxShadow: "0 10px 40px rgba(0,0,0,.35)",
-          border: "1px solid rgba(255,255,255,.08)",
+          boxShadow: "0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+          border: "1px solid rgba(255, 255, 255, 0.12)",
           borderRadius: "999px",
           zIndex: 100,
         }}
         className="flex items-center justify-between px-6 py-3"
       >
-        {/* Logo Layer: Replaced raw text with your imported graphic asset */}
+        {/* Logo Layer wrapped with the exact same light background container style used in the footer */}
         <NavLink
           id="navbar-logo-link"
           to="/"
           onClick={() =>
             window.scrollTo({
               top: 0,
-
               behavior: "smooth",
             })
           }
-          className="flex items-center justify-start cursor-pointer transition-opacity hover:opacity-90"
+          style={{
+            background: "rgba(245, 247, 250, 0.9)",
+            backdropFilter: "blur(30px)",
+            WebkitBackdropFilter: "blur(30px)",
+            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
+            border: "1px solid rgba(0, 0, 0, 0.12)",
+            borderRadius: "16px",
+          }}
+          className="flex items-center justify-start px-3.5 py-1.5 cursor-pointer transition-opacity hover:opacity-90"
         >
           <img
             src={logo}
             alt="NOVIX Health Care Logo"
-            className="h-9 w-auto object-contain"
+            className="h-8 w-auto object-contain"
           />
         </NavLink>
 
         {/* Navigation Tabs (Desktop) */}
-        <nav className="hidden md:flex items-center gap-1 bg-white/[0.03] border border-white/[0.08] rounded-full p-1 backdrop-blur-[20px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+        <nav className="hidden md:flex items-center gap-1 bg-white/[0.04] border border-white/[0.08] rounded-full p-1 backdrop-blur-[20px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]">
           {tabs.map((tab) => (
             <NavLink
               key={tab.name}
@@ -65,15 +77,14 @@ export default function Navbar() {
               onClick={() =>
                 window.scrollTo({
                   top: 0,
-
                   behavior: "smooth",
                 })
               }
               className={({ isActive }) =>
                 `px-5 py-2 text-[14px] font-medium rounded-full transition-all duration-300 relative cursor-pointer ${
                   isActive
-                    ? "text-black font-semibold font-sans bg-white"
-                    : "text-white/60 hover:text-white font-sans"
+                    ? "text-black font-semibold font-sans bg-white shadow-sm" 
+                    : "text-white/70 hover:text-white font-sans"
                 }`
               }
             >
@@ -89,11 +100,10 @@ export default function Navbar() {
             onClick={() =>
               window.scrollTo({
                 top: 0,
-
                 behavior: "smooth",
               })
             }
-            className="hidden md:flex px-5 py-2.5 text-sm font-medium border border-white/20 rounded-full text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 cursor-pointer font-sans"
+            className="hidden md:flex px-5 py-2.5 text-sm font-medium border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition-all duration-300 cursor-pointer font-sans"
           >
             Explore Solutions
           </NavLink>
@@ -120,12 +130,22 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[110] flex flex-col justify-between p-8"
+            className="fixed inset-0 bg-[#121216]/95 backdrop-blur-xl z-[110] flex flex-col justify-between p-8"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between">
-              {/* Logo Layer: Mobile view integration */}
-              <div className="flex items-center justify-start">
+              {/* Logo Layer with matching container style */}
+              <div 
+                style={{
+                  background: "rgba(245, 247, 250, 0.9)",
+                  backdropFilter: "blur(30px)",
+                  WebkitBackdropFilter: "blur(30px)",
+                  boxShadow: "0 10px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
+                  border: "1px solid rgba(0, 0, 0, 0.12)",
+                  borderRadius: "16px",
+                }}
+                className="flex items-center justify-start px-3.5 py-1.5"
+              >
                 <img
                   src={logo}
                   alt="NOVIX Healthcare Logo"
@@ -142,20 +162,15 @@ export default function Navbar() {
 
             {/* Drawer Links */}
             <div className="flex flex-col gap-[32px] my-auto text-left pl-4">
-              {tabs.map((tab, idx) => (
+              {tabs.map((tab) => (
                 <NavLink
                   key={tab.name}
                   to={tab.path}
-                  onClick={() =>
-                    window.scrollTo({
-                      top: 0,
-
-                      behavior: "smooth",
-                    })
-                  }
                   onClick={handleTabClick}
                   className={({ isActive }) =>
-                    `flex items-center justify-between w-full text-3xl font-medium tracking-tight text-left cursor-pointer font-sans ${isActive ? "text-white" : "text-white/40"}`
+                    `flex items-center justify-between w-full text-3xl font-medium tracking-tight text-left cursor-pointer font-sans ${
+                      isActive ? "text-white" : "text-white/40"
+                    }`
                   }
                 >
                   {({ isActive }) => (
