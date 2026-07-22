@@ -8,7 +8,7 @@ import DirectorsMessagePage from "../components/DirectorsMessage/DirectorsMessag
 
 import MissionVisionPage from "../components/MissonVission/MissionVisionPage";
 import BlogsPage from "../components/Blogs/BlogsPage";
-import CareersPage from "../Careers/CareersPage";
+import CareersPage from "../components/Careers/CareersPage";
 import ContactPage from "../Contact/ContactPage";
 import PrivacyPolicy from "../components/legal/PrivacyPolicyPage";
 import TermsAndConditions from "../components/terms/TermsAndConditions";
