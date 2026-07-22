@@ -5,7 +5,7 @@ export default function StatItem({ target, suffix = '+', label, isText = false }
 
   return (
     <div ref={ref} className="stat-item flex flex-col gap-1.5 text-left">
-      <span className="font-mono text-3xl font-semibold tracking-tight text-white md:text-4xl">
+      <span className="font-mono text-3xl font-semibold tracking-tight text-[var(--color-primary-navy)] md:text-4xl">
         {isText ? label.value : display}
       </span>
       <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-slate-400">

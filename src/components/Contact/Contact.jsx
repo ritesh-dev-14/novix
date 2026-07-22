@@ -128,7 +128,7 @@ export default function Contact() {
     <section
       ref={containerRef}
       id="novix-contact-section"
-      className="relative flex w-full shrink-0 select-none flex-col items-center overflow-hidden py-28 text-white"
+      className="relative flex w-full shrink-0 select-none flex-col items-center overflow-hidden py-28 text-[var(--color-primary-navy)]"
     >
       {/* BACKGROUND VIDEO — unchanged, preserved exactly as requested */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -170,7 +170,7 @@ export default function Contact() {
               </span>
             </div>
 
-            <h2 className="mb-7 max-w-xl text-[44px] font-semibold leading-[1.08] tracking-[-0.02em] text-white md:text-6xl lg:text-[68px]">
+            <h2 className="mb-7 max-w-xl text-[44px] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--color-primary-navy)] md:text-6xl lg:text-[68px]">
               <span className="block overflow-hidden">
                 {HEADLINE_LINE_1.map((word) => (
                   <span key={word} className="headline-word mr-3 inline-block">
@@ -222,7 +222,7 @@ export default function Contact() {
               <div className="pointer-events-none absolute -bottom-16 -left-10 h-48 w-48 rounded-full bg-blue-500/10 blur-[60px]" />
 
               <div className="relative mb-9 text-left">
-                <h3 className="mb-2 text-2xl font-semibold tracking-tight text-white">
+                <h3 className="mb-2 text-2xl font-semibold tracking-tight text-[var(--color-primary-navy)]">
                   Send Us a Message
                 </h3>
                 <p className="text-[13px] text-slate-400">
@@ -244,7 +244,7 @@ export default function Contact() {
                 {/* Premium CTA — light sweep is the page's visual highlight */}
                 <button
                   type="submit"
-                  className="group relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-sm font-semibold tracking-wide text-white shadow-[0_14px_28px_rgba(59,130,246,0.3)] transition-shadow duration-500 hover:shadow-[0_18px_40px_rgba(103,232,249,0.35)]"
+                  className="group relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-sm font-semibold tracking-wide text-[var(--color-primary-navy)] shadow-[0_14px_28px_rgba(59,130,246,0.3)] transition-shadow duration-500 hover:shadow-[0_18px_40px_rgba(103,232,249,0.35)]"
                 >
                   <span
                     aria-hidden="true"

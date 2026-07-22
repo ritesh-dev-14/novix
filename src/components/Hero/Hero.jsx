@@ -54,12 +54,12 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 flex w-full flex-col items-center text-center gap-8">
-        <div className="hero-element inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.36em] text-slate-200 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.25)]">
+        <div className="hero-element inline-flex items-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm px-4 py-1.5 text-xs uppercase tracking-[0.36em] text-slate-200 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.25)]">
           Made in India · DCGI Approved
         </div>
 
         <div ref={heroRef} className="max-w-4xl space-y-8">
-          <h1 className="hero-element text-5xl md:text-[5.5rem] font-black tracking-tight text-white leading-[0.95]">
+          <h1 className="hero-element text-5xl md:text-[5.5rem] font-black tracking-tight text-[var(--color-primary-navy)] leading-[0.95]">
             Premium pharmaceutical manufacturing,
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-sky-300">
               designed for India.
@@ -75,7 +75,7 @@ export default function Hero() {
               Explore product range
               <ArrowUpRight className="ml-3 h-5 w-5 stroke-[3]" />
             </button>
-            <a className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-4 text-base font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/10">
+            <a className="inline-flex items-center justify-center rounded-full border border-white/15 bg-[var(--color-bg-card)] shadow-sm px-6 py-4 text-base font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-[var(--color-bg-card)] shadow-sm">
               View our manufacturing
             </a>
           </div>
@@ -85,19 +85,19 @@ export default function Hero() {
           ref={statsRef}
           className="hero-element grid w-full max-w-5xl grid-cols-1 gap-5 md:grid-cols-3"
         >
-          <div className="hero-stat rounded-[32px] border border-white/10 bg-white/5 p-8 text-left shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+          <div className="hero-stat rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm p-8 text-left shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
             <span className="block text-sm uppercase tracking-[0.32em] text-sky-200/70 mb-4">Scale</span>
-            <p className="text-4xl font-semibold text-white">120+</p>
+            <p className="text-4xl font-semibold text-[var(--color-primary-navy)]">120+</p>
             <p className="mt-2 text-sm text-slate-300">Core pharmaceutical products across key therapeutic categories.</p>
           </div>
-          <div className="hero-stat rounded-[32px] border border-white/10 bg-white/5 p-8 text-left shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+          <div className="hero-stat rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm p-8 text-left shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
             <span className="block text-sm uppercase tracking-[0.32em] text-sky-200/70 mb-4">Trust</span>
-            <p className="text-4xl font-semibold text-white">DCGI</p>
+            <p className="text-4xl font-semibold text-[var(--color-primary-navy)]">DCGI</p>
             <p className="mt-2 text-sm text-slate-300">Approved medicines built for the Indian healthcare ecosystem.</p>
           </div>
-          <div className="hero-stat rounded-[32px] border border-white/10 bg-white/5 p-8 text-left shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+          <div className="hero-stat rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm p-8 text-left shadow-[0_25px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
             <span className="block text-sm uppercase tracking-[0.32em] text-sky-200/70 mb-4">Reach</span>
-            <p className="text-4xl font-semibold text-white">28</p>
+            <p className="text-4xl font-semibold text-[var(--color-primary-navy)]">28</p>
             <p className="mt-2 text-sm text-slate-300">States supported through a reliable supply network and local partnerships.</p>
           </div>
         </div>

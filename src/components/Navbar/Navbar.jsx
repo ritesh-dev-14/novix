@@ -1,199 +1,319 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { motion, AnimatePresence } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ArrowUpRight, ChevronDown } from "lucide-react";
 import logo from "../../assets/logo.png";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const tabs = [
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const location = useLocation();
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsAboutOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const aboutSubLinks = [
+    { name: "About Us", path: "/about" },
+    { name: "Director's Message", path: "/directors-message" },
+    { name: "Mission & Vision", path: "/mission-vision" },
+  ];
+
+  const mainTabs = [
     { name: "Home", path: "/" },
     { name: "Products", path: "/products" },
-    { name: "About Us", path: "/about" },
+    { name: "About", path: "/about", isDropdown: true },
+    { name: "Blogs", path: "/blogs" },
+    { name: "Careers", path: "/careers" },
+    { name: "Contact", path: "/contact" },
   ];
 
   const handleTabClick = () => {
     setIsMobileMenuOpen(false);
+    setIsAboutOpen(false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
 
+  const isAboutActive = location.pathname === "/about";
+
   return (
     <>
       <header
         id="banner-header"
-        style={{
-          position: "fixed",
-          top: "24px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "min(1280px, 92%)",
-          /* Original dark background as requested */
-          background: "rgba(18, 18, 22, 0.75)", 
-          backdropFilter: "blur(30px)",
-          WebkitBackdropFilter: "blur(30px)",
-          boxShadow: "0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.12)",
-          borderRadius: "999px",
-          zIndex: 100,
-        }}
-        className="flex items-center justify-between px-6 py-3"
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] transition-all duration-300 ease-in-out ${
+          isScrolled
+            ? "top-0 w-full rounded-none bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-md py-3 px-6 md:px-12"
+            : "top-5 w-[min(1280px,94%)] rounded-full bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-lg shadow-slate-900/5 py-2.5 px-6"
+        } flex items-center justify-between`}
       >
-        {/* Logo Layer wrapped with the exact same light background container style used in the footer */}
+        {/* Logo */}
         <NavLink
           id="navbar-logo-link"
           to="/"
-          onClick={() =>
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            })
-          }
-          style={{
-            background: "rgba(245, 247, 250, 0.9)",
-            backdropFilter: "blur(30px)",
-            WebkitBackdropFilter: "blur(30px)",
-            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
-            border: "1px solid rgba(0, 0, 0, 0.12)",
-            borderRadius: "16px",
-          }}
-          className="flex items-center justify-start px-3.5 py-1.5 cursor-pointer transition-opacity hover:opacity-90"
+          onClick={handleTabClick}
+          className="flex items-center justify-start cursor-pointer transition-opacity hover:opacity-80 shrink-0"
         >
           <img
             src={logo}
-            alt="NOVIX Health Care Logo"
-            className="h-8 w-auto object-contain"
+            alt="NOVIX Healthcare Logo"
+            className="h-7 md:h-8 w-auto object-contain"
           />
         </NavLink>
 
         {/* Navigation Tabs (Desktop) */}
-        <nav className="hidden md:flex items-center gap-1 bg-white/[0.04] border border-white/[0.08] rounded-full p-1 backdrop-blur-[20px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]">
-          {tabs.map((tab) => (
-            <NavLink
-              key={tab.name}
-              to={tab.path}
-              onClick={() =>
-                window.scrollTo({
-                  top: 0,
-                  behavior: "smooth",
-                })
-              }
-              className={({ isActive }) =>
-                `px-5 py-2 text-[14px] font-medium rounded-full transition-all duration-300 relative cursor-pointer ${
-                  isActive
-                    ? "text-black font-semibold font-sans bg-white shadow-sm" 
-                    : "text-white/70 hover:text-white font-sans"
-                }`
-              }
-            >
-              {tab.name}
-            </NavLink>
-          ))}
+        <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 p-1 rounded-full border border-slate-200/60">
+          {mainTabs.map((tab) => {
+            if (tab.isDropdown) {
+              return (
+                <div
+                  key={tab.name}
+                  ref={dropdownRef}
+                  className="relative"
+                  onMouseEnter={() => setIsAboutOpen(true)}
+                  onMouseLeave={() => setIsAboutOpen(false)}
+                >
+                  <button
+                    onClick={() => setIsAboutOpen((prev) => !prev)}
+                    className={`relative flex items-center gap-1 px-5 py-2 text-sm font-semibold rounded-full transition-colors duration-200 cursor-pointer ${
+                      isAboutActive ? "!text-white" : "text-[#06233F] hover:text-[#216853]"
+                    }`}
+                  >
+                    {isAboutActive && (
+                      <motion.div
+                        layoutId="active-pill"
+                        className="absolute inset-0 bg-[#06233F] rounded-full shadow-sm z-0"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{tab.name}</span>
+                    <ChevronDown
+                      size={14}
+                      className={`relative z-10 transition-transform duration-200 ${
+                        isAboutOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  <AnimatePresence>
+                    {isAboutOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                        transition={{ duration: 0.15, ease: "easeOut" }}
+                        className="absolute top-full left-0 mt-2 w-56 rounded-2xl bg-white p-2 border border-slate-200/80 shadow-xl shadow-slate-900/10 z-50"
+                      >
+                        {aboutSubLinks.map((subItem) => (
+                          <NavLink
+                            key={subItem.name}
+                            to={subItem.path}
+                            onClick={handleTabClick}
+                            className={({ isActive }) =>
+                              `block px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl transition-colors ${
+                                isActive
+                                  ? "bg-[#216853] !text-white"
+                                  : "text-[#06233F] hover:bg-slate-100 hover:text-[#216853]"
+                              }`
+                            }
+                          >
+                            {subItem.name}
+                          </NavLink>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            }
+
+            const isActive = location.pathname === tab.path;
+            return (
+              <NavLink
+                key={tab.name}
+                to={tab.path}
+                onClick={handleTabClick}
+                className={`relative px-5 py-2 text-sm font-semibold rounded-full transition-colors duration-200 cursor-pointer ${
+                  isActive ? "!text-white" : "text-[#06233F] hover:text-[#216853]"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="active-pill"
+                    className="absolute inset-0 bg-[#06233F] rounded-full shadow-sm z-0"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{tab.name}</span>
+              </NavLink>
+            );
+          })}
         </nav>
 
-        {/* Actions */}
+        {/* CTA Button */}
         <div className="flex items-center gap-3">
           <NavLink
             to="/products"
-            onClick={() =>
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              })
-            }
-            className="hidden md:flex px-5 py-2.5 text-sm font-medium border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition-all duration-300 cursor-pointer font-sans"
+            onClick={handleTabClick}
+            className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#216853] !text-white text-sm font-semibold tracking-wide transition-all duration-200 hover:bg-[#184d3d] hover:shadow-md active:scale-95 border border-transparent"
           >
-            Explore Solutions
+            <span className="!text-white">Explore Solutions</span>
+            <ArrowUpRight size={15} className="!text-white" />
           </NavLink>
 
+          {/* Mobile Menu Icon */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2.5 border border-white/20 rounded-full text-white hover:bg-white/10 transition-all cursor-pointer"
+            className="md:hidden p-2 rounded-full text-[#06233F] hover:bg-slate-100 transition-colors"
+            aria-label="Toggle Navigation"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </header>
 
-      {/* MOBILE DRAWER */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             id="mobile-drawer"
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-[#121216]/95 backdrop-blur-xl z-[110] flex flex-col justify-between p-8"
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-white z-[110] flex flex-col justify-between p-8 overflow-y-auto"
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between">
-              {/* Logo Layer with matching container style */}
-              <div 
-                style={{
-                  background: "rgba(245, 247, 250, 0.9)",
-                  backdropFilter: "blur(30px)",
-                  WebkitBackdropFilter: "blur(30px)",
-                  boxShadow: "0 10px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
-                  border: "1px solid rgba(0, 0, 0, 0.12)",
-                  borderRadius: "16px",
-                }}
-                className="flex items-center justify-start px-3.5 py-1.5"
-              >
-                <img
-                  src={logo}
-                  alt="NOVIX Healthcare Logo"
-                  className="h-7 w-auto object-contain"
-                />
-              </div>
+            <div className="flex items-center justify-between border-b border-slate-100 pb-5">
+              <NavLink to="/" onClick={handleTabClick}>
+                <img src={logo} alt="NOVIX Healthcare Logo" className="h-8 w-auto object-contain" />
+              </NavLink>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2.5 border border-white/20 rounded-full text-white hover:bg-white/10 transition-all"
+                className="p-2 rounded-full text-[#06233F] hover:bg-slate-100 transition-colors"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Drawer Links */}
-            <div className="flex flex-col gap-[32px] my-auto text-left pl-4">
-              {tabs.map((tab) => (
-                <NavLink
-                  key={tab.name}
-                  to={tab.path}
-                  onClick={handleTabClick}
-                  className={({ isActive }) =>
-                    `flex items-center justify-between w-full text-3xl font-medium tracking-tight text-left cursor-pointer font-sans ${
-                      isActive ? "text-white" : "text-white/40"
-                    }`
-                  }
-                >
-                  {({ isActive }) => (
-                    <>
-                      <span>{tab.name}</span>
-                      {isActive && (
-                        <motion.div
-                          layoutId="active-indicator-mobile"
-                          className="w-2.5 h-2.5 rounded-full bg-white mr-4"
-                        />
-                      )}
-                    </>
-                  )}
-                </NavLink>
-              ))}
+            {/* Links */}
+            <div className="flex flex-col gap-5 my-auto text-left pl-2 py-6">
+              {/* Home */}
+              <NavLink
+                to="/"
+                onClick={handleTabClick}
+                className={({ isActive }) =>
+                  `text-2xl font-bold tracking-tight transition-colors ${
+                    isActive ? "text-[#06233F]" : "text-slate-400 hover:text-[#216853]"
+                  }`
+                }
+              >
+                Home
+              </NavLink>
+
+              {/* Products */}
+              <NavLink
+                to="/products"
+                onClick={handleTabClick}
+                className={({ isActive }) =>
+                  `text-2xl font-bold tracking-tight transition-colors ${
+                    isActive ? "text-[#06233F]" : "text-slate-400 hover:text-[#216853]"
+                  }`
+                }
+              >
+                Products
+              </NavLink>
+
+              {/* About Us Accordion Section */}
+              <div className="flex flex-col gap-2">
+                <p className="text-2xl font-bold text-[#06233F] tracking-tight">About</p>
+                <div className="pl-4 flex flex-col gap-2.5 border-l-2 border-[#216853]/30 my-1">
+                  {aboutSubLinks.map((sub) => (
+                    <NavLink
+                      key={sub.name}
+                      to={sub.path}
+                      onClick={handleTabClick}
+                      className="text-base font-semibold text-slate-500 hover:text-[#216853] transition-colors"
+                    >
+                      {sub.name}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+
+              {/* Blogs */}
+              <NavLink
+                to="/blogs"
+                onClick={handleTabClick}
+                className={({ isActive }) =>
+                  `text-2xl font-bold tracking-tight transition-colors ${
+                    isActive ? "text-[#06233F]" : "text-slate-400 hover:text-[#216853]"
+                  }`
+                }
+              >
+                Blogs
+              </NavLink>
+
+              {/* Careers */}
+              <NavLink
+                to="/careers"
+                onClick={handleTabClick}
+                className={({ isActive }) =>
+                  `text-2xl font-bold tracking-tight transition-colors ${
+                    isActive ? "text-[#06233F]" : "text-slate-400 hover:text-[#216853]"
+                  }`
+                }
+              >
+                Careers
+              </NavLink>
+
+              {/* Contact */}
+              <NavLink
+                to="/contact"
+                onClick={handleTabClick}
+                className={({ isActive }) =>
+                  `text-2xl font-bold tracking-tight transition-colors ${
+                    isActive ? "text-[#06233F]" : "text-slate-400 hover:text-[#216853]"
+                  }`
+                }
+              >
+                Contact
+              </NavLink>
+
+              <NavLink
+                to="/products"
+                onClick={handleTabClick}
+                className="mt-4 inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white text-base font-semibold w-full shadow-lg shadow-[#216853]/20"
+              >
+                <span className="!text-white">Explore Solutions</span>
+                <ArrowUpRight size={18} className="!text-white" />
+              </NavLink>
             </div>
 
-            {/* Drawer Footer */}
-            <div className="w-full flex flex-col gap-4">
-              <div className="border-t border-white/10 pt-6 flex items-center justify-between text-sm text-white/50">
-                <span className="font-sans">© 2026 NOVIX Healthcare</span>
-                <span className="flex items-center gap-1 font-sans">🇬🇧 EN</span>
-              </div>
+            {/* Footer */}
+            <div className="w-full border-t border-slate-100 pt-5 flex items-center justify-between text-xs font-semibold text-slate-400">
+              <span>© 2026 NOVIX Healthcare</span>
+              <span className="uppercase text-[#216853]">Quality & Care</span>
             </div>
           </motion.div>
         )}

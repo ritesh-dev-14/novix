@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
 
-const FRAME_COUNT = 271;
+const FRAME_COUNT = 164;
 const MAX_CACHE = 40;
 
 const cache = new Map();
 
 function getFrameUrl(index) {
-  return `/frames/ezgif-frame-${String(index + 1).padStart(3, "0")}.jpg`;
+  return `/newbgframes/ezgif-frame-${String(index + 1).padStart(3, "0")}.jpg`;
 }
 
 function loadFrame(index) {
@@ -45,7 +45,7 @@ export default function VideoBackground() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
+      duration: 0.7,
       smoothWheel: true,
       smoothTouch: false,
     });
@@ -213,7 +213,7 @@ export default function VideoBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 -z-20 h-screen w-screen pointer-events-none"
+      className="fixed inset-0 z-0 h-screen w-screen pointer-events-none"
       aria-hidden="true"
     />
   );

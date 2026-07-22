@@ -8,7 +8,7 @@ export function FormField({ icon: Icon, id, label, type = 'text' }) {
         type={type}
         id={id}
         placeholder=" "
-        className="peer w-full rounded-2xl border border-white/[0.08] bg-black/40 pb-2 pl-12 pr-6 pt-6 text-sm text-white placeholder-transparent shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] backdrop-blur-sm transition-all duration-300 focus:border-cyan-400/50 focus:bg-black/60 focus:outline-none focus:ring-1 focus:ring-cyan-400/30"
+        className="peer w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] pb-2 pl-12 pr-6 pt-6 text-sm text-[var(--color-primary-navy)] placeholder-transparent shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] backdrop-blur-sm transition-all duration-300 focus:border-[var(--color-healthcare-green)] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[var(--color-healthcare-green)/30]"
       />
       <label
         htmlFor={id}
@@ -30,7 +30,7 @@ export function FormTextarea({ icon: Icon, id, label, rows = 4 }) {
         id={id}
         rows={rows}
         placeholder=" "
-        className="peer w-full resize-none rounded-2xl border border-white/[0.08] bg-black/40 pb-2 pl-12 pr-6 pt-6 text-sm text-white placeholder-transparent shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] backdrop-blur-sm transition-all duration-300 focus:border-cyan-400/50 focus:bg-black/60 focus:outline-none focus:ring-1 focus:ring-cyan-400/30"
+        className="peer w-full resize-none rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] pb-2 pl-12 pr-6 pt-6 text-sm text-[var(--color-primary-navy)] placeholder-transparent shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] backdrop-blur-sm transition-all duration-300 focus:border-[var(--color-healthcare-green)] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[var(--color-healthcare-green)/30]"
       />
       <label
         htmlFor={id}

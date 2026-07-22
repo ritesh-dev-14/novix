@@ -50,7 +50,7 @@ const ProductCard = forwardRef(function ProductCard(
       </div>
 
       {/* corner mark — subtle scientific reference, not decoration */}
-      <span className="absolute right-6 top-6 font-mono text-[10px] tracking-[0.1em] text-white/15 transition-colors duration-500 group-hover:text-[#7FD8D0]/40">
+      <span className="absolute right-6 top-6 font-mono text-[10px] tracking-[0.1em] text-[var(--color-text-secondary)] transition-colors duration-500 group-hover:text-[#7FD8D0]/40">
         {String(product.id).padStart(2, '0')}
       </span>
     </div>
@@ -62,7 +62,7 @@ export default ProductCard;
 export function TrustBadge({ icon: Icon, title, desc }) {
   return (
     <div className="prod-badge-item group flex items-center gap-3.5">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.02] text-[#9FE6DF] transition-colors duration-300 group-hover:border-[#7FD8D0]/30">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-[var(--color-bg-card)] shadow-sm text-[#9FE6DF] transition-colors duration-300 group-hover:border-[#7FD8D0]/30">
         <Icon className="h-[18px] w-[18px] stroke-[1.75]" />
       </div>
       <div className="flex flex-col text-left">

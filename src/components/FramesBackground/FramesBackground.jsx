@@ -88,7 +88,7 @@ export default function FramesBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[-1] pointer-events-none w-full h-full overflow-hidden bg-black">
+    <div className="fixed inset-0 z-[-1] pointer-events-none w-full h-full overflow-hidden bg-[var(--color-bg-primary)]">
       <canvas
         ref={canvasRef}
         className="w-full h-full object-cover opacity-100"

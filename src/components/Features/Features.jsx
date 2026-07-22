@@ -90,7 +90,7 @@ export default function Features() {
         <p className="feature-heading text-sm uppercase tracking-[0.3em] text-sky-300/80 mb-4">
           Why Novix Healthcare?
         </p>
-        <h2 className="feature-heading text-4xl md:text-5xl font-bold tracking-tight text-white">
+        <h2 className="feature-heading text-4xl md:text-5xl font-bold tracking-tight text-[var(--color-primary-navy)]">
           A premium Indian pharmaceutical partner with modern precision.
         </h2>
         <p className="feature-heading mt-6 text-base md:text-lg text-slate-300 leading-relaxed">
@@ -102,11 +102,11 @@ export default function Features() {
         {cards.map((card, index) => {
           const Icon = card.icon;
           return (
-            <div key={index} className="feature-card group rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_30px_80px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:bg-white/10">
-              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-white/10 border border-white/10 text-sky-200 transition-all duration-500 group-hover:bg-sky-500/10 group-hover:text-sky-200">
+            <div key={index} className="feature-card group rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm p-8 shadow-[0_30px_80px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-[var(--color-border)] hover:bg-[var(--color-bg-card)] shadow-sm">
+              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-[var(--color-bg-card)] shadow-sm border border-[var(--color-border)] text-sky-200 transition-all duration-500 group-hover:bg-sky-500/10 group-hover:text-sky-200">
                 <Icon className="h-7 w-7 stroke-[1.7]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 tracking-tight">
+              <h3 className="text-xl font-semibold text-[var(--color-primary-navy)] mb-3 tracking-tight">
                 {card.title}
               </h3>
               <p className="text-sm leading-relaxed text-slate-300">

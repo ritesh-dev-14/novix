@@ -2,8 +2,7 @@
 // import { useLayoutEffect } from "react";
 // import Navbar from "../components/Navbar/Navbar";
 // import Footer from "../components/Footer/Footer";
-// import VideoBackground from "../components/VideoBackground/VideoBackground";
-// import FramesBackground from "../components/FramesBackground/FramesBackground";
+// // import FramesBackground from "../components/FramesBackground/FramesBackground";
 // import contactBg from "../../contact.mp4";
 
 // export default function MainLayout() {
@@ -16,7 +15,7 @@
 //     <>
 //       {/* Background */}
 //       {isHome ? (
-//         <VideoBackground />
+//         <div className="bg-pattern-medical"></div>
 //       ) : isAbout ? (
 //         <video
 //           className="fixed inset-0 w-full h-full object-cover -z-0"

@@ -83,7 +83,7 @@ export default function Certifications() {
 
       <div className="relative z-10 mx-auto max-w-4xl text-center mb-16">
         <p className="text-sm uppercase tracking-[0.32em] text-sky-300/80 mb-4">Certifications</p>
-        <h2 className="cert-heading text-4xl md:text-5xl font-bold tracking-tight text-white">
+        <h2 className="cert-heading text-4xl md:text-5xl font-bold tracking-tight text-[var(--color-primary-navy)]">
           Built to earn trust at every step.
         </h2>
         <p className="mt-6 text-base md:text-lg text-slate-300 leading-relaxed">
@@ -95,24 +95,24 @@ export default function Certifications() {
         {certifications.map((cert) => {
           const Icon = cert.icon;
           return (
-            <div key={cert.label} className="cert-card rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_30px_80px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:bg-white/10">
-              <div className={`mb-6 inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${cert.accent} text-white shadow-lg`}>
+            <div key={cert.label} className="cert-card rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm p-8 shadow-[0_30px_80px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-[var(--color-border)] hover:bg-[var(--color-bg-card)] shadow-sm">
+              <div className={`mb-6 inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${cert.accent} text-[var(--color-primary-navy)] shadow-lg`}>
                 <Icon className="h-7 w-7 stroke-[1.5]" />
               </div>
-              <h3 className="text-2xl font-semibold text-white mb-3 tracking-tight">{cert.label}</h3>
+              <h3 className="text-2xl font-semibold text-[var(--color-primary-navy)] mb-3 tracking-tight">{cert.label}</h3>
               <p className="text-sm leading-relaxed text-slate-300">{cert.desc}</p>
             </div>
           );
         })}
       </div>
 
-      <div className="relative z-10 mt-16 rounded-[32px] border border-white/10 bg-white/5 p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.16)] backdrop-blur-xl">
+      <div className="relative z-10 mt-16 rounded-[32px] border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm p-8 md:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.16)] backdrop-blur-xl">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.32em] text-sky-300/80 mb-2">Quality bar</p>
-            <h3 className="text-3xl font-bold text-white">Strict compliance, consistently delivered.</h3>
+            <h3 className="text-3xl font-bold text-[var(--color-primary-navy)]">Strict compliance, consistently delivered.</h3>
           </div>
-          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-slate-950/30 px-5 py-4 text-sm text-slate-100">
+          <div className="inline-flex items-center gap-3 rounded-full border border-[var(--color-border)] bg-slate-950/30 px-5 py-4 text-sm text-slate-100">
             <ShieldCheck className="h-5 w-5 stroke-[2] text-sky-300" />
             Approved for India’s regulated healthcare market.
           </div>
