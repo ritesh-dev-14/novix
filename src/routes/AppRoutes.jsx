@@ -4,7 +4,6 @@ import Home from "../pages/Home";
 import Products from "../components/Products/Products";
 import AboutPage from "../pages/Contact";
 
-
 import DirectorsMessagePage from "../components/DirectorsMessage/DirectorsMessagePage";
 
 import MissionVisionPage from "../components/MissonVission/MissionVisionPage";
@@ -28,7 +27,6 @@ export default function AppRoutes() {
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-
       </Route>
     </Routes>
   );
