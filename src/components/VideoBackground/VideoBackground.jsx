@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
 
-const FRAME_COUNT = 164;
+const FRAME_COUNT = 109;
 const MAX_CACHE = 40;
 
 const cache = new Map();
 
 function getFrameUrl(index) {
-  return `/newbgframes/ezgif-frame-${String(index + 1).padStart(3, "0")}.jpg`;
+  return `/sequence/frame_${String(index + 1).padStart(3, "0")}.webp`;
 }
 
 function loadFrame(index) {

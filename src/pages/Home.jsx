@@ -248,7 +248,7 @@ export default function PremiumPharmaHomepage() {
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <VideoBackground />
-      <section className="relative min-h-screen w-full flex flex-col justify-center px-8 md:px-24 pt-32 overflow-hidden bg-white">
+      <section className="relative min-h-screen w-full flex flex-col justify-center px-8 md:px-24 pt-32 overflow-hidden bg-transparent">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
           {/* Main Heading Section */}
           <div className="lg:col-span-8">
@@ -616,7 +616,7 @@ export default function PremiumPharmaHomepage() {
       {/* ─────────────────────────────────────────────────────
           SECTION 6: INTERACTIVE CERTIFICATIONS (Physical Seals)
           ───────────────────────────────────────────────────── */}
-      <section id="certifications" className="relative py-28 px-6 md:px-16 lg:px-24 bg-slate-50 border-y border-slate-200">
+      <section id="certifications" className="relative py-28 px-6 md:px-16 lg:px-24 bg-transparent border-y border-slate-200">
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}
