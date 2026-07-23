@@ -39,7 +39,7 @@ const BLOG_POSTS = [
     author: "Novix Quality Assurance Team",
     date: "July 12, 2026",
     readTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=1200",
+    image: "https://imgs.search.brave.com/QvviVHa08NfGqDJtkBV8stAGxlWBynHMAoawIaebcVc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jcGlt/Zy50aXN0YXRpYy5j/b20vMDQ5MDU0MDAv/Yi80L2luamVjdGFi/bGUtcHJvZHVjdHMu/anBn",
     featured: true,
   },
   {
