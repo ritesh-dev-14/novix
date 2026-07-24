@@ -54,13 +54,14 @@ const OBJECTIVES = [
 
 function useFonts() {
   useEffect(() => {
-    if (document.getElementById(FONT_ID)) return;
-    const link = document.createElement("link");
-    link.id = FONT_ID;
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap";
-    document.head.appendChild(link);
+    if (typeof window !== "undefined" && !document.getElementById(FONT_ID)) {
+      const link = document.createElement("link");
+      link.id = FONT_ID;
+      link.rel = "stylesheet";
+      link.href =
+        "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@200;300;400;500&display=swap";
+      document.head.appendChild(link);
+    }
   }, []);
 }
 
@@ -68,7 +69,10 @@ export default function MissionVisionPage() {
   useFonts();
 
   return (
-    <div className="relative min-h-screen w-full pt-28 text-[#06233F]/80 font-['Inter'] bg-[#F8FAFC]">
+    <div
+      className="relative min-h-screen w-full pt-28 text-[#06233F]/80 bg-[#F8FAFC]"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+    >
       {/* Background Grid Pattern */}
       <div
         className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -79,23 +83,26 @@ export default function MissionVisionPage() {
       />
 
       {/* ================= HERO HEADER ================= */}
-      <header className="relative z-10 pt-8 pb-12 bg-[#F8FAFC] text-center border-b border-[#06233F]/10">
+      <header className="relative z-10 pt-10 md:pt-16 pb-12 bg-[#F8FAFC] text-center border-b border-[#06233F]/10">
         <div className="max-w-4xl mx-auto px-6">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-4">
             Purpose & Roadmap
           </p>
-          <h1 className="font-bold text-[38px] sm:text-[48px] md:text-[56px] leading-[1.1] tracking-tight text-[#06233F] mb-6">
-            Our Mission & <span className="text-[#216853]">Vision</span>
+          <h1
+            className="font-medium text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight text-[#06233F] mb-6"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            Our Mission & <span className="italic font-normal text-[#216853]">Vision</span>
           </h1>
-          <p className="text-[16px] sm:text-[18px] text-[#06233F]/70 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-[#06233F]/70 font-light leading-relaxed max-w-2xl mx-auto">
             Driven by purpose and guided by high standards, we are dedicated to transforming healthcare delivery through safe, precise, and high-impact pharmaceutical solutions.
           </p>
         </div>
       </header>
 
       {/* ================= MISSION & VISION GRID ================= */}
-      <section className="relative z-10 py-16 max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="relative z-10 py-16 max-w-7xl mx-auto px-6 md:px-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           
           {/* Mission Card */}
           <div className="rounded-[28px] border border-[#06233F]/10 bg-white p-8 md:p-12 shadow-lg shadow-[#06233F]/5 flex flex-col justify-between hover:border-[#216853]/40 transition-all duration-300">
@@ -103,17 +110,20 @@ export default function MissionVisionPage() {
               <div className="w-14 h-14 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-8">
                 <Target size={28} className="text-[#216853]" />
               </div>
-              <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#216853] mb-2 font-mono">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-3">
                 Our Purpose
               </p>
-              <h2 className="text-[28px] sm:text-[34px] font-bold text-[#06233F] leading-tight mb-6">
+              <h2
+                className="text-2xl sm:text-3xl font-light text-[#06233F] leading-tight mb-6"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
                 Our Mission
               </h2>
-              <p className="text-[15px] sm:text-[16px] text-[#06233F]/75 leading-relaxed mb-6">
+              <p className="text-sm sm:text-base text-[#06233F]/70 font-light leading-relaxed mb-6">
                 To formulate, manufacture, and distribute critical care pharmaceuticals that adhere strictly to international quality standardizations. We strive to empower clinicians with dependable therapeutics that enhance patient care and restore health.
               </p>
             </div>
-            <div className="pt-6 border-t border-[#06233F]/10 flex items-center gap-3 text-[13px] font-semibold text-[#06233F]">
+            <div className="pt-6 border-t border-[#06233F]/10 flex items-center gap-3 text-xs uppercase tracking-[0.1em] font-semibold text-[#06233F]">
               <Award className="text-[#216853]" size={18} />
               <span>WHO-GMP Compliant Manufacturing Standards</span>
             </div>
@@ -125,17 +135,20 @@ export default function MissionVisionPage() {
               <div className="w-14 h-14 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-8">
                 <Eye size={28} className="text-[#216853]" />
               </div>
-              <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#216853] mb-2 font-mono">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-3">
                 Our Horizon
               </p>
-              <h2 className="text-[28px] sm:text-[34px] font-bold text-[#06233F] leading-tight mb-6">
+              <h2
+                className="text-2xl sm:text-3xl font-light text-[#06233F] leading-tight mb-6"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
                 Our Vision
               </h2>
-              <p className="text-[15px] sm:text-[16px] text-[#06233F]/75 leading-relaxed mb-6">
+              <p className="text-sm sm:text-base text-[#06233F]/70 font-light leading-relaxed mb-6">
                 To become a trusted global leader in injectable and specialized pharmaceutical formulations—recognized for unwavering quality, manufacturing integrity, and accessible healthcare solutions.
               </p>
             </div>
-            <div className="pt-6 border-t border-[#06233F]/10 flex items-center gap-3 text-[13px] font-semibold text-[#06233F]">
+            <div className="pt-6 border-t border-[#06233F]/10 flex items-center gap-3 text-xs uppercase tracking-[0.1em] font-semibold text-[#06233F]">
               <Sparkles className="text-[#216853]" size={18} />
               <span>Expanding Healthcare Accessibility Everywhere</span>
             </div>
@@ -145,19 +158,22 @@ export default function MissionVisionPage() {
       </section>
 
       {/* ================= STRATEGIC OBJECTIVES SECTION ================= */}
-      <section className="relative z-10 py-16 bg-white border-y border-[#06233F]/10">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="relative z-10 py-20 bg-white border-y border-[#06233F]/10">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             
             {/* Left Column Text */}
             <div>
-              <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-4">
                 Strategic Goals
               </p>
-              <h2 className="text-[30px] sm:text-[38px] font-bold text-[#06233F] tracking-tight leading-tight mb-6">
-                How We Translate Vision into Action
+              <h2
+                className="text-3xl sm:text-4xl font-light text-[#06233F] tracking-tight leading-tight mb-6"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                How We Translate Vision into <span className="italic font-normal text-[#216853]">Action</span>
               </h2>
-              <p className="text-[15px] sm:text-[16px] text-[#06233F]/70 leading-relaxed mb-8">
+              <p className="text-sm sm:text-base text-[#06233F]/70 font-light leading-relaxed mb-8">
                 Our mission is supported by continuous operational refinements and strict adherence to protocol. We focus on structured growth that directly benefits hospital ecosystems.
               </p>
 
@@ -165,7 +181,7 @@ export default function MissionVisionPage() {
                 {OBJECTIVES.map((obj, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <CheckCircle2 size={20} className="text-[#216853] shrink-0 mt-0.5" />
-                    <span className="text-[14px] sm:text-[15px] font-medium text-[#06233F]">
+                    <span className="text-sm sm:text-base text-[#06233F]/80 font-light leading-relaxed">
                       {obj}
                     </span>
                   </div>
@@ -193,13 +209,16 @@ export default function MissionVisionPage() {
       </section>
 
       {/* ================= CORE PILLARS ================= */}
-      <section className="relative z-10 py-20 max-w-7xl mx-auto px-6">
+      <section className="relative z-10 py-20 max-w-7xl mx-auto px-6 md:px-10">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-3">
             Key Drivers
           </p>
-          <h2 className="text-[30px] sm:text-[38px] font-bold text-[#06233F] tracking-tight">
-            Pillars of Our Commitment
+          <h2
+            className="text-3xl sm:text-4xl font-light text-[#06233F] tracking-tight"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            Pillars of Our <span className="italic font-normal text-[#216853]">Commitment</span>
           </h2>
         </div>
 
@@ -215,10 +234,13 @@ export default function MissionVisionPage() {
                   <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-6">
                     <Icon size={24} className="text-[#216853]" />
                   </div>
-                  <h3 className="text-[18px] font-bold text-[#06233F] mb-3">
+                  <h3
+                    className="text-xl font-light text-[#06233F] mb-3"
+                    style={{ fontFamily: "'Cinzel', serif" }}
+                  >
                     {item.title}
                   </h3>
-                  <p className="text-[14px] text-[#06233F]/70 leading-relaxed">
+                  <p className="text-sm text-[#06233F]/70 font-light leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -229,21 +251,24 @@ export default function MissionVisionPage() {
       </section>
 
       {/* ================= CALL TO ACTION ================= */}
-      <section className="relative z-10 bg-[#06233F] text-white py-20 text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+      <section className="relative z-10 bg-[#06233F] text-white py-24 text-center mb-0">
+        <div className="max-w-4xl mx-auto px-6 md:px-10">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-4">
             Work With Us
           </p>
-          <h2 className="text-[32px] sm:text-[42px] font-bold tracking-tight mb-6 !text-white leading-tight">
-            Share in our vision for quality healthcare
+          <h2
+            className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight mb-6 !text-white leading-tight max-w-2xl mx-auto"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            Share in our vision for <span className="italic font-normal text-[#216853]">quality healthcare</span>
           </h2>
-          <p className="text-[16px] text-white/70 max-w-xl mx-auto mb-8">
+          <p className="text-base text-slate-300 font-light max-w-xl mx-auto leading-relaxed mb-10">
             Partner with Novix Healthcare to deliver pharmaceutical reliability and excellence across hospitals and supply networks.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30"
             >
               <Mail size={16} className="!text-white" />
               <span className="!text-white">Get in Touch</span>

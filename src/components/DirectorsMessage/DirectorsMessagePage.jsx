@@ -59,13 +59,14 @@ const VALUES = [
 
 function useFonts() {
   useEffect(() => {
-    if (document.getElementById(FONT_ID)) return;
-    const link = document.createElement("link");
-    link.id = FONT_ID;
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap";
-    document.head.appendChild(link);
+    if (typeof window !== "undefined" && !document.getElementById(FONT_ID)) {
+      const link = document.createElement("link");
+      link.id = FONT_ID;
+      link.rel = "stylesheet";
+      link.href =
+        "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@200;300;400;500&display=swap";
+      document.head.appendChild(link);
+    }
   }, []);
 }
 
@@ -73,7 +74,10 @@ export default function DirectorsMessagePage() {
   useFonts();
 
   return (
-    <div className="relative min-h-screen w-full pt-28 text-[#06233F]/80 font-['Inter'] bg-[#F8FAFC]">
+    <div
+      className="relative min-h-screen w-full pt-28 text-[#06233F]/80 bg-[#F8FAFC]"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+    >
       {/* Background Grid Pattern */}
       <div
         className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -84,15 +88,18 @@ export default function DirectorsMessagePage() {
       />
 
       {/* ================= HERO HEADER ================= */}
-      <header className="relative z-10 pt-8 pb-12 bg-[#F8FAFC] text-center border-b border-[#06233F]/10">
+      <header className="relative z-10 pt-10 md:pt-16 pb-12 bg-[#F8FAFC] text-center border-b border-[#06233F]/10">
         <div className="max-w-4xl mx-auto px-6">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-4">
             Leadership & Vision
           </p>
-          <h1 className="font-bold text-[38px] sm:text-[48px] md:text-[56px] leading-[1.1] tracking-tight text-[#06233F] mb-6">
-            Message from the <span className="text-[#216853]">Board of Directors</span>
+          <h1
+            className="font-medium text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight text-[#06233F] mb-6"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            Message from the <span className="italic font-normal text-[#216853]">Board of Directors</span>
           </h1>
-          <p className="text-[16px] sm:text-[18px] text-[#06233F]/70 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-[#06233F]/70 font-light leading-relaxed max-w-2xl mx-auto">
             Guided by a commitment to healthcare excellence, our leadership team 
             strives to deliver high-quality pharmaceutical formulations that empower hospitals and save lives nationwide.
           </p>
@@ -100,7 +107,7 @@ export default function DirectorsMessagePage() {
       </header>
 
       {/* ================= DIRECTORS GRID (3 EQUAL CARDS) ================= */}
-      <section className="relative z-10 py-16 max-w-7xl mx-auto px-6">
+      <section className="relative z-10 py-16 max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {DIRECTORS.map((director, index) => (
             <div
@@ -124,14 +131,17 @@ export default function DirectorsMessagePage() {
                 </div>
 
                 {/* Director Name */}
-                <h2 className="text-[22px] font-bold text-[#06233F] text-center mb-4">
+                <h2
+                  className="text-xl sm:text-2xl font-light text-[#06233F] text-center mb-4"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
                   {director.name}
                 </h2>
 
                 {/* Director Quote / Statement */}
                 <div className="relative pt-2">
                   <Quote className="w-6 h-6 text-[#216853]/20 mb-2 -scale-x-100" />
-                  <p className="text-[14px] text-[#06233F]/75 leading-relaxed">
+                  <p className="text-sm text-[#06233F]/70 font-light leading-relaxed">
                     "{director.quote}"
                   </p>
                 </div>
@@ -142,13 +152,16 @@ export default function DirectorsMessagePage() {
       </section>
 
       {/* ================= GUIDING PRINCIPLES ================= */}
-      <section className="relative z-10 py-20 max-w-7xl mx-auto px-6">
+      <section className="relative z-10 py-20 max-w-7xl mx-auto px-6 md:px-10">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-3">
             Core Beliefs
           </p>
-          <h2 className="text-[30px] sm:text-[38px] font-bold text-[#06233F] tracking-tight">
-            Our Guiding Pillars
+          <h2
+            className="text-3xl sm:text-4xl font-light text-[#06233F] tracking-tight"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            Our Guiding <span className="italic font-normal text-[#216853]">Pillars</span>
           </h2>
         </div>
 
@@ -163,10 +176,13 @@ export default function DirectorsMessagePage() {
                 <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-6">
                   <Icon size={24} className="text-[#216853]" />
                 </div>
-                <h3 className="text-[18px] font-bold text-[#06233F] mb-3">
+                <h3
+                  className="text-xl font-light text-[#06233F] mb-3"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
                   {val.title}
                 </h3>
-                <p className="text-[14px] text-[#06233F]/70 leading-relaxed">
+                <p className="text-sm text-[#06233F]/70 font-light leading-relaxed">
                   {val.description}
                 </p>
               </div>
@@ -176,21 +192,24 @@ export default function DirectorsMessagePage() {
       </section>
 
       {/* ================= CALL TO ACTION ================= */}
-      <section className="relative z-10 bg-[#06233F] text-white py-20 text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+      <section className="relative z-10 bg-[#06233F] text-white py-24 text-center mb-0">
+        <div className="max-w-4xl mx-auto px-6 md:px-10">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-0">
             Partner With Us
           </p>
-          <h2 className="text-[32px] sm:text-[42px] font-bold tracking-tight mb-6 !text-white leading-tight">
-            Connect directly with our leadership team
+          <h2
+            className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight mb-6 !text-white leading-tight max-w-2xl mx-auto"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            Connect directly with our <span className="italic font-normal text-[#216853]">leadership team</span>
           </h2>
-          <p className="text-[16px] text-white/70 max-w-xl mx-auto mb-8">
+          <p className="text-base text-slate-300 font-light max-w-xl mx-auto leading-relaxed mb-10">
             Interested in institutional supply, distribution partnerships, or manufacturing collaborations? We'd love to hear from you.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30"
             >
               <Mail size={16} className="!text-white" />
               <span className="!text-white">Get in Touch</span>

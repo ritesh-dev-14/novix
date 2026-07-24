@@ -49,13 +49,14 @@ const CONTACT_INFO = {
 
 function useFonts() {
   useEffect(() => {
-    if (document.getElementById(FONT_ID)) return;
-    const link = document.createElement("link");
-    link.id = FONT_ID;
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap";
-    document.head.appendChild(link);
+    if (typeof window !== "undefined" && !document.getElementById(FONT_ID)) {
+      const link = document.createElement("link");
+      link.id = FONT_ID;
+      link.rel = "stylesheet";
+      link.href =
+        "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@200;300;400;500&display=swap";
+      document.head.appendChild(link);
+    }
   }, []);
 }
 
@@ -63,7 +64,10 @@ export default function CareersPage() {
   useFonts();
 
   return (
-    <div className="relative min-h-screen w-full pt-28 text-[#06233F]/80 font-['Inter'] bg-[#F8FAFC]">
+    <div
+      className="relative min-h-screen w-full pt-28 text-[#06233F]/80 bg-[#F8FAFC]"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+    >
       {/* Background Grid Pattern */}
       <div
         className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -74,27 +78,33 @@ export default function CareersPage() {
       />
 
       {/* ================= HERO HEADER ================= */}
-      <header className="relative z-10 pt-8 pb-12 bg-[#F8FAFC] text-center border-b border-[#06233F]/10">
+      <header className="relative z-10 pt-10 md:pt-16 pb-12 bg-[#F8FAFC] text-center border-b border-[#06233F]/10">
         <div className="max-w-4xl mx-auto px-6">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-4">
             Join Our Team
           </p>
-          <h1 className="font-bold text-[38px] sm:text-[48px] md:text-[56px] leading-[1.1] tracking-tight text-[#06233F] mb-6">
-            Build Your Career in <span className="text-[#216853]">Healthcare</span>
+          <h1
+            className="font-medium text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight text-[#06233F] mb-6"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            Build Your Career in <span className="italic font-normal text-[#216853]">Healthcare</span>
           </h1>
-          <p className="text-[16px] sm:text-[18px] text-[#06233F]/70 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-[#06233F]/70 font-light leading-relaxed max-w-2xl mx-auto">
             At Novix Healthcare, we empower dedicated professionals to engineer precision therapeutics and deliver high-impact critical care solutions.
           </p>
         </div>
       </header>
 
       {/* ================= CULTURE & PERKS ================= */}
-      <section className="relative z-10 py-16 max-w-7xl mx-auto px-6">
+      <section className="relative z-10 py-16 max-w-7xl mx-auto px-6 md:px-10">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-3">
             Why Novix?
           </p>
-          <h2 className="text-[30px] sm:text-[38px] font-bold text-[#06233F] tracking-tight">
+          <h2
+            className="text-3xl sm:text-4xl font-light text-[#06233F] tracking-tight"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
             Our Work Culture
           </h2>
         </div>
@@ -110,10 +120,13 @@ export default function CareersPage() {
                 <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-6">
                   <Icon size={24} className="text-[#216853]" />
                 </div>
-                <h3 className="text-[18px] font-bold text-[#06233F] mb-2">
+                <h3
+                  className="text-xl font-light text-[#06233F] mb-3"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
                   {perk.title}
                 </h3>
-                <p className="text-[14px] text-[#06233F]/70 leading-relaxed">
+                <p className="text-sm text-[#06233F]/70 font-light leading-relaxed">
                   {perk.description}
                 </p>
               </div>
@@ -129,17 +142,20 @@ export default function CareersPage() {
             <Briefcase size={28} className="text-[#216853]" />
           </div>
 
-          <h2 className="text-[26px] sm:text-[32px] font-bold text-[#06233F] mb-3">
+          <h2
+            className="text-2xl sm:text-3xl font-light text-[#06233F] mb-4"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
             No Active Openings Currently
           </h2>
-          <p className="text-[15px] sm:text-[16px] text-[#06233F]/70 max-w-xl mx-auto mb-8 leading-relaxed">
+          <p className="text-sm md:text-base text-[#06233F]/70 font-light max-w-xl mx-auto mb-8 leading-relaxed">
             We are not actively hiring for any open positions right now. However, we are always open to connecting with talented healthcare professionals for future opportunities.
           </p>
 
           {/* Contact Details Card */}
           <div className="bg-[#06233F] text-white p-8 rounded-[24px] max-w-lg mx-auto text-left shadow-xl mb-8">
-            <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#216853] mb-6 font-mono">
-              GET IN TOUCH
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-6">
+              Get in Touch
             </p>
 
             <div className="space-y-5">
@@ -147,7 +163,7 @@ export default function CareersPage() {
                 <div className="w-10 h-10 rounded-full bg-[#216853]/20 flex items-center justify-center shrink-0">
                   <MapPin size={18} className="text-[#216853]" />
                 </div>
-                <span className="text-[16px] font-medium text-white/90">
+                <span className="text-sm font-light text-white/90 leading-relaxed">
                   {CONTACT_INFO.location}
                 </span>
               </div>
@@ -158,7 +174,7 @@ export default function CareersPage() {
                 </div>
                 <a
                   href={`mailto:${CONTACT_INFO.email}`}
-                  className="text-[16px] font-medium text-[#216853] hover:underline break-all"
+                  className="text-sm font-light text-[#216853] hover:underline break-all"
                 >
                   {CONTACT_INFO.email}
                 </a>
@@ -170,7 +186,7 @@ export default function CareersPage() {
                 </div>
                 <a
                   href={`tel:${CONTACT_INFO.phone.replace(/\s+/g, "")}`}
-                  className="text-[16px] font-medium text-[#216853] hover:underline"
+                  className="text-sm font-light text-[#216853] hover:underline"
                 >
                   {CONTACT_INFO.phone}
                 </a>
@@ -181,7 +197,7 @@ export default function CareersPage() {
           {/* Redirect Button */}
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30"
           >
             <span>Contact Us</span>
             <ArrowRight size={16} className="!text-white" />

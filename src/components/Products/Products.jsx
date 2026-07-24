@@ -31,7 +31,7 @@ import img15 from "../../Images/amo.png";
 import img16 from "../../Images/nora2.png";
 import { useNavigate } from "react-router-dom";
 
-const FONT_ID = "novix-font-import";
+const FONT_ID = "editorial-fonts";
 
 const categories = [
   "All",
@@ -237,20 +237,26 @@ const TRUST_ITEMS = [
   },
 ];
 
-function useFonts() {
-  useEffect(() => {
-    if (document.getElementById(FONT_ID)) return;
+// Injects Cinzel and Plus Jakarta Sans for 1:1 homepage typography consistency
+const injectFonts = () => {
+  if (
+    typeof window !== "undefined" &&
+    !document.getElementById(FONT_ID)
+  ) {
     const link = document.createElement("link");
     link.id = FONT_ID;
     link.rel = "stylesheet";
     link.href =
-      "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap";
+      "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@200;300;400;500&display=swap";
     document.head.appendChild(link);
-  }, []);
-}
+  }
+};
 
 export default function NovixProductsPage() {
-  useFonts();
+  useEffect(() => {
+    injectFonts();
+  }, []);
+
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeProduct, setActiveProduct] = useState(null);
 
@@ -270,10 +276,13 @@ export default function NovixProductsPage() {
     };
   }, [activeProduct]);
 
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   return (
-    <div className="relative min-h-screen w-full text-[#06233F]/80 font-['Inter'] bg-[#F8FAFC]">
+    <div 
+      className="relative min-h-screen w-full text-[#06233F]/80 bg-[#F8FAFC]"
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+    >
       {/* Subtle Grid overlay */}
       <div
         className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -287,13 +296,16 @@ export default function NovixProductsPage() {
       <header className="relative z-10 bg-[#F8FAFC] w-full pt-16">
         <div className="max-w-7xl mx-auto px-6 pt-20 pb-20 grid lg:grid-cols-[1.3fr,1fr] gap-16 items-center">
           <div>
-            <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-4 font-mono">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-4">
               Novix Healthcare · Product Portfolio
             </p>
-            <h1 className="font-bold text-[40px] sm:text-[52px] md:text-[62px] leading-[1.08] tracking-tight text-[#06233F] mb-6">
-              Medicines hospitals <span className="text-[#216853]">count on.</span>
+            <h1 
+              className="font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-[#06233F] mb-6"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              Medicines hospitals <span className="italic font-normal text-[#216853]">count on.</span>
             </h1>
-            <p className="text-[17px] md:text-[19px] text-[#06233F]/75 max-w-xl leading-relaxed mb-8">
+            <p className="text-base md:text-lg text-[#06233F]/75 max-w-xl font-light leading-relaxed mb-8">
               We manufacture sterile injectables for hospitals and clinics
               across India — tested carefully, packed with care, and delivered
               on time, every time.
@@ -301,12 +313,12 @@ export default function NovixProductsPage() {
             <div className="flex flex-wrap gap-4">
               <a
                 href="#catalogue"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#216853] !text-white font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20"
               >
                 <span className="!text-white">Browse Products</span>
                 <ArrowRight size={15} className="!text-white" />
               </a>
-              <button className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#06233F]/20 text-[#06233F] font-semibold text-[13px] uppercase tracking-[0.08em] hover:border-[#216853] hover:text-[#216853] transition-colors duration-300 bg-white/50">
+              <button className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#06233F]/20 text-[#06233F] font-semibold text-xs uppercase tracking-[0.2em] hover:border-[#216853] hover:text-[#216853] transition-colors duration-300 bg-white/50">
                 <FileText size={15} />
                 Download Catalogue
               </button>
@@ -320,25 +332,28 @@ export default function NovixProductsPage() {
                 <ShieldCheck size={22} className="text-[#216853]" />
               </div>
               <div>
-                <p className="text-[#06233F] font-bold text-[17px] leading-tight mb-1">
+                <p 
+                  className="text-[#06233F] font-semibold text-lg leading-tight mb-1"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
                   WHO-GMP Certified
                 </p>
-                <p className="text-[#06233F]/60 text-[13px]">
+                <p className="text-[#06233F]/60 text-xs font-light">
                   Manufacturing facility
                 </p>
               </div>
             </div>
             <div className="h-px bg-[#06233F]/10 mb-6" />
             <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-[14px] text-[#06233F]/80 font-medium">
+              <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
                 <CheckCircle2 size={18} className="text-[#216853] shrink-0" />{" "}
                 Batch-tested for purity and sterility
               </li>
-              <li className="flex items-center gap-3 text-[14px] text-[#06233F]/80 font-medium">
+              <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
                 <CheckCircle2 size={18} className="text-[#216853] shrink-0" />{" "}
                 Proudly made in India
               </li>
-              <li className="flex items-center gap-3 text-[14px] text-[#06233F]/80 font-medium">
+              <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
                 <CheckCircle2 size={18} className="text-[#216853] shrink-0" />{" "}
                 Trusted by 500+ hospitals & clinics
               </li>
@@ -357,10 +372,13 @@ export default function NovixProductsPage() {
                     <Icon size={20} className="text-[#216853]" />
                   </div>
                   <div>
-                    <p className="text-[24px] text-[#06233F] font-bold leading-none mb-1">
+                    <p 
+                      className="text-3xl text-[#06233F] font-medium leading-none mb-1"
+                      style={{ fontFamily: "'Cinzel', serif" }}
+                    >
                       {s.value}
                     </p>
-                    <p className="text-[11px] text-[#06233F]/60 font-bold uppercase tracking-wider leading-snug">
+                    <p className="text-[10px] text-[#06233F]/60 font-bold uppercase tracking-[0.3em] leading-snug">
                       {s.label}
                     </p>
                   </div>
@@ -376,14 +394,17 @@ export default function NovixProductsPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
             <div>
-              <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+              <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-3">
                 Our Range
               </p>
-              <h2 className="text-[32px] md:text-[42px] font-bold text-[#06233F] tracking-tight leading-tight">
+              <h2 
+                className="text-4xl md:text-5xl font-light text-[#06233F] tracking-tight leading-tight"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
                 Browse by category
               </h2>
             </div>
-            <p className="text-[15px] text-[#06233F]/70 max-w-sm leading-relaxed">
+            <p className="text-base text-[#06233F]/70 max-w-sm font-light leading-relaxed">
               Every product below is WHO-GMP manufactured and quality-tested
               before it reaches you.
             </p>
@@ -397,7 +418,7 @@ export default function NovixProductsPage() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2.5 rounded-full text-[13px] font-semibold tracking-wide transition-all duration-200 ${
+                  className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-[0.2em] transition-all duration-200 ${
                     active
                       ? "bg-[#06233F] !text-white border border-[#06233F] shadow-sm"
                       : "bg-white text-[#06233F]/70 border border-[#06233F]/15 hover:border-[#216853] hover:text-[#216853]"
@@ -419,7 +440,7 @@ export default function NovixProductsPage() {
                 {/* WHO-GMP corner badge */}
                 <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 rounded-full bg-[#F4F8F6] border border-[#216853]/20 px-3 py-1">
                   <ShieldCheck size={12} className="text-[#216853]" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#06233F]">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#06233F]">
                     WHO-GMP
                   </span>
                 </div>
@@ -428,27 +449,33 @@ export default function NovixProductsPage() {
                   <img
                     src={product.image}
                     alt={product.name}
+                    loading="lazy"
+                    decoding="async"
+                    fetchPriority="low"
                     className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-[1.04]"
                   />
                 </div>
 
                 <div className="p-7 flex flex-col flex-1">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#216853] mb-2 font-mono">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#216853] mb-2">
                     {product.category}
                   </p>
-                  <h3 className="text-[22px] font-bold text-[#06233F] mb-1 leading-snug">
+                  <h3 
+                    className="text-2xl font-light text-[#06233F] mb-1 leading-snug"
+                    style={{ fontFamily: "'Cinzel', serif" }}
+                  >
                     {product.name}
                   </h3>
-                  <p className="text-[12px] text-[#06233F]/60 font-semibold uppercase tracking-[0.05em] mb-4">
+                  <p className="text-[11px] text-[#06233F]/60 font-semibold uppercase tracking-[0.2em] mb-4">
                     {product.generic} · {product.strength}
                   </p>
-                  <p className="text-[14px] text-[#06233F]/70 leading-relaxed mb-6 flex-1">
+                  <p className="text-sm text-[#06233F]/70 font-light leading-relaxed mb-6 flex-1">
                     {product.description}
                   </p>
 
                   <button
                     onClick={() => setActiveProduct(product)}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#216853] text-[13px] font-semibold uppercase tracking-[0.08em] !text-white hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20 group/btn"
+                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#216853] text-xs font-semibold uppercase tracking-[0.2em] !text-white hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20 group/btn"
                   >
                     <span className="!text-white">View Details</span>
                     <ArrowRight
@@ -466,11 +493,14 @@ export default function NovixProductsPage() {
       {/* ================= WHY TRUST US ================= */}
       <section className="relative z-10 bg-white border-t border-[#06233F]/10 py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-3 font-mono">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-3">
             Why Hospitals Choose Novix
           </p>
-          <h2 className="text-[30px] md:text-[40px] font-bold text-[#06233F] tracking-tight leading-tight mb-16 max-w-2xl">
-            Quality you can check, every single time.
+          <h2 
+            className="text-3xl md:text-5xl font-light text-[#06233F] tracking-tight leading-tight mb-16 max-w-2xl"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
+            Quality you can check, <span className="italic font-normal text-[#216853]">every single time.</span>
           </h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -484,10 +514,13 @@ export default function NovixProductsPage() {
                   <div className="w-10 h-10 rounded-xl bg-[#F4F8F6] flex items-center justify-center mb-6">
                     <Icon size={22} className="text-[#216853]" />
                   </div>
-                  <h3 className="text-[18px] font-bold text-[#06233F] mb-2 leading-snug">
+                  <h3 
+                    className="text-xl font-light text-[#06233F] mb-2 leading-snug"
+                    style={{ fontFamily: "'Cinzel', serif" }}
+                  >
                     {item.title}
                   </h3>
-                  <p className="text-[14px] text-[#06233F]/65 leading-relaxed">
+                  <p className="text-sm text-[#06233F]/65 font-light leading-relaxed">
                     {item.text}
                   </p>
                 </div>
@@ -500,18 +533,21 @@ export default function NovixProductsPage() {
       {/* ================= CTA ================= */}
       <section className="relative z-10 bg-[#06233F] text-white py-24 text-center">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#216853] mb-4 font-mono">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-4">
             Need Bulk Supply?
           </p>
-          <h2 className="text-[32px] sm:text-[42px] md:text-[50px] font-bold tracking-tight leading-[1.1] max-w-3xl mx-auto mb-8 !text-white">
+          <h2 
+            className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.1] max-w-3xl mx-auto mb-8 !text-white"
+            style={{ fontFamily: "'Cinzel', serif" }}
+          >
             Let's talk about your hospital's supply needs.
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30">
+            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30">
               <FileText size={15} className="!text-white" />
               <span className="!text-white">Download Catalogue</span>
             </button>
-            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-white/10 transition-colors duration-300">
+            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-colors duration-300">
               <Mail size={15} />
               Contact Sales Team
             </button>
@@ -541,41 +577,45 @@ export default function NovixProductsPage() {
                 <img
                   src={activeProduct.image}
                   alt={activeProduct.name}
+                  loading="eager"
                   className="w-full h-auto max-h-80 object-contain"
                 />
               </div>
 
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#216853] font-mono">
+                <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853]">
                   {activeProduct.category}
                 </span>
-                <h2 className="text-[32px] md:text-[38px] font-bold text-[#06233F] mt-2 mb-1 leading-tight">
+                <h2 
+                  className="text-3xl md:text-4xl font-light text-[#06233F] mt-2 mb-1 leading-tight"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
                   {activeProduct.name}
                 </h2>
-                <p className="text-[13px] text-[#06233F]/60 font-semibold uppercase tracking-[0.05em] mb-6">
+                <p className="text-[11px] text-[#06233F]/60 font-semibold uppercase tracking-[0.2em] mb-6">
                   {activeProduct.generic} &middot; {activeProduct.strength}
                 </p>
 
-                <p className="text-[15px] text-[#06233F]/75 leading-relaxed mb-6">
+                <p className="text-base text-[#06233F]/75 font-light leading-relaxed mb-6">
                   {activeProduct.description}
                 </p>
 
                 <div className="flex flex-col gap-3 mb-8">
                   <div className="flex items-center gap-3">
                     <CheckCircle2 size={18} className="text-[#216853]" />
-                    <span className="text-[14px] font-semibold text-[#06233F]">
+                    <span className="text-sm font-semibold text-[#06233F]">
                       WHO-GMP certified manufacturing
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle2 size={18} className="text-[#216853]" />
-                    <span className="text-[14px] font-semibold text-[#06233F]">
+                    <span className="text-sm font-semibold text-[#06233F]">
                       Every batch quality-tested
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle2 size={18} className="text-[#216853]" />
-                    <span className="text-[14px] font-semibold text-[#06233F]">
+                    <span className="text-sm font-semibold text-[#06233F]">
                       Proudly made in India
                     </span>
                   </div>
@@ -583,15 +623,12 @@ export default function NovixProductsPage() {
 
                 <div className="flex flex-wrap gap-3">
                   <button
-                  onClick={() => nav("/contact")}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#216853] !text-white font-semibold text-[13px] uppercase tracking-[0.08em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20">
+                    onClick={() => nav("/contact")}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20"
+                  >
                     <Mail size={15} className="!text-white" />
                     <span className="!text-white">Enquire Now</span>
                   </button>
-                  {/* <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#06233F]/20 text-[#06233F] font-semibold text-[13px] uppercase tracking-[0.08em] hover:border-[#216853] hover:text-[#216853] transition-colors duration-200">
-                    <FileText size={15} />
-                    Spec Sheet
-                  </button> */}
                 </div>
               </div>
             </div>

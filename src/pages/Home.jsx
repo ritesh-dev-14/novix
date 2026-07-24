@@ -19,12 +19,12 @@ import {
   Sparkles,
   Navigation,
   Layers,
-  ChevronRight,  Activity, ThermometerSnowflake,
+  ChevronRight, Activity, ThermometerSnowflake,
   BadgeCheck,
   FlaskConical,
   Truck,
   ClipboardCheck,
-  CheckCircle2, // Added missing import
+  CheckCircle2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -167,10 +167,10 @@ const LuxuryButton = ({ children, onClick }) => {
           : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
         fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}
-      className="relative group px-10 py-5 rounded-full overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm backdrop-blur-md text-[var(--color-primary-navy)] tracking-[0.25em] text-xs uppercase transition-colors duration-500 hover:border-[var(--color-primary-navy)]"
+      className="relative group px-10 py-5 rounded-full overflow-hidden border border-[var(--color-border)] bg-white/5 backdrop-blur-xl border-white/10 shadow-sm backdrop-blur-md text-[#06233F] tracking-[0.25em] text-xs uppercase transition-colors duration-500 hover:border-[var(--color-primary-navy)]"
     >
-      <span className="absolute inset-0 bg-white scale-x-0 origin-left transition-transform duration-700 cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-x-100" />
-      <span className="relative z-10 flex items-center gap-3 transition-colors duration-500 group-hover:text-black">
+      <span className="absolute inset-0 bg-white/5 backdrop-blur-xl border-white/10 scale-x-0 origin-left transition-transform duration-700 cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-x-100" />
+      <span className="relative z-10 flex items-center gap-3 transition-colors duration-500 group-hover:text-[#06233F]">
         {children}{" "}
         <ArrowUpRight
           size={14}
@@ -193,7 +193,7 @@ export default function PremiumPharmaHomepage() {
   const horizontalTrackRef = useRef(null);
   const timelineRef = useRef(null);
   const current = certifications[activeCert];
-  
+
   useEffect(() => {
     injectFonts();
 
@@ -238,33 +238,34 @@ export default function PremiumPharmaHomepage() {
     "PATIENT-FIRST INNOVATION",
   ];
 
-
-
-
   return (
     <main
       ref={containerRef}
-      className="relative min-h-screen w-full bg-transparent overflow-x-hidden selection:bg-white selection:text-black"
+      className="relative min-h-screen w-full bg-[#F8FAFC] overflow-x-hidden selection:bg-white selection:text-black"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
-      <VideoBackground />
+      {/* <VideoBackground /> */}
+
+      {/* VIGNETTE & ATMOSPHERIC LIGHTING */}
+      <div className="fixed inset-0 pointer-events-none z-[1] shadow-[inset_0_0_150px_rgba(255,255,255,0.4)]" />
+      <div className="fixed inset-0 pointer-events-none z-[1] bg-gradient-to-b from-white/10 via-transparent to-white/20" />
       <section className="relative min-h-screen w-full flex flex-col justify-center px-8 md:px-24 pt-32 overflow-hidden bg-transparent">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
           {/* Main Heading Section */}
           <div className="lg:col-span-8">
             <TextShield type="linear" className="!p-0">
-              <span className="block text-xs font-bold tracking-widest uppercase text-[var(--color-primary-navy)] opacity-90 mb-4">
+              <span className="block text-xs font-bold tracking-widest uppercase text-[#216853] opacity-90 mb-4">
                 Premium Healthcare Standards
               </span>
               <h1
-                className="text-5xl md:text-6xl lg:text-7xl font-medium text-[var(--color-primary-navy)] leading-tight tracking-tight"
+                className="text-5xl md:text-6xl lg:text-7xl font-medium text-[#06233F] leading-tight tracking-tight"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
                 <span className="hero-title-line block overflow-hidden">
                   Science That
                 </span>
 
-                <span className="hero-title-line block overflow-hidden text-[var(--color-primary-navy)] italic font-normal">
+                <span className="hero-title-line block overflow-hidden text-[#216853] italic font-normal">
                   Protects Lives.
                 </span>
 
@@ -278,46 +279,36 @@ export default function PremiumPharmaHomepage() {
           {/* Stats Section */}
           <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-10 border-t lg:border-t-0 lg:border-l border-[var(--color-primary-navy)]/20 pt-10 lg:pt-0 lg:pl-12">
             <div className="flex-1">
-              <span className="block text-xs font-bold tracking-widest uppercase text-[var(--color-primary-navy)] mb-2">
+              <span className="block text-xs font-bold tracking-widest uppercase text-[#216853] mb-2">
                 Purity Rate
               </span>
               <p
-                className="text-4xl md:text-5xl font-semibold text-[var(--color-primary-navy)] mb-2"
+                className="text-4xl md:text-5xl font-semibold text-[#06233F] mb-2"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
                 99.9%
               </p>
-              <p className="text-sm text-slate-800 font-medium leading-relaxed">
+              <p className="text-sm text-[#06233F]/70 font-medium leading-relaxed">
                 Strictly lab-tested to ensure maximum safety and effectiveness.
               </p>
             </div>
 
             <div className="flex-1">
-              <span className="block text-xs font-bold tracking-widest uppercase text-[var(--color-primary-navy)] mb-2">
+              <span className="block text-xs font-bold tracking-widest uppercase text-[#216853] mb-2">
                 Trusted By
               </span>
               <p
-                className="text-4xl md:text-5xl font-semibold text-[var(--color-primary-navy)] mb-2"
+                className="text-4xl md:text-5xl font-semibold text-[#06233F] mb-2"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
                 620+
               </p>
-              <p className="text-sm text-slate-800 font-medium leading-relaxed">
+              <p className="text-sm text-[#06233F]/70 font-medium leading-relaxed">
                 Hospitals, clinics, and medical facilities worldwide.
               </p>
             </div>
           </div>
         </div>
-
-        {/* Float Specimen Aesthetic Graphic */}
-        {/* <div className="hero-specimen absolute right-0 bottom-0 w-[50vw] h-[50vw] opacity-40 pointer-events-none mix-blend-screen select-none">
-    <div className="absolute inset-0 bg-radial-gradient from-transparent to-[#050505] z-10" />
-    <img
-      src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1200&auto=format&fit=crop"
-      alt="Pharmaceutical Compound Structure"
-      className="w-full h-full object-cover filter grayscale sepia brightness-90 animate-[spin_120s_linear_infinite]"
-    />
-  </div> */}
       </section>
 
       {/* ─────────────────────────────────────────────────────
@@ -330,14 +321,14 @@ export default function PremiumPharmaHomepage() {
               {marqueeItems.map((item, index) => (
                 <React.Fragment key={`${copyIndex}-${index}`}>
                   <span
-                    className="text-xs md:text-sm uppercase tracking-[0.25em] text-[#163A63] font-semibold"
+                    className="text-xs md:text-sm uppercase tracking-[0.25em] text-[#216853] font-semibold"
                     style={{ fontFamily: "'Cinzel', serif" }}
                   >
                     {item}
                   </span>
 
                   {index !== marqueeItems.length - 1 && (
-                    <span className="text-[#2E7D73]/40 text-lg">•</span>
+                    <span className="text-[#216853]/40 text-lg">•</span>
                   )}
                 </React.Fragment>
               ))}
@@ -356,11 +347,11 @@ export default function PremiumPharmaHomepage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           {/* Left Column: Heading */}
           <div className="lg:col-span-5">
-            <span className="block text-xs font-bold tracking-widest uppercase text-[var(--color-text-secondary)] mb-6">
+            <span className="block text-xs font-bold tracking-widest uppercase text-[#216853] mb-6">
               Our Vision
             </span>
             <h2
-              className="text-3xl md:text-5xl font-light text-[var(--color-primary-navy)] leading-snug"
+              className="text-3xl md:text-5xl font-light text-[#06233F] leading-snug"
               style={{ fontFamily: "'Cinzel', serif" }}
             >
               Where advanced science meets human biology.
@@ -370,16 +361,16 @@ export default function PremiumPharmaHomepage() {
           {/* Right Column: Content */}
           <div className="lg:col-span-7 flex flex-col gap-6">
             <TextShield type="radial" className="!p-0">
-              <p className="text-lg md:text-xl text-[var(--color-text-secondary)] font-light leading-relaxed">
+              <p className="text-lg md:text-xl text-[#06233F]/70 font-light leading-relaxed">
                 We develop medical treatments with the precision of fine art. We
                 believe that since the human body is a masterpiece of design,
                 the molecules used to heal it must be crafted with the same
                 level of care and structural beauty.
               </p>
 
-              <div className="h-px w-16 bg-[var(--color-bg-card)] shadow-sm my-6"></div>
+              <div className="h-px w-16 bg-white/5 backdrop-blur-xl border-white/10 shadow-sm my-6"></div>
 
-              <p className="text-base text-[var(--color-text-secondary)] font-light leading-relaxed">
+              <p className="text-base text-[#06233F]/70 font-light leading-relaxed">
                 Every product is refined and verified using advanced technology.
                 By optimizing how our treatments are absorbed at a microscopic
                 level, we ensure the most effective and reliable results for
@@ -399,11 +390,11 @@ export default function PremiumPharmaHomepage() {
         className="relative  h-screen bg-transparent backdrop-blur-md z-20"
       >
         <div className="absolute top-25 left-8 md:left-24 z-30">
-          <span className="block text-[11px] font-medium tracking-[0.3em] uppercase text-[var(--color-text-secondary)]">
+          <span className="block text-[11px] font-medium tracking-[0.3em] uppercase text-[#216853]">
             Our Products
           </span>
           <h2
-            className="text-3xl font-light text-[var(--color-primary-navy)] mt-2"
+            className="text-3xl font-light text-[#06233F] mt-2"
             style={{ fontFamily: "'Cinzel', serif" }}
           >
             Injectable Solutions
@@ -417,29 +408,29 @@ export default function PremiumPharmaHomepage() {
           {/* Card 1 */}
           <div className="w-[85vw] md:w-[70vw] lg:w-[60vw] h-[75vh] flex-shrink-0 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
             <div className="w-full md:w-1/2 flex flex-col justify-center">
-              <span className="text-[10px] tracking-[0.3em] text-[var(--color-text-secondary)] uppercase mb-4">
+              <span className="text-[10px] tracking-[0.3em] text-[#216853] uppercase mb-4">
                 Category: Antibiotics
               </span>
               <h3
-                className="text-5xl md:text-7xl font-light text-[var(--color-primary-navy)] mb-6"
+                className="text-5xl md:text-7xl font-light text-[#06233F] mb-6"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
                 Injectable Antibiotics
               </h3>
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed font-light mb-8">
+              <p className="text-sm text-[#06233F]/70 leading-relaxed font-light mb-8">
                 A wide range of high-quality injectable antibiotics designed for
                 effective infection control and rapid patient recovery in
                 hospital settings.
               </p>
-              <div className="flex gap-8 text-[11px] tracking-wider text-[var(--color-text-secondary)] uppercase border-t border-[var(--color-border)] pt-6">
+              <div className="flex gap-8 text-[11px] tracking-wider text-[#06233F]/60 uppercase border-t border-[var(--color-border)] pt-6">
                 <div>
-                  <span className="block text-[var(--color-primary-navy)]">
+                  <span className="block text-[#06233F]">
                     STERILE
                   </span>{" "}
                   FORMULA
                 </div>
                 <div>
-                  <span className="block text-[var(--color-primary-navy)]">
+                  <span className="block text-[#06233F]">
                     CLINICAL
                   </span>{" "}
                   GRADE
@@ -458,29 +449,29 @@ export default function PremiumPharmaHomepage() {
           {/* Card 2 */}
           <div className="w-[85vw] md:w-[70vw] lg:w-[60vw] h-[75vh] flex-shrink-0 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
             <div className="w-full md:w-1/2 flex flex-col justify-center">
-              <span className="text-[10px] tracking-[0.3em] text-[var(--color-text-secondary)] uppercase mb-4">
+              <span className="text-[10px] tracking-[0.3em] text-[#216853] uppercase mb-4">
                 Category: Pain Management
               </span>
               <h3
-                className="text-5xl md:text-7xl font-light text-[var(--color-primary-navy)] mb-6"
+                className="text-5xl md:text-7xl font-light text-[#06233F] mb-6"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
                 Pain Relief
               </h3>
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed font-light mb-8">
+              <p className="text-sm text-[#06233F]/70 leading-relaxed font-light mb-8">
                 Safe and reliable injectable treatments developed to provide
                 fast-acting relief for patients managing acute pain and
                 inflammation.
               </p>
-              <div className="flex gap-8 text-[11px] tracking-wider text-[var(--color-text-secondary)] uppercase border-t border-[var(--color-border)] pt-6">
+              <div className="flex gap-8 text-[11px] tracking-wider text-[#06233F]/60 uppercase border-t border-[var(--color-border)] pt-6">
                 <div>
-                  <span className="block text-[var(--color-primary-navy)]">
+                  <span className="block text-[#06233F]">
                     FAST
                   </span>{" "}
                   ACTION HALF-LIFE
                 </div>
                 <div>
-                  <span className="block text-[var(--color-primary-navy)]">
+                  <span className="block text-[#06233F]">
                     PROVEN
                   </span>{" "}
                   SAFETY
@@ -499,29 +490,29 @@ export default function PremiumPharmaHomepage() {
           {/* Card 3 */}
           <div className="w-[85vw] md:w-[70vw] lg:w-[60vw] h-[75vh] flex-shrink-0 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
             <div className="w-full md:w-1/2 flex flex-col justify-center">
-              <span className="text-[10px] tracking-[0.3em] text-[var(--color-text-secondary)] uppercase mb-4">
+              <span className="text-[10px] tracking-[0.3em] text-[#216853] uppercase mb-4">
                 Category: Essential Care
               </span>
               <h3
-                className="text-5xl md:text-7xl font-light text-[var(--color-primary-navy)] mb-6"
+                className="text-5xl md:text-7xl font-light text-[#06233F] mb-6"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
                 Critical Care
               </h3>
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed font-light mb-8">
+              <p className="text-sm text-[#06233F]/70 leading-relaxed font-light mb-8">
                 Essential injectable solutions for emergency care and
                 stabilizing vital patient functions, trusted by healthcare
                 professionals daily.
               </p>
-              <div className="flex gap-8 text-[11px] tracking-wider text-[var(--color-text-secondary)] uppercase border-t border-[var(--color-border)] pt-6">
+              <div className="flex gap-8 text-[11px] tracking-wider text-[#06233F]/60 uppercase border-t border-[var(--color-border)] pt-6">
                 <div>
-                  <span className="block text-[var(--color-primary-navy)]">
+                  <span className="block text-[#06233F]">
                     TRUSTED
                   </span>{" "}
                   PURITY
                 </div>
                 <div>
-                  <span className="block text-[var(--color-primary-navy)]">
+                  <span className="block text-[#06233F]">
                     STABLE
                   </span>{" "}
                   RESULTS
@@ -549,11 +540,11 @@ export default function PremiumPharmaHomepage() {
       >
         <div className="max-w-6xl mx-auto">
           <div className="mb-24">
-            <span className="block text-[11px] font-bold tracking-[0.3em] uppercase text-[var(--color-text-secondary)] mb-3">
+            <span className="block text-[11px] font-bold tracking-[0.3em] uppercase text-[#216853] mb-3">
               Our Process
             </span>
             <h2
-              className="text-4xl md:text-6xl font-light text-[var(--color-primary-navy)]"
+              className="text-4xl md:text-6xl font-light text-[#06233F]"
               style={{ fontFamily: "'Cinzel', serif" }}
             >
               Manufacturing Excellence
@@ -582,18 +573,18 @@ export default function PremiumPharmaHomepage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="group p-6 rounded-2xl bg-[var(--color-bg-card)] shadow-sm border border-[var(--color-border)] hover:border-[var(--color-border)] transition-all duration-500"
+                  className="group p-6 rounded-2xl bg-white/5 backdrop-blur-xl border-white/10 shadow-sm border border-[var(--color-border)] hover:border-[var(--color-border)] transition-all duration-500"
                 >
-                  <span className="text-[10px] tracking-[0.3em] text-[var(--color-text-secondary)] uppercase">
+                  <span className="text-[10px] tracking-[0.3em] text-[#216853] uppercase">
                     {item.stage}
                   </span>
                   <h3
-                    className="text-xl font-light text-[var(--color-primary-navy)] mt-2 mb-3"
+                    className="text-xl font-light text-[#06233F] mt-2 mb-3"
                     style={{ fontFamily: "'Cinzel', serif" }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-sm text-[var(--color-text-secondary)] font-light leading-relaxed">
+                  <p className="text-sm text-[#06233F]/70 font-light leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -617,168 +608,165 @@ export default function PremiumPharmaHomepage() {
           SECTION 6: INTERACTIVE CERTIFICATIONS (Physical Seals)
           ───────────────────────────────────────────────────── */}
       <section id="certifications" className="relative py-28 px-6 md:px-16 lg:px-24 bg-transparent border-y border-slate-200">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Section Header */}
-        <div className="mb-16 text-left max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200/70 border border-slate-300 mb-4">
-            <span className="w-2 h-2 rounded-full bg-[var(--color-primary-navy,#0f172a)]" />
-            <span className="text-xs font-bold tracking-wider uppercase text-slate-800">
-              Regulatory & Compliance
-            </span>
-          </div>
-          <h2
-            className="text-3xl md:text-5xl font-semibold text-slate-900 tracking-tight leading-tight"
-            style={{ fontFamily: "'Cinzel', serif" }}
-          >
-            Global Accreditation Standards
-          </h2>
-          <p className="mt-4 text-base text-slate-700 font-normal leading-relaxed">
-            Engineered to exceed international health regulations, ensuring uncompromised purity and safety in every dosage.
-          </p>
-        </div>
+        <div className="max-w-7xl mx-auto">
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Left Column: Interactive Navigation List */}
-          <div className="lg:col-span-5 flex flex-col gap-2">
-            {certifications.map((cert, idx) => {
-              const isActive = activeCert === idx;
-              return (
-                <button
-                  key={idx}
-                  onClick={() => setActiveCert(idx)}
-                  className={`group relative text-left p-5 rounded-xl border transition-all duration-200 flex items-center justify-between ${
-                    isActive
-                      ? "bg-white border-[var(--color-primary-navy,#0f172a)] shadow-sm"
-                      : "bg-white/60 border-slate-200 hover:bg-white hover:border-slate-300"
-                  }`}
-                >
-                  {/* Left Active Accent Indicator Bar */}
-                  <div
-                    className={`absolute left-0 top-3 bottom-3 w-1 rounded-r transition-all ${
-                      isActive ? "bg-[var(--color-primary-navy,#0f172a)]" : "bg-transparent"
-                    }`}
-                  />
-
-                  <div className="pl-3">
-                    <span className="block text-[11px] font-bold tracking-widest uppercase text-slate-500 mb-1">
-                      {cert.category}
-                    </span>
-                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-[var(--color-primary-navy,#0f172a)]">
-                      {cert.title}
-                    </h3>
-                  </div>
-
-                  <ChevronRight
-                    size={18}
-                    className={`transition-transform duration-200 ${
-                      isActive
-                        ? "text-[var(--color-primary-navy,#0f172a)] translate-x-1"
-                        : "text-slate-400 group-hover:text-slate-600"
-                    }`}
-                  />
-                </button>
-              );
-            })}
+          {/* Section Header */}
+          <div className="mb-16 text-left max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200/70 border border-slate-300 mb-4">
+              <span className="w-2 h-2 rounded-full bg-[var(--color-primary-navy,#0f172a)]" />
+              <span className="text-xs font-bold tracking-wider uppercase text-[#216853]">
+                Regulatory & Compliance
+              </span>
+            </div>
+            <h2
+              className="text-3xl md:text-5xl font-semibold text-[#06233F] tracking-tight leading-tight"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              Global Accreditation Standards
+            </h2>
+            <p className="mt-4 text-base text-[#06233F]/70 font-normal leading-relaxed">
+              Engineered to exceed international health regulations, ensuring uncompromised purity and safety in every dosage.
+            </p>
           </div>
 
-          {/* Right Column: High-Precision Spec Card */}
-          <div className="lg:col-span-7">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeCert}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                className="bg-white rounded-2xl border border-slate-200 p-8 md:p-10 shadow-lg relative overflow-hidden"
-              >
-                {/* Top Header Badge */}
-                <div className="flex items-center justify-between border-b border-slate-100 pb-6 mb-8">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[var(--color-primary-navy,#0f172a)] shadow-inner">
-                      {React.createElement(current.icon, {
-                        size: 28,
-                        strokeWidth: 1.75,
-                      })}
-                    </div>
-                    <div>
-                      <span className="text-xs font-bold tracking-widest uppercase text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200/60 inline-flex items-center gap-1.5">
-                        <CheckCircle2 size={13} /> Verified Standard
+          {/* Main Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+            {/* Left Column: Interactive Navigation List */}
+            <div className="lg:col-span-5 flex flex-col gap-2">
+              {certifications.map((cert, idx) => {
+                const isActive = activeCert === idx;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveCert(idx)}
+                    className={`group relative text-left p-5 rounded-xl border transition-all duration-200 flex items-center justify-between ${isActive
+                        ? "bg-white/5 backdrop-blur-xl border-white/10 border-[var(--color-primary-navy,#0f172a)] shadow-sm"
+                        : "bg-white/5 backdrop-blur-xl border-white/10/60 border-slate-200 hover:bg-white/5 backdrop-blur-xl border-white/10 hover:border-slate-300"
+                      }`}
+                  >
+                    {/* Left Active Accent Indicator Bar */}
+                    <div
+                      className={`absolute left-0 top-3 bottom-3 w-1 rounded-r transition-all ${isActive ? "bg-[var(--color-primary-navy,#0f172a)]" : "bg-transparent"
+                        }`}
+                    />
+
+                    <div className="pl-3">
+                      <span className="block text-[11px] font-bold tracking-widest uppercase text-[#216853] mb-1">
+                        {cert.category}
                       </span>
-                      <h3
-                        className="text-2xl md:text-3xl font-semibold text-slate-900 mt-1"
-                        style={{ fontFamily: "'Cinzel', serif" }}
-                      >
-                        {current.title}
+                      <h3 className="text-lg font-bold text-[#06233F] group-hover:text-[#06233F]">
+                        {cert.title}
                       </h3>
                     </div>
-                  </div>
-                  <span className="hidden sm:inline-block text-3xl font-bold text-slate-200 select-none font-mono">
-                    #{current.short}
-                  </span>
-                </div>
 
-                {/* Description */}
-                <p className="text-slate-700 text-base md:text-lg leading-relaxed font-normal mb-8">
-                  {current.description}
-                </p>
+                    <ChevronRight
+                      size={18}
+                      className={`transition-transform duration-200 ${isActive
+                          ? "text-[#06233F] translate-x-1"
+                          : "text-[#06233F]/60 group-hover:text-[#06233F]"
+                        }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
 
-                {/* Technical Specifications Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-100 bg-slate-50/80 -mx-8 -mb-8 p-8 mt-auto">
-                  <div>
-                    <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                      Domain
-                    </span>
-                    <span className="text-sm font-bold text-slate-900">
-                      {current.category}
+            {/* Right Column: High-Precision Spec Card */}
+            <div className="lg:col-span-7">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeCert}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="bg-white/5 backdrop-blur-xl border-white/10 rounded-2xl border border-slate-200 p-8 md:p-10 shadow-lg relative overflow-hidden"
+                >
+                  {/* Top Header Badge */}
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-6 mb-8">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[#06233F] shadow-inner">
+                        {React.createElement(current.icon, {
+                          size: 28,
+                          strokeWidth: 1.75,
+                        })}
+                      </div>
+                      <div>
+                        <span className="text-xs font-bold tracking-widest uppercase text-[#216853] bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200/60 inline-flex items-center gap-1.5">
+                          <CheckCircle2 size={13} /> Verified Standard
+                        </span>
+                        <h3
+                          className="text-2xl md:text-3xl font-semibold text-[#06233F] mt-1"
+                          style={{ fontFamily: "'Cinzel', serif" }}
+                        >
+                          {current.title}
+                        </h3>
+                      </div>
+                    </div>
+                    <span className="hidden sm:inline-block text-3xl font-bold text-[#06233F]/50 select-none font-mono">
+                      #{current.short}
                     </span>
                   </div>
-                  <div>
-                    <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                      Territory
-                    </span>
-                    <span className="text-sm font-bold text-slate-900">
-                      {current.region}
-                    </span>
+
+                  {/* Description */}
+                  <p className="text-[#06233F]/70 text-base md:text-lg leading-relaxed font-normal mb-8">
+                    {current.description}
+                  </p>
+
+                  {/* Technical Specifications Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-100 bg-slate-50/80 -mx-8 -mb-8 p-8 mt-auto">
+                    <div>
+                      <span className="block text-xs font-semibold uppercase tracking-wider text-[#06233F]/60 mb-1">
+                        Domain
+                      </span>
+                      <span className="text-sm font-bold text-[#06233F]">
+                        {current.category}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="block text-xs font-semibold uppercase tracking-wider text-[#06233F]/60 mb-1">
+                        Territory
+                      </span>
+                      <span className="text-sm font-bold text-[#06233F]">
+                        {current.region}
+                      </span>
+                    </div>
+                    <div className="col-span-2 sm:col-span-1">
+                      <span className="block text-xs font-semibold uppercase tracking-wider text-[#06233F]/60 mb-1">
+                        Compliance Period
+                      </span>
+                      <span className="text-sm font-bold text-[#06233F]">
+                        Valid through {current.year}
+                      </span>
+                    </div>
                   </div>
-                  <div className="col-span-2 sm:col-span-1">
-                    <span className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                      Compliance Period
-                    </span>
-                    <span className="text-sm font-bold text-slate-900">
-                      Valid through {current.year}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
           </div>
-
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* ─────────────────────────────────────────────────────
           SECTION 7: PREMIUM PRODUCT SPOTLIGHT (Light Sweep & Detail)
           ───────────────────────────────────────────────────── */}
       <section id="spotlight" className="relative py-32 px-8 md:px-24 z-20">
         <div className="max-w-6xl mx-auto">
-          <div className="relative rounded-[2.5rem] overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-sm p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 backdrop-blur-sm">
+          <div className="relative rounded-[2.5rem] overflow-hidden border border-[var(--color-border)] bg-white/5 backdrop-blur-xl border-white/10 shadow-sm p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 backdrop-blur-sm">
             {/* Content Side */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center">
-              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[var(--color-text-secondary)] mb-4">
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#216853] mb-4">
                 Featured Solution
               </span>
               <h2
-                className="text-5xl md:text-6xl font-light text-[var(--color-primary-navy)] mb-6"
+                className="text-5xl md:text-6xl font-light text-[#06233F] mb-6"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
                 Aura Injectable
               </h2>
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed font-light mb-8 max-w-md">
+              <p className="text-sm text-[#06233F]/70 leading-relaxed font-light mb-8 max-w-md">
                 A high-purity regenerative solution engineered for precision and
                 rapid results. Aura represents the highest standard in
                 injectable care.
@@ -792,9 +780,9 @@ export default function PremiumPharmaHomepage() {
                 ].map((feature, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-3 text-xs tracking-widest text-[var(--color-text-secondary)] uppercase"
+                    className="flex items-center gap-3 text-xs tracking-widest text-[#216853] uppercase"
                   >
-                    <div className="w-1 h-1 rounded-full bg-[var(--color-bg-card)] shadow-sm" />
+                    <div className="w-1 h-1 rounded-full bg-white/5 backdrop-blur-xl border-white/10 shadow-sm" />
                     {feature}
                   </div>
                 ))}
@@ -822,25 +810,25 @@ export default function PremiumPharmaHomepage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           {/* Content Side */}
           <div className="lg:col-span-5">
-            <span className="block text-[10px] font-bold tracking-[0.3em] uppercase text-[var(--color-text-secondary)] mb-4">
+            <span className="block text-[10px] font-bold tracking-[0.3em] uppercase text-[#216853] mb-4">
               Nationwide Distribution
             </span>
             <h2
-              className="text-4xl md:text-5xl font-light text-[var(--color-primary-navy)] mb-6"
+              className="text-4xl md:text-5xl font-light text-[#06233F] mb-6"
               style={{ fontFamily: "'Cinzel', serif" }}
             >
               Secure Cold-Chain Logic
             </h2>
-            <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed font-light mb-8">
+            <p className="text-sm text-[#06233F]/70 leading-relaxed font-light mb-8">
               We ensure the integrity of every injectable shipment through
               specialized temperature-controlled logistics across India. Our
               systems monitor stability from our facility to the hospital door.
             </p>
 
-            <div className="flex gap-8 text-[11px] tracking-wider text-[var(--color-text-secondary)] uppercase">
+            <div className="flex gap-8 text-[11px] tracking-wider text-[#06233F]/60 uppercase">
               <div>
                 <span
-                  className="block text-2xl font-light text-[var(--color-primary-navy)]"
+                  className="block text-2xl font-light text-[#06233F]"
                   style={{ fontFamily: "'Cinzel', serif" }}
                 >
                   PAN-INDIA
@@ -849,7 +837,7 @@ export default function PremiumPharmaHomepage() {
               </div>
               <div>
                 <span
-                  className="block text-2xl font-light text-[var(--color-primary-navy)]"
+                  className="block text-2xl font-light text-[#06233F]"
                   style={{ fontFamily: "'Cinzel', serif" }}
                 >
                   100%
@@ -861,7 +849,7 @@ export default function PremiumPharmaHomepage() {
 
           {/* Visual Side: India Map Image */}
           <div className="lg:col-span-7 flex justify-center">
-            <div className="w-full h-96 rounded-[2.5rem] relative overflow-hidden flex items-center justify-center p-8 bg-[var(--color-bg-card)] shadow-sm border border-[var(--color-border)]">
+            <div className="w-full h-96 rounded-[2.5rem] relative overflow-hidden flex items-center justify-center p-8 bg-white/5 backdrop-blur-xl border-white/10 shadow-sm border border-[var(--color-border)]">
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]" />
 
               {/* India Map Image */}
@@ -872,7 +860,7 @@ export default function PremiumPharmaHomepage() {
               />
 
               <div className="absolute bottom-10 z-20">
-                <span className="text-[10px] tracking-[0.4em] text-[var(--color-text-secondary)] uppercase">
+                <span className="text-[10px] tracking-[0.4em] text-[#216853] uppercase">
                   National Cold-Chain Monitoring
                 </span>
               </div>
@@ -887,13 +875,13 @@ export default function PremiumPharmaHomepage() {
           SECTION 9: HOSPITAL PARTNERS (Minimalist Grid)
           ───────────────────────────────────────────────────── */}
       <section className="relative py-48 px-8 md:px-24 flex flex-col items-center justify-center text-center z-20 border-t border-[var(--color-border)]">
-        <div className="max-w-4xl w-full flex flex-col items-center p-12 rounded-[3rem] bg-[var(--color-bg-card)] shadow-sm border border-[var(--color-border)] backdrop-blur-sm">
-          <span className="block text-[10px] font-bold tracking-[0.3em] uppercase text-[var(--color-text-secondary)] mb-6">
+        <div className="max-w-4xl w-full flex flex-col items-center p-12 rounded-[3rem] bg-white/5 backdrop-blur-xl border-white/10 shadow-sm border border-[var(--color-border)] backdrop-blur-sm">
+          <span className="block text-[10px] font-bold tracking-[0.3em] uppercase text-[#216853] mb-6">
             Get Started
           </span>
 
           <h2
-            className="text-5xl md:text-7xl font-light text-[var(--color-primary-navy)] mb-12 leading-tight"
+            className="text-5xl md:text-7xl font-light text-[#06233F] mb-12 leading-tight"
             style={{ fontFamily: "'Cinzel', serif" }}
           >
             Ready to start
@@ -902,45 +890,13 @@ export default function PremiumPharmaHomepage() {
 
           <button
             onClick={() => nav("/contact")}
-            className="px-10 py-4 border border-[var(--color-border)] text-[var(--color-primary-navy)] text-[11px] uppercase tracking-[0.2em] hover:bg-[var(--color-primary-navy)] hover:text-white transition-all duration-500 rounded-full font-bold"
+            className="px-10 py-4 border border-[var(--color-border)] text-[#06233F] text-[11px] uppercase tracking-[0.2em] hover:bg-[var(--color-primary-navy)] hover:text-white transition-all duration-500 rounded-full font-bold"
           >
             Contact Us Now
           </button>
         </div>
       </section>
 
-      {/* ─────────────────────────────────────────────────────
-          SECTION 10: CINEMATIC CALL TO ACTION
-          ───────────────────────────────────────────────────── */}
-      {/* <section className="relative py-48 px-8 md:px-24 flex flex-col items-center justify-center text-center z-20 border-t border-[var(--color-border)]">
-  <div className="max-w-4xl w-full flex flex-col items-center p-12 rounded-[3rem] bg-[var(--color-bg-card)] shadow-sm border border-[var(--color-border)] backdrop-blur-sm">
-    
-    <span className="block text-[10px] font-bold tracking-[0.3em] uppercase text-[var(--color-text-secondary)] mb-6">
-      Initiate Partnership
-    </span>
-    
-    <h2
-      className="text-5xl md:text-7xl font-light text-[var(--color-primary-navy)] mb-12 leading-tight"
-      style={{ fontFamily: "'Cinzel', serif" }}
-    >
-      Ready to secure
-      <br />
-      the pipeline?
-    </h2>
-    
-    <button 
-      onClick={() => alert("Onboarding initiated")}
-      className="px-10 py-4 border border-[var(--color-border)] text-[var(--color-primary-navy)] text-[11px] uppercase tracking-[0.2em] hover:bg-[var(--color-primary-navy)] hover:text-white transition-all duration-500 rounded-full font-bold"
-    >
-      Commence Onboarding
-    </button>
-    
-  </div>
-</section> */}
-
-      {/* ─────────────────────────────────────────────────────
-          GLOBAL FOOTER
-          ───────────────────────────────────────────────────── */}
     </main>
   );
 }
