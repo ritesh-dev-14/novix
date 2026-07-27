@@ -4,7 +4,6 @@ import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
 const FEATURES = [
@@ -97,11 +96,13 @@ export default function NovixHero() {
 
     const scrollToNext = () => {
       unlockScroll();
-      gsap.to(window, {
-        duration: 1.6,
-        scrollTo: { y: nextSectionRef.current, autoKill: true },
-        ease: "power2.inOut",
-      });
+      if (nextSectionRef.current) {
+        gsap.to(window, {
+          duration: 1.6,
+          scrollTo: { y: nextSectionRef.current, autoKill: true },
+          ease: "power2.inOut",
+        });
+      }
     };
 
     const onUserScrollAttempt = (e) => {
@@ -151,7 +152,7 @@ export default function NovixHero() {
       gsap.set(charRefs.current, { opacity: 1, y: 0 });
       gsap.set(subRef.current, { opacity: 1, y: 0 });
       gsap.set(ctaBarRef.current, { opacity: 1, y: 0 });
-      gsap.set(scrollCueRef.current, { opacity: 1 });
+      if (scrollCueRef.current) gsap.set(scrollCueRef.current, { opacity: 1 });
       return () => {
         if (videoEl) videoEl.removeEventListener("ended", handleVideoEnded);
         window.removeEventListener("wheel", onUserScrollAttempt);
@@ -174,30 +175,33 @@ export default function NovixHero() {
         0.6,
       )
       .to(subRef.current, { opacity: 1, y: 0, duration: 1.0 }, 1.1)
-      .to(ctaBarRef.current, { opacity: 1, y: 0, duration: 1.0 }, 1.4)
-      .to(scrollCueRef.current, { opacity: 1, duration: 0.9 }, 1.7)
-      .to(
-        contentWrapperRef.current,
-        {
-          filter: "blur(12px)",
-          scale: 0.96,
-          opacity: 0.4,
-          duration: 1.2,
-          ease: "power2.inOut",
-        },
-        3.0,
-      )
-      .to(
-        finalCalloutRef.current,
-        {
-          opacity: 1,
-          filter: "blur(0px)",
-          scale: 1,
-          duration: 1.0,
-          ease: "power2.out",
-        },
-        8.0,
-      );
+      .to(ctaBarRef.current, { opacity: 1, y: 0, duration: 1.0 }, 1.4);
+
+    if (scrollCueRef.current) {
+      tl.to(scrollCueRef.current, { opacity: 1, duration: 0.9 }, 1.7);
+    }
+
+    tl.to(
+      contentWrapperRef.current,
+      {
+        filter: "blur(12px)",
+        scale: 0.96,
+        opacity: 0.4,
+        duration: 1.2,
+        ease: "power2.inOut",
+      },
+      3.0,
+    ).to(
+      finalCalloutRef.current,
+      {
+        opacity: 1,
+        filter: "blur(0px)",
+        scale: 1,
+        duration: 1.0,
+        ease: "power2.out",
+      },
+      8.0,
+    );
 
     return () => {
       tl.kill();
@@ -215,32 +219,31 @@ export default function NovixHero() {
         {/* Top Video Container Area */}
         <div className="relative w-full flex-1 min-h-[50vh] overflow-hidden bg-black flex items-center justify-center">
           <>
-  {/* Poster */}
-  <img
-    src="/videos/hero-poster.jpg"
-    alt=""
-    aria-hidden="true"
-    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-      videoLoaded ? "opacity-0" : "opacity-100"
-    }`}
-  />
+            {/* Poster */}
+            <img
+              src="/videos/hero-poster.jpg"
+              alt=""
+              aria-hidden="true"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                videoLoaded ? "opacity-0" : "opacity-100"
+              }`}
+            />
 
-  {/* Video */}
-  <video
-    ref={videoRef}
-    autoPlay
-    muted
-    loop
-    playsInline
-    preload="metadata"
-    onCanPlay={() => setVideoLoaded(true)}
-    className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ${
-      videoLoaded ? "opacity-100" : "opacity-0"
-    }`}
-  >
-    <source src="/videos/hero.mp4" type="video/mp4" />
-  </video>
-</>
+            {/* Video — plays once, then scrolls to the next section on "ended" */}
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              playsInline
+              preload="metadata"
+              onCanPlay={() => setVideoLoaded(true)}
+              className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ${
+                videoLoaded ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <source src="/videos/hero.mp4" type="video/mp4" />
+            </video>
+          </>
 
           <div className="absolute inset-0 bg-black/40 lg:bg-transparent pointer-events-none" />
 
