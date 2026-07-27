@@ -54,6 +54,8 @@ function Divider() {
   return <div className="h-px w-full bg-[#06233F]/10" />;
 }
 
+
+
 /* ============================================================ */
 
 export default function About() {
@@ -71,10 +73,41 @@ export default function About() {
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
+    setSent(false);
+
+    const formData = new FormData(e.target);
+    formData.append("access_key", "c5d9a0be-c95b-4070-b69a-04e7d6838545"); 
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSent(true);
+        setForm({
+          name: "",
+          company: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        alert(data.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Network error. Please try again later.");
+    }
   };
+
+
 
   return (
     <div 
@@ -533,7 +566,7 @@ export default function About() {
                 required
                 className="w-full mb-6 rounded-xl border border-[#06233F]/15 bg-white px-4 py-3.5 text-sm text-[#06233F] placeholder:text-[#06233F]/40 focus:outline-none focus:border-[#216853] transition-colors resize-none"
               />
-              <button
+                            <button
                 type="submit"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20"
               >
@@ -542,25 +575,16 @@ export default function About() {
               </button>
               {sent && (
                 <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#216853]">
-                  Thank you — we've received your message and will be in touch shortly.
+                  Thank you! Your message has been sent successfully. We will get back to you soon.
                 </p>
               )}
+
+              
             </form>
           </Reveal>
         </div>
 
-        {/* Map */}
-        <Reveal delay={0.15} className="mt-10">
-          <div className="rounded-[20px] overflow-hidden border border-[#06233F]/10 shadow-sm bg-white p-2">
-            <iframe
-              title="Novix Healthcare location"
-              src="https://www.google.com/maps?q=India&output=embed"
-              className="w-full h-[320px] border-0 rounded-[14px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </Reveal>
+     
       </section>
 
       {/* ================= FINAL CTA ================= */}

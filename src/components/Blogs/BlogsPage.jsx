@@ -417,7 +417,7 @@ export default function BlogsPage() {
       )}
 
       {/* ================= CALL TO ACTION ================= */}
-      <section className="relative z-10 bg-[#06233F] text-white py-24 text-center mb-10">
+      <section className="relative z-10 bg-[#06233F] text-white py-24 text-center mb-0">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-4">
             Stay Connected
