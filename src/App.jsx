@@ -3,18 +3,21 @@ import AppRoutes from "./routes/AppRoutes";
 import Preloader from "./components/Preloader/Preloader";
 import ScrollToTop from "./components/scrolltotop/ScrollToTop";
 import { useEffect } from "react";
+import { HelmetProvider } from "react-helmet-async";
 
 export default function App() {
   useEffect(() => {
-  if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
-  }
-}, []);
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+  }, []);
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      {/* <Preloader /> */}
-      <AppRoutes />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        {/* <Preloader /> */}
+        <AppRoutes />
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }

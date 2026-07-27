@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import factory from "../../assets/factory.png";
-
+import { Helmet } from "react-helmet-async";
 const FONT_ID = "editorial-fonts";
 
 /* ---------- hooks ---------- */
@@ -114,6 +114,104 @@ export default function About() {
       className="relative w-full max-w-full overflow-x-hidden min-h-screen bg-[#F8FAFC] text-[#06233F]/80 pt-20 m-0 p-0"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
+
+      <Helmet>
+
+      <title>About Novix Healthcare | Quality Injectable Pharmaceutical Solutions</title>
+
+      <meta
+
+        name="description"
+
+        content="Learn about Novix Healthcare, our commitment to quality injectable pharmaceutical solutions, scientific excellence, regulatory compliance, and trusted healthcare partnerships."
+
+      />
+
+      <meta
+
+        name="keywords"
+
+        content="Novix Healthcare, About Novix, Injectable Pharmaceuticals, Healthcare Company, Pharmaceutical Company India"
+
+      />
+
+      <link
+
+        rel="canonical"
+
+        href="https://novixhealthcare.com/about"
+
+      />
+
+      {/* Open Graph */}
+
+      <meta
+
+        property="og:title"
+
+        content="About Novix Healthcare"
+
+      />
+
+      <meta
+
+        property="og:description"
+
+        content="Discover Novix Healthcare's commitment to quality, innovation, regulatory compliance, and trusted pharmaceutical partnerships."
+
+      />
+
+      <meta
+
+        property="og:url"
+
+        content="https://novixhealthcare.com/about"
+
+      />
+
+      <meta
+
+        property="og:type"
+
+        content="website"
+
+      />
+
+      <meta
+
+        property="og:image"
+
+        content="https://novixhealthcare.com/og-image.jpg"
+
+      />
+
+      {/* Twitter */}
+
+      <meta
+
+        name="twitter:title"
+
+        content="About Novix Healthcare"
+
+      />
+
+      <meta
+
+        name="twitter:description"
+
+        content="Learn about Novix Healthcare and our commitment to delivering high-quality injectable pharmaceutical solutions."
+
+      />
+
+      <meta
+
+        name="twitter:image"
+
+        content="https://novixhealthcare.com/og-image.jpg"
+
+      />
+
+    </Helmet>
       {/* ================= SECTION 1 — HERO ================= */}
       <section className="w-full max-w-7xl mx-auto px-6 md:px-10 pt-10 md:pt-16 pb-24">
         <div className="grid lg:grid-cols-[1.1fr,0.9fr] gap-14 items-center">
