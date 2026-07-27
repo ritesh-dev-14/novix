@@ -2,14 +2,15 @@ import {
   ShieldCheck, FlaskConical, Truck, Handshake, Target, Eye, Factory,
   ClipboardCheck, Package, Boxes, Scale, Lightbulb, HeartPulse, Clock,
   Building2, Stethoscope, Landmark, FileCheck, MapPin, Phone, Mail,
-  Globe, ArrowRight, Send
+  Globe, ArrowRight, Send, Loader2
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import factory from "../../assets/factory.png";
 import { Helmet } from "react-helmet-async";
 const FONT_ID = "editorial-fonts";
+import emailjs from "@emailjs/browser";
 
 /* ---------- hooks ---------- */
 
@@ -69,46 +70,48 @@ export default function About() {
     message: "",
   });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-      const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setSent(false);
 
-    const formData = new FormData(e.target);
-    formData.append("access_key", "c5d9a0be-c95b-4070-b69a-04e7d6838545"); 
-
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
+      await emailjs.sendForm(
+        "service_1ffcqqb",
+        "template_66a2484",
+        formRef.current,
+        "TNb42PIBqGgV9OuhM"
+      );
+
+      setLoading(false);
+      setSent(true);
+
+      setForm({
+        name: "",
+        company: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
       });
 
-      const data = await response.json();
+      setTimeout(() => {
+        setSent(false);
+      }, 4000);
 
-      if (data.success) {
-        setSent(true);
-        setForm({
-          name: "",
-          company: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: "",
-        });
-      } else {
-        alert(data.message || "Something went wrong. Please try again.");
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
-      alert("Network error. Please try again later.");
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      alert("Something went wrong. Please try again.");
     }
   };
 
-
-
+  const formRef = useRef();
   return (
     <div 
       className="relative w-full max-w-full overflow-x-hidden min-h-screen bg-[#F8FAFC] text-[#06233F]/80 pt-20 m-0 p-0"
@@ -610,6 +613,7 @@ export default function About() {
           {/* Contact form */}
           <Reveal delay={0.1}>
             <form
+              ref={formRef}
               onSubmit={handleSubmit}
               className="rounded-[24px] border border-[#06233F]/10 bg-white p-8 md:p-10 shadow-sm"
             >
@@ -664,20 +668,28 @@ export default function About() {
                 required
                 className="w-full mb-6 rounded-xl border border-[#06233F]/15 bg-white px-4 py-3.5 text-sm text-[#06233F] placeholder:text-[#06233F]/40 focus:outline-none focus:border-[#216853] transition-colors resize-none"
               />
-                            <button
+              <button
                 type="submit"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20"
+                disabled={loading}
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <Send size={14} className="!text-white" />
-                <span className="!text-white">Send Message</span>
+                {loading ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin !text-white" />
+                    <span className="!text-white">Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={14} className="!text-white" />
+                    <span className="!text-white">Send Message</span>
+                  </>
+                )}
               </button>
               {sent && (
                 <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#216853]">
                   Thank you! Your message has been sent successfully. We will get back to you soon.
                 </p>
               )}
-
-              
             </form>
           </Reveal>
         </div>

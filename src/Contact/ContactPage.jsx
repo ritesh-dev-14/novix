@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   MapPin,
   Mail,
@@ -7,12 +7,14 @@ import {
   Send,
   CheckCircle2,
   Globe,
+  Loader2,
 } from "lucide-react";
-
+import emailjs from "@emailjs/browser";
 const FONT_ID = "novix-font-import";
 
 const CONTACT_DETAILS = {
-  location: "Shop No. 55, Near Punjab National Bank (PNB), Barara, Ambala, Haryana – 133201, India",
+  location:
+    "Shop No. 55, Near Punjab National Bank (PNB), Barara, Ambala, Haryana – 133201, India",
   email: "info@novixhealthcare.com",
   phone: "+91 8053868387",
   hours: "Mon - Sat: 9:00 AM - 6:00 PM IST",
@@ -50,19 +52,30 @@ export default function ContactPage() {
     inquiryType: INQUIRY_TYPES[0],
     message: "",
   });
-
+  const formRef = useRef(null);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setLoading(true);
+
+    try {
+      await emailjs.sendForm(
+        "service_k4soq2m",
+        "template_9550jnn",
+        formRef.current,
+        "j2xGmz_K6TUdCQAao",
+      );
+
+      setLoading(false);
+      setSubmitted(true);
+
       setFormData({
         name: "",
         email: "",
@@ -71,7 +84,15 @@ export default function ContactPage() {
         inquiryType: INQUIRY_TYPES[0],
         message: "",
       });
-    }, 3000);
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -98,10 +119,15 @@ export default function ContactPage() {
             className="font-medium text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight text-[#06233F] mb-6"
             style={{ fontFamily: "'Cinzel', serif" }}
           >
-            Let's Start a <span className="italic font-normal text-[#216853]">Conversation</span>
+            Let's Start a{" "}
+            <span className="italic font-normal text-[#216853]">
+              Conversation
+            </span>
           </h1>
           <p className="text-base md:text-lg text-[#06233F]/70 font-light leading-relaxed max-w-2xl mx-auto">
-            Have questions about our sterile formulations, institutional orders, or partnership opportunities? Reach out to our dedicated support team.
+            Have questions about our sterile formulations, institutional orders,
+            or partnership opportunities? Reach out to our dedicated support
+            team.
           </p>
         </div>
       </header>
@@ -109,7 +135,6 @@ export default function ContactPage() {
       {/* ================= MAIN CONTENT SECTION ================= */}
       <section className="relative z-10 py-16 max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid lg:grid-cols-12 gap-12 items-start">
-          
           {/* LEFT SIDE: Contact Info Cards */}
           <div className="lg:col-span-5 space-y-6">
             {/* Primary Contact Card */}
@@ -208,7 +233,8 @@ export default function ContactPage() {
                   WHO-GMP Certified Operations
                 </h4>
                 <p className="text-xs text-[#06233F]/70 font-light mt-1">
-                  Supplying critical care products with international quality compliance.
+                  Supplying critical care products with international quality
+                  compliance.
                 </p>
               </div>
             </div>
@@ -227,7 +253,8 @@ export default function ContactPage() {
                 Send Us a Message
               </h2>
               <p className="text-sm text-[#06233F]/70 font-light mt-1">
-                Fill out the form below and our medical affairs or business team will get back to you within 24 hours.
+                Fill out the form below and our medical affairs or business team
+                will get back to you within 24 hours.
               </p>
             </div>
 
@@ -241,17 +268,23 @@ export default function ContactPage() {
                   Message Sent Successfully!
                 </h3>
                 <p className="text-sm text-[#06233F]/70 font-light max-w-md mx-auto">
-                  Thank you for reaching out to Novix Healthcare. A representative will contact you shortly.
+                  Thank you for reaching out to Novix Healthcare. A
+                  representative will contact you shortly.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Name */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-[0.2em] text-[#06233F]/80 mb-2">
                       Full Name *
                     </label>
+                    <input
+                      type="hidden"
+                      name="subject"
+                      value="New Contact Form Inquiry"
+                    />
                     <input
                       required
                       type="text"
@@ -351,9 +384,18 @@ export default function ContactPage() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 py-4 rounded-full bg-[#216853] text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/25"
+                  disabled={loading}
+                  className="w-full inline-flex items-center justify-center gap-2 py-4 rounded-full bg-[#216853] text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/25 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <Send size={16} /> Submit Inquiry
+                  {loading ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" /> Sending Message...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} /> Submit Inquiry
+                    </>
+                  )}
                 </button>
               </form>
             )}
