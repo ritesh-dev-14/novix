@@ -161,3 +161,12 @@ input:focus, textarea:focus, select:focus {
 }
 
 
+/* Add to your global stylesheet (e.g. index.css / globals.css) */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap');
+
+/* Applied to <body> while the intro owns scroll */
+body.novix-locked {
+  overflow: hidden;
+  height: 100vh;
+}

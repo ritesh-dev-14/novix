@@ -13,22 +13,22 @@ import {
   Truck,
   Boxes,
 } from "lucide-react";
-import img1 from "../../Images/NORA.png";
-import img2 from "../../Images/AMIKA.png";
-import img3 from "../../Images/CEF1MG.png";
-import img4 from "../../Images/CEFO.png";
-import img5 from "../../Images/HEPARIN.png";
-import img6 from "../../Images/ONDA.png";
-import img7 from "../../Images/40mg.png";
-import img8 from "../../Images/DOXY.png";
-import img9 from "../../Images/paracetamol.png";
-import img10 from "../../Images/multivitamin.png";
-import img11 from "../../Images/trane.png";
-import img12 from "../../Images/sulbactum.png";
-import img13 from "../../Images/hepa.png";
-import img14 from "../../Images/infussion.png";
-import img15 from "../../Images/amo.png";
-import img16 from "../../Images/nora2.png";
+import img1 from "../../Images/NORA.webp";
+import img2 from "../../Images/AMIKA.webp";
+import img3 from "../../Images/CEF1MG.webp";
+import img4 from "../../Images/CEFO.webp";
+import img5 from "../../Images/HEPARIN.webp";
+import img6 from "../../Images/ONDA.webp";
+import img7 from "../../Images/40mg.webp";
+import img8 from "../../Images/DOXY.webp";
+import img9 from "../../Images/paracetamol.webp";
+import img10 from "../../Images/multivitamin.webp";
+import img11 from "../../Images/trane.webp";
+import img12 from "../../Images/sulbactum.webp";
+import img13 from "../../Images/hepa.webp";
+import img14 from "../../Images/infussion.webp";
+import img15 from "../../Images/amo.webp";
+import img16 from "../../Images/nora2.webp";
 import { useNavigate } from "react-router-dom";
 
 const FONT_ID = "editorial-fonts";
@@ -547,7 +547,9 @@ export default function NovixProductsPage() {
               <FileText size={15} className="!text-white" />
               <span className="!text-white">Download Catalogue</span>
             </button>
-            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-colors duration-300">
+            <button
+            onClick={() => nav("/contact")}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-colors duration-300">
               <Mail size={15} />
               Contact Sales Team
             </button>
