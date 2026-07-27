@@ -1,10 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import videoMain from "../../assets/mainVideo-optimized.mp4";
-import poster from "../../assets/poster.png";
+
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
@@ -49,6 +48,8 @@ export default function NovixHero() {
 
   const sectionRef = useRef(null);
   const itemRefs = useRef([]);
+
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   // Feature list entrance animation
   useEffect(() => {
@@ -213,16 +214,33 @@ export default function NovixHero() {
       <section className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden bg-black">
         {/* Top Video Container Area */}
         <div className="relative w-full flex-1 min-h-[50vh] overflow-hidden bg-black flex items-center justify-center">
-          <video
-            ref={videoRef}
-            src={videoMain}
-            autoPlay
-            muted
-            playsInline
-            preload="metadata"
-            poster={poster}
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          />
+          <>
+  {/* Poster */}
+  <img
+    src="/videos/hero-poster.jpg"
+    alt=""
+    aria-hidden="true"
+    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+      videoLoaded ? "opacity-0" : "opacity-100"
+    }`}
+  />
+
+  {/* Video */}
+  <video
+    ref={videoRef}
+    autoPlay
+    muted
+    loop
+    playsInline
+    preload="metadata"
+    onCanPlay={() => setVideoLoaded(true)}
+    className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ${
+      videoLoaded ? "opacity-100" : "opacity-0"
+    }`}
+  >
+    <source src="/videos/hero.mp4" type="video/mp4" />
+  </video>
+</>
 
           <div className="absolute inset-0 bg-black/40 lg:bg-transparent pointer-events-none" />
 

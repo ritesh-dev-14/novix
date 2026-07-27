@@ -1,6 +1,5 @@
 import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import bgVideo from "../../assets/section2.webm";
 
 const scenesData = [
   {
@@ -562,7 +561,7 @@ export default function StorySection() {
               <div className="absolute inset-0 w-full h-full scale-[1.35] origin-center">
                 <video
                   ref={videoRef}
-                  src={bgVideo}
+                  src='/public/videos/section2.webm'
                   autoPlay
                   loop
                   muted
