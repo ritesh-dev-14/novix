@@ -559,16 +559,25 @@ export default function StorySection() {
           <div ref={cameraScrollRef} className="absolute inset-0 w-full h-full will-change-transform scale-100 origin-center">
             <div ref={cameraBreatheRef} className="absolute inset-0 w-full h-full will-change-transform">
               <div className="absolute inset-0 w-full h-full scale-[1.35] origin-center">
-                <video
-                  ref={videoRef}
-                  src='/public/videos/section2.webm'
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  className="absolute top-1/2 left-1/2 w-screen h-screen min-w-full min-h-full object-cover -translate-x-1/2 -translate-y-1/2 object-center will-change-[filter]"
-                />
+               <video
+  ref={videoRef}
+  src="/videos/section2.webm"
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="metadata"
+  poster="/videos/section2-poster.jpg"
+  disablePictureInPicture
+  controlsList="nodownload"
+  className="absolute top-1/2 left-1/2
+             w-screen h-screen
+             min-w-full min-h-full
+             object-cover
+             object-center
+             -translate-x-1/2 -translate-y-1/2
+             pointer-events-none"
+/>
               </div>
 
               <div className="absolute inset-0 w-full h-full bg-gradient-to-tr from-black/70 via-black/40 to-[#06233F]/30" />
