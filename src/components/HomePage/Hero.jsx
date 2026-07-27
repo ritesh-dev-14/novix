@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import videoMain from "../../assets/mainVideo.mp4";
+import videoMain from "../../assets/mainVideo-optimized.mp4";
+import poster from "../../assets/poster.png";
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
@@ -51,7 +52,9 @@ export default function NovixHero() {
 
   // Feature list entrance animation
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (reduced) return;
 
     const ctx = gsap.context(() => {
@@ -71,7 +74,7 @@ export default function NovixHero() {
               start: "top 85%",
               toggleActions: "play none none reverse",
             },
-          }
+          },
         );
       });
     }, sectionRef);
@@ -81,7 +84,9 @@ export default function NovixHero() {
 
   // Hero entrance + scroll-lock + video-end -> scroll-to-next
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     const unlockScroll = () => {
       if (!scrollLocked.current) return;
@@ -115,7 +120,9 @@ export default function NovixHero() {
 
     document.body.classList.add("novix-locked");
     window.addEventListener("wheel", onUserScrollAttempt, { passive: false });
-    window.addEventListener("touchmove", onUserScrollAttempt, { passive: false });
+    window.addEventListener("touchmove", onUserScrollAttempt, {
+      passive: false,
+    });
     window.addEventListener("keydown", onKeyScrollAttempt);
 
     // Video finished -> move to next section automatically
@@ -160,19 +167,35 @@ export default function NovixHero() {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     tl.to(eyebrowRef.current, { opacity: 1, y: 0, duration: 0.9 }, 0.4)
-      .to(charRefs.current, { opacity: 1, y: 0, duration: 1.0, stagger: 0.045 }, 0.6)
+      .to(
+        charRefs.current,
+        { opacity: 1, y: 0, duration: 1.0, stagger: 0.045 },
+        0.6,
+      )
       .to(subRef.current, { opacity: 1, y: 0, duration: 1.0 }, 1.1)
       .to(ctaBarRef.current, { opacity: 1, y: 0, duration: 1.0 }, 1.4)
       .to(scrollCueRef.current, { opacity: 1, duration: 0.9 }, 1.7)
       .to(
         contentWrapperRef.current,
-        { filter: "blur(12px)", scale: 0.96, opacity: 0.4, duration: 1.2, ease: "power2.inOut" },
-        3.0
+        {
+          filter: "blur(12px)",
+          scale: 0.96,
+          opacity: 0.4,
+          duration: 1.2,
+          ease: "power2.inOut",
+        },
+        3.0,
       )
       .to(
         finalCalloutRef.current,
-        { opacity: 1, filter: "blur(0px)", scale: 1, duration: 1.0, ease: "power2.out" },
-        8.0
+        {
+          opacity: 1,
+          filter: "blur(0px)",
+          scale: 1,
+          duration: 1.0,
+          ease: "power2.out",
+        },
+        8.0,
       );
 
     return () => {
@@ -188,7 +211,6 @@ export default function NovixHero() {
   return (
     <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <section className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden bg-black">
-
         {/* Top Video Container Area */}
         <div className="relative w-full flex-1 min-h-[50vh] overflow-hidden bg-black flex items-center justify-center">
           <video
@@ -197,6 +219,8 @@ export default function NovixHero() {
             autoPlay
             muted
             playsInline
+            preload="metadata"
+            poster={poster}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           />
 
@@ -233,13 +257,17 @@ export default function NovixHero() {
               ref={subRef}
               className="mt-3 sm:mt-6 text-sm sm:text-base md:text-lg text-white/95 font-light tracking-[0.01em] opacity-0 translate-y-[12px] max-w-[540px] leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] px-4"
             >
-              The moment human intuition meets computational precision — engineered
-              into every diagnostic pathway Novix delivers.
+              The moment human intuition meets computational precision —
+              engineered into every diagnostic pathway Novix delivers.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-2 text-[10px] tracking-[0.2em] uppercase text-white/80 font-semibold md:hidden">
-              <span className="bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/15">WHO-GMP Certified</span>
-              <span className="bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/15">Global Standards</span>
+              <span className="bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/15">
+                WHO-GMP Certified
+              </span>
+              <span className="bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/15">
+                Global Standards
+              </span>
             </div>
           </div>
 
@@ -260,8 +288,8 @@ export default function NovixHero() {
             </h2>
 
             <p className="mt-3 sm:mt-6 text-sm sm:text-base md:text-lg text-white/95 font-light tracking-[0.01em] max-w-[340px] leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] px-4">
-              The moment human intuition meets computational precision — engineered
-              into every diagnostic pathway Novix delivers.
+              The moment human intuition meets computational precision —
+              engineered into every diagnostic pathway Novix delivers.
             </p>
           </div>
 
@@ -309,7 +337,6 @@ export default function NovixHero() {
             </Link>
           </div>
         </div>
-
       </section>
 
       {/* Demo Scroll Target Section */}
