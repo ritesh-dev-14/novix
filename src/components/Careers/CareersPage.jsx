@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Briefcase,
@@ -10,7 +10,9 @@ import {
   GraduationCap,
   Heart,
   Award,
+  Sparkles,
 } from "lucide-react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const FONT_ID = "novix-font-import";
 
@@ -54,20 +56,91 @@ function useFonts() {
       link.id = FONT_ID;
       link.rel = "stylesheet";
       link.href =
-        "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@200;300;400;500&display=swap";
+        "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap";
       document.head.appendChild(link);
     }
   }, []);
 }
 
+/* 3D Magnetic Motion Tilt Container */
+function TiltContainer({ children, className = "" }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["6deg", "-6deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-6deg", "6deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className={`relative transition-all duration-300 ease-out ${className}`}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function Reveal({ children, delay = 0, y = 30, className = "" }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.8, delay, ease: [0.215, 0.61, 0.355, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function CareersPage() {
   useFonts();
 
+  const containerRef = useRef();
+  const [cursorPos, setCursorPos] = useState({ x: -1000, y: -1000 });
+
+  const handleGlobalMouseMove = (e) => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setCursorPos({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    }
+  };
+
   return (
     <div
-      className="relative min-h-screen w-full pt-28 text-[#06233F]/80 bg-[#F8FAFC]"
+      ref={containerRef}
+      onMouseMove={handleGlobalMouseMove}
+      className="relative min-h-screen w-full pt-28 text-[#06233F]/80 bg-[#F8FAFC] overflow-x-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
+      {/* Dynamic Light Cursor Tracking Spotlight */}
+      <div
+        className="pointer-events-none fixed top-0 left-0 w-[600px] h-[600px] bg-radial from-[#216853]/10 via-transparent to-transparent rounded-full blur-3xl z-0 transition-transform duration-300 ease-out"
+        style={{
+          transform: `translate(${cursorPos.x - 300}px, ${cursorPos.y - 300}px)`,
+        }}
+      />
+
       {/* Background Grid Pattern */}
       <div
         className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -78,58 +151,70 @@ export default function CareersPage() {
       />
 
       {/* ================= HERO HEADER ================= */}
-      <header className="relative z-10 pt-10 md:pt-16 pb-12 bg-[#F8FAFC] text-center border-b border-[#06233F]/10">
+      <header className="relative z-10 pt-10 md:pt-16 pb-12 text-center border-b border-[#06233F]/10">
         <div className="max-w-4xl mx-auto px-6">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-4">
-            Join Our Team
-          </p>
-          <h1
-            className="font-medium text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight text-[#06233F] mb-6"
-            style={{ fontFamily: "'Cinzel', serif" }}
-          >
-            Build Your Career in <span className="italic font-normal text-[#216853]">Healthcare</span>
-          </h1>
-          <p className="text-base md:text-lg text-[#06233F]/70 font-light leading-relaxed max-w-2xl mx-auto">
-            At Novix Healthcare, we empower dedicated professionals to engineer precision therapeutics and deliver high-impact critical care solutions.
-          </p>
+          <Reveal>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-4 flex items-center justify-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#216853] animate-ping" />
+              Join Our Team
+            </p>
+            <h1
+              className="font-medium text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight text-[#06233F] mb-6"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              Build Your Career in{" "}
+              <span className="italic font-normal text-[#216853]">Healthcare</span>
+            </h1>
+            <p className="text-base md:text-lg text-[#06233F]/70 font-light leading-relaxed max-w-2xl mx-auto">
+              At Novix Healthcare, we empower dedicated professionals to engineer precision therapeutics and deliver high-impact critical care solutions.
+            </p>
+          </Reveal>
         </div>
       </header>
 
       {/* ================= CULTURE & PERKS ================= */}
       <section className="relative z-10 py-16 max-w-7xl mx-auto px-6 md:px-10">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-3">
-            Why Novix?
-          </p>
-          <h2
-            className="text-3xl sm:text-4xl font-light text-[#06233F] tracking-tight"
-            style={{ fontFamily: "'Cinzel', serif" }}
-          >
-            Our Work Culture
-          </h2>
-        </div>
+        <Reveal>
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-3">
+              Why Novix?
+            </p>
+            <h2
+              className="text-3xl sm:text-4xl font-light text-[#06233F] tracking-tight"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              Our Work Culture
+            </h2>
+          </div>
+        </Reveal>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {PERKS.map((perk) => {
+          {PERKS.map((perk, index) => {
             const Icon = perk.icon;
             return (
-              <div
-                key={perk.title}
-                className="rounded-[24px] border border-[#06233F]/10 bg-white p-8 shadow-sm hover:shadow-md hover:border-[#216853]/40 transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-6">
-                  <Icon size={24} className="text-[#216853]" />
-                </div>
-                <h3
-                  className="text-xl font-light text-[#06233F] mb-3"
-                  style={{ fontFamily: "'Cinzel', serif" }}
-                >
-                  {perk.title}
-                </h3>
-                <p className="text-sm text-[#06233F]/70 font-light leading-relaxed">
-                  {perk.description}
-                </p>
-              </div>
+              <Reveal key={perk.title} delay={index * 0.1}>
+                <TiltContainer className="h-full">
+                  <motion.div
+                    whileHover={{ y: -6 }}
+                    className="h-full rounded-[24px] border border-[#06233F]/10 bg-white/80 backdrop-blur-md p-8 shadow-sm hover:shadow-xl hover:border-[#216853]/40 transition-all duration-300 group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-6 group-hover:bg-[#216853] transition-colors duration-300">
+                        <Icon size={24} className="text-[#216853] group-hover:text-white transition-colors duration-300" />
+                      </div>
+                      <h3
+                        className="text-xl font-light text-[#06233F] mb-3 group-hover:text-[#216853] transition-colors duration-300"
+                        style={{ fontFamily: "'Cinzel', serif" }}
+                      >
+                        {perk.title}
+                      </h3>
+                      <p className="text-sm text-[#06233F]/70 font-light leading-relaxed">
+                        {perk.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                </TiltContainer>
+              </Reveal>
             );
           })}
         </div>
@@ -137,72 +222,77 @@ export default function CareersPage() {
 
       {/* ================= NO ACTIVE OPENINGS & CONTACT DISPLAY ================= */}
       <section className="relative z-10 pb-20 max-w-4xl mx-auto px-6">
-        <div className="rounded-[28px] border border-[#06233F]/10 bg-white p-8 sm:p-12 text-center shadow-lg shadow-[#06233F]/5">
-          <div className="w-16 h-16 mx-auto rounded-full bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-6">
-            <Briefcase size={28} className="text-[#216853]" />
-          </div>
+        <Reveal delay={0.2}>
+          <div className="rounded-[28px] border border-[#06233F]/10 bg-white/80 backdrop-blur-md p-8 sm:p-12 text-center shadow-lg shadow-[#06233F]/5">
+            <div className="w-16 h-16 mx-auto rounded-full bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center mb-6">
+              <Briefcase size={28} className="text-[#216853]" />
+            </div>
 
-          <h2
-            className="text-2xl sm:text-3xl font-light text-[#06233F] mb-4"
-            style={{ fontFamily: "'Cinzel', serif" }}
-          >
-            No Active Openings Currently
-          </h2>
-          <p className="text-sm md:text-base text-[#06233F]/70 font-light max-w-xl mx-auto mb-8 leading-relaxed">
-            We are not actively hiring for any open positions right now. However, we are always open to connecting with talented healthcare professionals for future opportunities.
-          </p>
-
-          {/* Contact Details Card */}
-          <div className="bg-[#06233F] text-white p-8 rounded-[24px] max-w-lg mx-auto text-left shadow-xl mb-8">
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-6">
-              Get in Touch
+            <h2
+              className="text-2xl sm:text-3xl font-light text-[#06233F] mb-4"
+              style={{ fontFamily: "'Cinzel', serif" }}
+            >
+              No Active Openings Currently
+            </h2>
+            <p className="text-sm md:text-base text-[#06233F]/70 font-light max-w-xl mx-auto mb-8 leading-relaxed">
+              We are not actively hiring for any open positions right now. However, we are always open to connecting with talented healthcare professionals for future opportunities.
             </p>
 
-            <div className="space-y-5">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#216853]/20 flex items-center justify-center shrink-0">
-                  <MapPin size={18} className="text-[#216853]" />
-                </div>
-                <span className="text-sm font-light text-white/90 leading-relaxed">
-                  {CONTACT_INFO.location}
-                </span>
-              </div>
+            {/* Contact Details Card */}
+            <TiltContainer className="max-w-lg mx-auto mb-8">
+              <div className="relative bg-[#06233F] text-white p-8 rounded-[24px] text-left shadow-xl overflow-hidden group">
+                <div className="absolute inset-0 bg-radial from-[#216853]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853] mb-6 flex items-center gap-2">
+                  <Sparkles size={14} /> Get in Touch
+                </p>
 
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#216853]/20 flex items-center justify-center shrink-0">
-                  <Mail size={18} className="text-[#216853]" />
-                </div>
-                <a
-                  href={`mailto:${CONTACT_INFO.email}`}
-                  className="text-sm font-light text-[#216853] hover:underline break-all"
-                >
-                  {CONTACT_INFO.email}
-                </a>
-              </div>
+                <div className="space-y-5 relative z-10">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-[#216853]/20 flex items-center justify-center shrink-0">
+                      <MapPin size={18} className="text-[#216853]" />
+                    </div>
+                    <span className="text-sm font-light text-white/90 leading-relaxed">
+                      {CONTACT_INFO.location}
+                    </span>
+                  </div>
 
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#216853]/20 flex items-center justify-center shrink-0">
-                  <Phone size={18} className="text-[#216853]" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-[#216853]/20 flex items-center justify-center shrink-0">
+                      <Mail size={18} className="text-[#216853]" />
+                    </div>
+                    <a
+                      href={`mailto:${CONTACT_INFO.email}`}
+                      className="text-sm font-light text-[#216853] hover:underline break-all"
+                    >
+                      {CONTACT_INFO.email}
+                    </a>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-[#216853]/20 flex items-center justify-center shrink-0">
+                      <Phone size={18} className="text-[#216853]" />
+                    </div>
+                    <a
+                      href={`tel:${CONTACT_INFO.phone.replace(/\s+/g, "")}`}
+                      className="text-sm font-light text-[#216853] hover:underline"
+                    >
+                      {CONTACT_INFO.phone}
+                    </a>
+                  </div>
                 </div>
-                <a
-                  href={`tel:${CONTACT_INFO.phone.replace(/\s+/g, "")}`}
-                  className="text-sm font-light text-[#216853] hover:underline"
-                >
-                  {CONTACT_INFO.phone}
-                </a>
               </div>
-            </div>
+            </TiltContainer>
+
+            {/* Redirect Button */}
+            <Link
+              to="/contact"
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg shadow-[#216853]/30"
+            >
+              <span className="!text-white">Contact Us</span>
+              <ArrowRight size={16} className="!text-white transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
           </div>
-
-          {/* Redirect Button */}
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30"
-          >
-            <span>Contact Us</span>
-            <ArrowRight size={16} className="!text-white" />
-          </Link>
-        </div>
+        </Reveal>
       </section>
     </div>
   );

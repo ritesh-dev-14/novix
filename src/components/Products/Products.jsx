@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   ShieldCheck,
   Microscope,
@@ -12,7 +12,12 @@ import {
   Users,
   Truck,
   Boxes,
+  Sparkles,
 } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useNavigate } from "react-router-dom";
+
 import img1 from "../../Images/NORA.webp";
 import img2 from "../../Images/AMIKA.webp";
 import img3 from "../../Images/CEF1MG.webp";
@@ -29,7 +34,11 @@ import img13 from "../../Images/hepa.webp";
 import img14 from "../../Images/infussion.webp";
 import img15 from "../../Images/amo.webp";
 import img16 from "../../Images/nora2.webp";
-import { useNavigate } from "react-router-dom";
+
+// Register GSAP Plugins
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const FONT_ID = "editorial-fonts";
 
@@ -237,33 +246,220 @@ const TRUST_ITEMS = [
   },
 ];
 
-// Injects Cinzel and Plus Jakarta Sans for 1:1 homepage typography consistency
 const injectFonts = () => {
-  if (
-    typeof window !== "undefined" &&
-    !document.getElementById(FONT_ID)
-  ) {
+  if (typeof window !== "undefined" && !document.getElementById(FONT_ID)) {
     const link = document.createElement("link");
     link.id = FONT_ID;
     link.rel = "stylesheet";
     link.href =
-      "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@200;300;400;500&display=swap";
+      "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap";
     document.head.appendChild(link);
   }
 };
 
+const ProductImage = ({ src, alt, className }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-lg" />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        loading="eager"
+        decoding="async"
+        onLoad={() => setIsLoaded(true)}
+        className={`${className} transition-all duration-700 ease-out ${
+          isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-90"
+        }`}
+      />
+    </div>
+  );
+};
+
+// Interactive 3D Tilt Card Sub-Component
+const ProductCard = ({ product, onSelect }) => {
+  const cardRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+
+    gsap.to(card, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      transformPerspective: 1000,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+    gsap.to(cardRef.current, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.6,
+      ease: "elastic.out(1, 0.4)",
+    });
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="group relative flex flex-col rounded-[24px] border border-[#06233F]/10 bg-white/80 backdrop-blur-md overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#216853]/40 transition-all duration-300 transform-gpu"
+      style={{ transformStyle: "preserve-3d" }}
+    >
+      {/* Badge */}
+      <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 rounded-full bg-[#F4F8F6]/90 backdrop-blur-sm border border-[#216853]/20 px-3 py-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
+        <ShieldCheck size={12} className="text-[#216853] animate-pulse" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#06233F]">
+          WHO-GMP
+        </span>
+      </div>
+
+      {/* Image Container with Dynamic Float */}
+      <div className="h-64 flex items-center justify-center bg-gradient-to-b from-[#F8FAFC] to-white p-8 border-b border-[#06233F]/5 overflow-hidden relative">
+        <div className="absolute inset-0 bg-[#216853]/5 rounded-full blur-2xl transform scale-50 group-hover:scale-125 transition-transform duration-500 opacity-0 group-hover:opacity-100" />
+        <ProductImage
+          src={product.image}
+          alt={product.name}
+          className="h-full w-auto object-contain transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2 drop-shadow-md group-hover:drop-shadow-xl"
+        />
+      </div>
+
+      <div className="p-7 flex flex-col flex-1 relative z-10 bg-white/50">
+        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#216853] mb-2 flex items-center gap-1">
+          <Sparkles size={10} className="inline-block" />
+          {product.category}
+        </p>
+        <h3
+          className="text-2xl font-light text-[#06233F] mb-1 leading-snug group-hover:text-[#216853] transition-colors duration-300"
+          style={{ fontFamily: "'Cinzel', serif" }}
+        >
+          {product.name}
+        </h3>
+        <p className="text-[11px] text-[#06233F]/60 font-semibold uppercase tracking-[0.2em] mb-4">
+          {product.generic} · {product.strength}
+        </p>
+        <p className="text-sm text-[#06233F]/70 font-light leading-relaxed mb-6 flex-1">
+          {product.description}
+        </p>
+
+        <button
+          onClick={() => onSelect(product)}
+          className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#216853] text-xs font-semibold uppercase tracking-[0.2em] !text-white hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20 group/btn active:scale-95 overflow-hidden relative"
+        >
+          <span className="relative z-10 !text-white">View Details</span>
+          <ArrowRight
+            size={15}
+            className="relative z-10 !text-white transition-transform duration-300 group-hover/btn:translate-x-2"
+          />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export default function NovixProductsPage() {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeProduct, setActiveProduct] = useState(null);
+  const gridRef = useRef(null);
+  const cursorLightRef = useRef(null);
+  const heroRef = useRef(null);
+  const statsRef = useRef(null);
+  const trustRef = useRef(null);
+  const nav = useNavigate();
+
   useEffect(() => {
     injectFonts();
   }, []);
 
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [activeProduct, setActiveProduct] = useState(null);
+  // Cursor Light Tracking Effect
+  const handleMouseMoveGlobal = (e) => {
+    if (!cursorLightRef.current) return;
+    gsap.to(cursorLightRef.current, {
+      x: e.clientX,
+      y: e.clientY,
+      duration: 0.8,
+      ease: "power2.out",
+    });
+  };
 
-  const filteredProducts =
-    activeCategory === "All"
-      ? productData
-      : productData.filter((p) => p.category === activeCategory);
+  // Scroll Animations using GSAP ScrollTrigger
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Hero Entrance
+      gsap.from(heroRef.current.querySelectorAll(".hero-animate"), {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+
+      // Stats Section Scroll Reveal
+      gsap.from(statsRef.current.children, {
+        scrollTrigger: {
+          trigger: statsRef.current,
+          start: "top 85%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+      });
+
+      // Trust Cards Scroll Reveal
+      gsap.from(trustRef.current.children, {
+        scrollTrigger: {
+          trigger: trustRef.current,
+          start: "top 80%",
+        },
+        y: 40,
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.6,
+        stagger: 0.12,
+        ease: "power2.out",
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  // Category change grid animation
+  useLayoutEffect(() => {
+    if (!gridRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        gridRef.current.children,
+        { opacity: 0, y: 40, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.06,
+          ease: "back.out(1.2)",
+        }
+      );
+    }, gridRef);
+
+    return () => ctx.revert();
+  }, [activeCategory]);
 
   useEffect(() => {
     if (!activeProduct) return;
@@ -276,14 +472,24 @@ export default function NovixProductsPage() {
     };
   }, [activeProduct]);
 
-  const nav = useNavigate();
+  const filteredProducts =
+    activeCategory === "All"
+      ? productData
+      : productData.filter((p) => p.category === activeCategory);
 
   return (
-    <div 
-      className="relative min-h-screen w-full text-[#06233F]/80 bg-[#F8FAFC]"
+    <div
+      onMouseMove={handleMouseMoveGlobal}
+      className="relative min-h-screen w-full text-[#06233F]/80 bg-[#F8FAFC] overflow-x-hidden"
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
-      {/* Subtle Grid overlay */}
+      {/* Dynamic Interactive Background Cursor Light */}
+      <div
+        ref={cursorLightRef}
+        className="fixed top-0 left-0 w-[500px] h-[500px] bg-radial from-[#216853]/10 to-transparent rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0 transition-opacity duration-500"
+      />
+
+      {/* Grid Overlay */}
       <div
         className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -293,87 +499,107 @@ export default function NovixProductsPage() {
       />
 
       {/* ================= HERO ================= */}
-      <header className="relative z-10 bg-[#F8FAFC] w-full pt-16">
+      <header ref={heroRef} className="relative z-10 bg-[#F8FAFC] w-full pt-16">
         <div className="max-w-7xl mx-auto px-6 pt-20 pb-20 grid lg:grid-cols-[1.3fr,1fr] gap-16 items-center">
           <div>
-            <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-4">
+            <p className="hero-animate text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#216853] animate-ping" />
               Novix Healthcare · Product Portfolio
             </p>
-            <h1 
-              className="font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-[#06233F] mb-6"
+            <h1
+              className="hero-animate font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-[#06233F] mb-6"
               style={{ fontFamily: "'Cinzel', serif" }}
             >
-              Medicines hospitals <span className="italic font-normal text-[#216853]">count on.</span>
+              Medicines hospitals{" "}
+              <span className="italic font-normal text-[#216853] relative inline-block">
+                count on.
+                <span className="absolute bottom-1 left-0 w-full h-[3px] bg-[#216853]/30 rounded-full" />
+              </span>
             </h1>
-            <p className="text-base md:text-lg text-[#06233F]/75 max-w-xl font-light leading-relaxed mb-8">
+            <p className="hero-animate text-base md:text-lg text-[#06233F]/75 max-w-xl font-light leading-relaxed mb-8">
               We manufacture sterile injectables for hospitals and clinics
               across India — tested carefully, packed with care, and delivered
               on time, every time.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="hero-animate flex flex-wrap gap-4">
               <a
                 href="#catalogue"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg shadow-[#216853]/20"
               >
                 <span className="!text-white">Browse Products</span>
                 <ArrowRight size={15} className="!text-white" />
               </a>
-              <button className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#06233F]/20 text-[#06233F] font-semibold text-xs uppercase tracking-[0.2em] hover:border-[#216853] hover:text-[#216853] transition-colors duration-300 bg-white/50">
+              <button className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#06233F]/20 text-[#06233F] font-semibold text-xs uppercase tracking-[0.2em] hover:border-[#216853] hover:text-[#216853] hover:bg-white transition-all duration-300 bg-white/50 backdrop-blur-sm">
                 <FileText size={15} />
                 Download Catalogue
               </button>
             </div>
           </div>
 
-          {/* WHO-GMP Information Card */}
-          <div className="rounded-[24px] border border-[#06233F]/10 bg-white p-8 shadow-xl shadow-[#06233F]/5">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center">
-                <ShieldCheck size={22} className="text-[#216853]" />
+          {/* WHO-GMP Floating Card */}
+          <div className="hero-animate rounded-[28px] border border-[#06233F]/10 bg-white/70 backdrop-blur-md p-8 shadow-2xl shadow-[#06233F]/5 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#216853]/20 to-transparent rounded-[30px] blur opacity-0 group-hover:opacity-100 transition duration-500" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] border border-[#216853]/20 flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
+                  <ShieldCheck size={22} className="text-[#216853]" />
+                </div>
+                <div>
+                  <p
+                    className="text-[#06233F] font-semibold text-lg leading-tight mb-1"
+                    style={{ fontFamily: "'Cinzel', serif" }}
+                  >
+                    WHO-GMP Certified
+                  </p>
+                  <p className="text-[#06233F]/60 text-xs font-light">
+                    Manufacturing facility
+                  </p>
+                </div>
               </div>
-              <div>
-                <p 
-                  className="text-[#06233F] font-semibold text-lg leading-tight mb-1"
-                  style={{ fontFamily: "'Cinzel', serif" }}
-                >
-                  WHO-GMP Certified
-                </p>
-                <p className="text-[#06233F]/60 text-xs font-light">
-                  Manufacturing facility
-                </p>
-              </div>
+              <div className="h-px bg-[#06233F]/10 mb-6" />
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
+                  <CheckCircle2
+                    size={18}
+                    className="text-[#216853] shrink-0 animate-bounce"
+                  />{" "}
+                  Batch-tested for purity and sterility
+                </li>
+                <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
+                  <CheckCircle2 size={18} className="text-[#216853] shrink-0" />{" "}
+                  Proudly made in India
+                </li>
+                <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
+                  <CheckCircle2 size={18} className="text-[#216853] shrink-0" />{" "}
+                  Trusted by 500+ hospitals & clinics
+                </li>
+              </ul>
             </div>
-            <div className="h-px bg-[#06233F]/10 mb-6" />
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
-                <CheckCircle2 size={18} className="text-[#216853] shrink-0" />{" "}
-                Batch-tested for purity and sterility
-              </li>
-              <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
-                <CheckCircle2 size={18} className="text-[#216853] shrink-0" />{" "}
-                Proudly made in India
-              </li>
-              <li className="flex items-center gap-3 text-sm text-[#06233F]/80 font-light">
-                <CheckCircle2 size={18} className="text-[#216853] shrink-0" />{" "}
-                Trusted by 500+ hospitals & clinics
-              </li>
-            </ul>
           </div>
         </div>
 
         {/* Stats Row */}
-        <div className="border-y border-[#06233F]/10 bg-white">
-          <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="border-y border-[#06233F]/10 bg-white/80 backdrop-blur-md">
+          <div
+            ref={statsRef}
+            className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8"
+          >
             {STATS.map((s) => {
               const Icon = s.icon;
               return (
-                <div key={s.label} className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#F4F8F6] flex items-center justify-center shrink-0">
-                    <Icon size={20} className="text-[#216853]" />
+                <div
+                  key={s.label}
+                  className="flex items-center gap-4 group cursor-default"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] flex items-center justify-center shrink-0 group-hover:bg-[#216853] group-hover:rotate-6 transition-all duration-300">
+                    <Icon
+                      size={22}
+                      className="text-[#216853] group-hover:text-white transition-colors duration-300"
+                    />
                   </div>
                   <div>
-                    <p 
-                      className="text-3xl text-[#06233F] font-medium leading-none mb-1"
+                    <p
+                      className="text-3xl text-[#06233F] font-medium leading-none mb-1 group-hover:text-[#216853] transition-colors duration-300"
                       style={{ fontFamily: "'Cinzel', serif" }}
                     >
                       {s.value}
@@ -397,7 +623,7 @@ export default function NovixProductsPage() {
               <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-3">
                 Our Range
               </p>
-              <h2 
+              <h2
                 className="text-4xl md:text-5xl font-light text-[#06233F] tracking-tight leading-tight"
                 style={{ fontFamily: "'Cinzel', serif" }}
               >
@@ -410,7 +636,7 @@ export default function NovixProductsPage() {
             </p>
           </div>
 
-          {/* Category filters */}
+          {/* Interactive Category Filters */}
           <div className="flex flex-wrap gap-2.5 mb-14">
             {categories.map((cat) => {
               const active = activeCategory === cat;
@@ -418,10 +644,10 @@ export default function NovixProductsPage() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-[0.2em] transition-all duration-200 ${
+                  className={`px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95 ${
                     active
-                      ? "bg-[#06233F] !text-white border border-[#06233F] shadow-sm"
-                      : "bg-white text-[#06233F]/70 border border-[#06233F]/15 hover:border-[#216853] hover:text-[#216853]"
+                      ? "bg-[#06233F] !text-white border border-[#06233F] shadow-lg shadow-[#06233F]/20"
+                      : "bg-white text-[#06233F]/70 border border-[#06233F]/15 hover:border-[#216853] hover:text-[#216853] hover:bg-white"
                   }`}
                 >
                   {cat}
@@ -430,92 +656,57 @@ export default function NovixProductsPage() {
             })}
           </div>
 
-          {/* Product grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Animated Product Grid */}
+          <div
+            ref={gridRef}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             {filteredProducts.map((product) => (
-              <div
+              <ProductCard
                 key={product.id}
-                className="group relative flex flex-col rounded-[20px] border border-[#06233F]/10 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:border-[#216853]/40 transition-all duration-300 hover:-translate-y-1"
-              >
-                {/* WHO-GMP corner badge */}
-                <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 rounded-full bg-[#F4F8F6] border border-[#216853]/20 px-3 py-1">
-                  <ShieldCheck size={12} className="text-[#216853]" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#06233F]">
-                    WHO-GMP
-                  </span>
-                </div>
-
-                <div className="h-64 flex items-center justify-center bg-[#F8FAFC] p-8 border-b border-[#06233F]/10">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    loading="lazy"
-                    decoding="async"
-                    fetchPriority="low"
-                    className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                  />
-                </div>
-
-                <div className="p-7 flex flex-col flex-1">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#216853] mb-2">
-                    {product.category}
-                  </p>
-                  <h3 
-                    className="text-2xl font-light text-[#06233F] mb-1 leading-snug"
-                    style={{ fontFamily: "'Cinzel', serif" }}
-                  >
-                    {product.name}
-                  </h3>
-                  <p className="text-[11px] text-[#06233F]/60 font-semibold uppercase tracking-[0.2em] mb-4">
-                    {product.generic} · {product.strength}
-                  </p>
-                  <p className="text-sm text-[#06233F]/70 font-light leading-relaxed mb-6 flex-1">
-                    {product.description}
-                  </p>
-
-                  <button
-                    onClick={() => setActiveProduct(product)}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#216853] text-xs font-semibold uppercase tracking-[0.2em] !text-white hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20 group/btn"
-                  >
-                    <span className="!text-white">View Details</span>
-                    <ArrowRight
-                      size={15}
-                      className="!text-white transition-transform duration-300 group-hover/btn:translate-x-1"
-                    />
-                  </button>
-                </div>
-              </div>
+                product={product}
+                onSelect={setActiveProduct}
+              />
             ))}
           </div>
         </div>
       </main>
 
       {/* ================= WHY TRUST US ================= */}
-      <section className="relative z-10 bg-white border-t border-[#06233F]/10 py-24">
+      <section className="relative z-10 bg-white/60 backdrop-blur-md border-t border-[#06233F]/10 py-24">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-3">
             Why Hospitals Choose Novix
           </p>
-          <h2 
+          <h2
             className="text-3xl md:text-5xl font-light text-[#06233F] tracking-tight leading-tight mb-16 max-w-2xl"
             style={{ fontFamily: "'Cinzel', serif" }}
           >
-            Quality you can check, <span className="italic font-normal text-[#216853]">every single time.</span>
+            Quality you can check,{" "}
+            <span className="italic font-normal text-[#216853]">
+              every single time.
+            </span>
           </h2>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div
+            ref={trustRef}
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             {TRUST_ITEMS.map((item) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className="rounded-[20px] border border-[#06233F]/10 bg-white p-8 shadow-sm hover:border-[#216853]/40 transition-all duration-300"
+                  className="group rounded-[24px] border border-[#06233F]/10 bg-white p-8 shadow-sm hover:border-[#216853]/40 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#F4F8F6] flex items-center justify-center mb-6">
-                    <Icon size={22} className="text-[#216853]" />
+                  <div className="w-12 h-12 rounded-2xl bg-[#F4F8F6] flex items-center justify-center mb-6 group-hover:bg-[#216853] transition-colors duration-300">
+                    <Icon
+                      size={24}
+                      className="text-[#216853] group-hover:text-white transition-colors duration-300"
+                    />
                   </div>
-                  <h3 
-                    className="text-xl font-light text-[#06233F] mb-2 leading-snug"
+                  <h3
+                    className="text-xl font-light text-[#06233F] mb-2 leading-snug group-hover:text-[#216853] transition-colors duration-300"
                     style={{ fontFamily: "'Cinzel', serif" }}
                   >
                     {item.title}
@@ -531,25 +722,27 @@ export default function NovixProductsPage() {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="relative z-10 bg-[#06233F] text-white py-24 text-center">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="relative z-10 bg-[#06233F] text-white py-28 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-radial from-[#216853]/30 via-transparent to-transparent opacity-50 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#216853] mb-4">
             Need Bulk Supply?
           </p>
-          <h2 
+          <h2
             className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.1] max-w-3xl mx-auto mb-8 !text-white"
             style={{ fontFamily: "'Cinzel', serif" }}
           >
             Let's talk about your hospital's supply needs.
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-lg shadow-[#216853]/30">
+            <button className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl shadow-[#216853]/30">
               <FileText size={15} className="!text-white" />
               <span className="!text-white">Download Catalogue</span>
             </button>
             <button
-            onClick={() => nav("/contact")}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-colors duration-300">
+              onClick={() => nav("/contact")}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 backdrop-blur-sm"
+            >
               <Mail size={15} />
               Contact Sales Team
             </button>
@@ -561,26 +754,25 @@ export default function NovixProductsPage() {
       {activeProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-[#06233F]/40 backdrop-blur-sm transition-opacity"
+            className="absolute inset-0 bg-[#06233F]/50 backdrop-blur-md transition-opacity animate-in fade-in duration-300"
             onClick={() => setActiveProduct(null)}
           />
 
-          <div className="relative w-full max-w-4xl rounded-[28px] border border-[#06233F]/10 bg-white p-8 md:p-12 shadow-2xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-4xl rounded-[32px] border border-[#06233F]/10 bg-white p-8 md:p-12 shadow-2xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95 fade-in duration-300 z-10">
             <button
               onClick={() => setActiveProduct(null)}
-              className="absolute top-6 right-6 flex items-center justify-center w-10 h-10 rounded-full border border-[#06233F]/10 bg-[#F8FAFC] text-[#06233F] hover:bg-[#216853] hover:text-white hover:border-[#216853] transition-colors duration-200"
+              className="absolute top-6 right-6 flex items-center justify-center w-10 h-10 rounded-full border border-[#06233F]/10 bg-[#F8FAFC] text-[#06233F] hover:bg-[#216853] hover:text-white hover:border-[#216853] transition-all duration-300 hover:rotate-90"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="grid md:grid-cols-2 gap-10 items-center">
-              <div className="rounded-[20px] border border-[#06233F]/10 bg-[#F8FAFC] p-8 flex items-center justify-center">
-                <img
+              <div className="rounded-[24px] border border-[#06233F]/10 bg-[#F8FAFC] p-8 flex items-center justify-center h-80 relative overflow-hidden group">
+                <ProductImage
                   src={activeProduct.image}
                   alt={activeProduct.name}
-                  loading="eager"
-                  className="w-full h-auto max-h-80 object-contain"
+                  className="w-full h-auto max-h-72 object-contain group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
 
@@ -588,7 +780,7 @@ export default function NovixProductsPage() {
                 <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#216853]">
                   {activeProduct.category}
                 </span>
-                <h2 
+                <h2
                   className="text-3xl md:text-4xl font-light text-[#06233F] mt-2 mb-1 leading-tight"
                   style={{ fontFamily: "'Cinzel', serif" }}
                 >
@@ -626,7 +818,7 @@ export default function NovixProductsPage() {
                 <div className="flex flex-wrap gap-3">
                   <button
                     onClick={() => nav("/contact")}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] transition-all duration-300 shadow-md shadow-[#216853]/20"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#216853] !text-white font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#184d3d] hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg shadow-[#216853]/20"
                   >
                     <Mail size={15} className="!text-white" />
                     <span className="!text-white">Enquire Now</span>
