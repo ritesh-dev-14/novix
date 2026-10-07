@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import img1 from "../../Images/NORA.webp";
-import img5 from "../../Images/HEPARIN.webp";
-import img6 from "../../Images/ONDA.webp";
-import img9 from "../../Images/paracetamol.webp";
-import img10 from "../../Images/multivitamin.webp";
+import img1 from "../../Images/n-vit-b1.webp";
+import img5 from "../../Images/novix-tx.webp";
+import img6 from "../../Images/panta-n.webp";
+import img9 from "../../Images/cefvix-1gm.webp";
+import img10 from "../../Images/n-clav.webp";
 
 const CARDS = [
   {
