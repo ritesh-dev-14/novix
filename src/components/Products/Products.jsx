@@ -18,22 +18,21 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useNavigate } from "react-router-dom";
 
-import img1 from "../../Images/NORA.webp";
-import img2 from "../../Images/AMIKA.webp";
-import img3 from "../../Images/CEF1MG.webp";
-import img4 from "../../Images/CEFO.webp";
-import img5 from "../../Images/HEPARIN.webp";
-import img6 from "../../Images/ONDA.webp";
-import img7 from "../../Images/40mg.webp";
-import img8 from "../../Images/DOXY.webp";
-import img9 from "../../Images/paracetamol.webp";
-import img10 from "../../Images/multivitamin.webp";
-import img11 from "../../Images/trane.webp";
-import img12 from "../../Images/sulbactum.webp";
-import img13 from "../../Images/hepa.webp";
-import img14 from "../../Images/infussion.webp";
-import img15 from "../../Images/amo.webp";
-import img16 from "../../Images/nora2.webp";
+import img1 from "../../Images/n-vit-b1.webp";
+import img2 from "../../Images/novix-tx.webp";
+import img3 from "../../Images/panta-n.webp";
+import img4 from "../../Images/cefvix-1gm.webp";
+import img5 from "../../Images/n-clav.webp";
+import img6 from "../../Images/ncef-sb.webp";
+import img7 from "../../Images/onda-n.webp";
+import img8 from "../../Images/o-clot-25000.webp";
+import img9 from "../../Images/onda-n-tray.webp";
+import img10 from "../../Images/cefvix-sb.webp";
+import img11 from "../../Images/lbpc.webp";
+import img12 from "../../Images/docvix.webp";
+import img13 from "../../Images/o-clot-5000.webp";
+import img14 from "../../Images/tazovix.webp";
+import img15 from "../../Images/n-vit.webp";
 
 // Register GSAP Plugins
 if (typeof window !== "undefined") {
@@ -54,170 +53,158 @@ const categories = [
 const productData = [
   {
     id: 1,
-    category: "Injectable Antibiotics",
-    name: "LBPC",
-    generic:
-      "NORADRENALINE BITARTRATE INJECTION IP (STERILE NORADRENALINE CONCENTRATE 4mg)",
-    strength: "4MG",
+    category: "Supportive Care",
+    name: "N-VIT B1",
+    generic: "THIAMINE INJECTION I.P.",
+    strength: "100MG/2ML",
     image: img1,
     description:
-      "Used in emergency care to quickly stabilise blood pressure. Made under strict sterile conditions so hospitals can trust every vial.",
+      "Indicated for the prevention and treatment of thiamine deficiency, especially when rapid parenteral replacement is required.",
   },
   {
     id: 2,
-    category: "Injectable Antibiotics",
-    name: "MULTI-DR",
-    generic: "AMIKACIN INJECTION",
-    strength: "500MG",
+    category: "Critical Care",
+    name: "Novix-TX",
+    generic: "TRANEXAMIC ACID INJECTION I.P.",
+    strength: "500MG/5ML",
     image: img2,
     description:
-      "A dependable antibiotic for serious infections that don't respond to common treatments. Hospital-grade sterility, every batch.",
+      "Formulated for the reduction of bleeding caused by excessive fibrinolysis and control of significant surgical bleeding.",
   },
   {
     id: 3,
-    category: "Injectable Antibiotics",
-    name: "CEFVIX",
-    generic: "CEFTRIAXONE INJECTION",
-    strength: "1GM",
+    category: "Gastrointestinal",
+    name: "PANTA-N 40 mg",
+    generic: "PANTOPRAZOLE FOR INJECTION IP",
+    strength: "40 MG",
     image: img3,
     description:
-      "A widely trusted antibiotic for serious bacterial infections. Dissolves quickly, so it's ready when every minute counts.",
+      "Used for the treatment of acid-related disorders such as GERD, peptic ulcers, and hyperacidity-related conditions.",
   },
   {
     id: 4,
     category: "Injectable Antibiotics",
-    name: "CEFVIX-SB",
-    generic: "CEFTRIAXONE + SULBACTUM INJECTION",
-    strength: "1.5 GM",
+    name: "CEFVIX 1 GM",
+    generic: "CEFTRIAXONE FOR INJECTION IP",
+    strength: "1 GM",
     image: img4,
     description:
-      "A stronger combination for infections that need extra support. Built for hospitals treating tougher cases.",
+      "Broad-spectrum cephalosporin antibiotic for susceptible bacterial infections, including serious respiratory and urinary tract cases.",
   },
   {
     id: 5,
-    category: "Critical Care",
-    name: "O-CLOT 25000 IU",
-    generic: "HEPARIN 25000 IU",
-    strength: "25000 IU",
+    category: "Injectable Antibiotics",
+    name: "N-CLAV",
+    generic: "AMOXYCILLIN & POTASSIUM CLAVULANATE FOR INJECTION IP",
+    strength: "1.2 GM",
     image: img5,
     description:
-      "Helps prevent dangerous blood clots in critical care and surgery. Every batch is tested for consistent strength.",
+      "Potent antibiotic combination for treating susceptible respiratory, urinary, and skin/soft-tissue bacterial infections.",
   },
   {
     id: 6,
-    category: "Gastrointestinal",
-    name: "NOVISET",
-    generic: "ONDANSETRON INJECTION",
-    strength: "2ML",
+    category: "Injectable Antibiotics",
+    name: "NCEF-SB 1.5 GM",
+    generic: "CEFOPERAZONE & SULBACTAM FOR INJECTION I.P.",
+    strength: "1.5 GM",
     image: img6,
     description:
-      "Gives fast relief from nausea after surgery or chemotherapy. Gentle, reliable, and easy to administer.",
+      "Combination therapy targeting severe bacterial respiratory tract, urinary tract, and intra-abdominal infections.",
   },
   {
     id: 7,
     category: "Gastrointestinal",
-    name: "NOVPRA",
-    generic: "PANTAPRAZOLE 40 MG",
-    strength: "40 MG",
+    name: "ONDA-N",
+    generic: "ONDANSETRON HYDROCHLORIDE INJECTION I.P.",
+    strength: "4MG/2ML",
     image: img7,
     description:
-      "Used for serious stomach bleeding and ulcers when a patient can't take tablets. A trusted IV option for doctors.",
+      "Provides effective prevention and relief from nausea and vomiting caused by chemotherapy or surgical procedures.",
   },
   {
     id: 8,
-    category: "Injectable Antibiotics",
-    name: "DOXVIX",
-    generic: "DOXYCYCLINE 100 MG",
-    strength: "100 MG",
+    category: "Critical Care",
+    name: "O-CLOT 25000",
+    generic: "HEPARIN SODIUM INJECTION IP",
+    strength: "25000 IU/5ML",
     image: img8,
     description:
-      "A well-established antibiotic for IV use, formulated for steady, reliable absorption in the body.",
+      "High-dose anticoagulant for treatment of venous thromboembolic disorders and preventing clotting during extracorporeal circulation.",
   },
   {
     id: 9,
-    category: "Pain & Fever",
-    name: "NFEVO",
-    generic: "PARACETAMOL INJECTION",
-    strength: "150MG/2ML",
+    category: "Gastrointestinal",
+    name: "ONDA-N — TRAY PACK",
+    generic: "ONDANSETRON HYDROCHLORIDE INJECTION I.P.",
+    strength: "8MG/4ML",
     image: img9,
     description:
-      "Brings down fever and pain quickly for patients who need fast relief on the ward.",
+      "Hospital tray pack format engineered for rapid ward delivery and postoperative nausea/vomiting management.",
   },
   {
     id: 10,
-    category: "Supportive Care",
-    name: "N-VIT",
-    generic: "MULTIVITAMIN 10ML",
-    strength: "10ML",
+    category: "Injectable Antibiotics",
+    name: "CEFVIX-SB 1.5 GM",
+    generic: "CEFTRIAXONE & SULBACTAM FOR INJECTION IP",
+    strength: "1.5 GM",
     image: img10,
     description:
-      "A complete vitamin support shot to help patients recover strength during treatment.",
+      "Synergistic antibiotic pairing for resistant bacterial infections, severe lower respiratory, and urinary tract infections.",
   },
   {
     id: 11,
     category: "Critical Care",
-    name: "NOVIX-TX",
-    generic: "TRANEXAMIC ACID 500MG/5ML",
-    strength: "500MG/5ML",
+    name: "LBPC",
+    generic: "NORADRENALINE BITARTRATE INJECTION IP",
+    strength: "4MG/2ML",
     image: img11,
     description:
-      "Helps control severe bleeding — an essential medicine for trauma and surgery teams.",
+      "Essential vasopressor for management of acute severe hypotension and blood-pressure support in vasodilatory shock.",
   },
   {
     id: 12,
     category: "Injectable Antibiotics",
-    name: "CEFVIX-SB",
-    generic: "CEFTRIXONE + SULBACTUM 1.5GM",
-    strength: "1.5GM",
+    name: "DOCVIX",
+    generic: "DOXYCYCLINE FOR INJECTION USP",
+    strength: "100 MG",
     image: img12,
     description:
-      "A two-in-one antibiotic formula for serious infections, made in our dedicated manufacturing unit.",
+      "Injectable tetracycline antibiotic formulated for susceptible bacterial and rickettsial infection protocols.",
   },
   {
     id: 13,
     category: "Critical Care",
-    name: "0-CLOT",
-    generic: "HEPARIN 5000 IU",
-    strength: "5000 IU",
+    name: "O-CLOT 5000",
+    generic: "HEPARIN SODIUM INJECTION IP",
+    strength: "5000 IU/5ML",
     image: img13,
     description:
-      "A standard dose to prevent clots after surgery and keep IV lines working smoothly.",
+      "Standard-dose heparin for prevention and treatment of venous thromboembolic disorders and line maintenance.",
   },
   {
     id: 14,
-    category: "Pain & Fever",
-    name: "NFEVO IV",
-    generic: "PARACETAMOL INFUSSION",
-    strength: "100ML",
+    category: "Injectable Antibiotics",
+    name: "TAZOVIX-4.5 GM",
+    generic: "PIPERACILLIN & TAZOBACTAM FOR INJECTION I.P.",
+    strength: "4.5 GM",
     image: img14,
     description:
-      "A ready-to-use IV drip for fast, effective pain and fever relief after surgery.",
+      "Broad-spectrum extended penicillin formulation for treating severe hospital-acquired respiratory and abdominal infections.",
   },
   {
     id: 15,
-    category: "Injectable Antibiotics",
-    name: "N-CLAV",
-    generic: "AMOXYCILLIN + CLAVULANATE",
-    strength: "1.2 GM",
+    category: "Supportive Care",
+    name: "N-VIT",
+    generic: "MULTIVITAMIN INJECTION",
+    strength: "10 ML",
     image: img15,
     description:
-      "A trusted broad-spectrum antibiotic, manufactured to WHO-GMP purity standards you can rely on.",
-  },
-  {
-    id: 16,
-    category: "Injectable Antibiotics",
-    name: "LBPC",
-    generic:
-      "NORADRENALINE BITARTRATE INJECTION IP (STERILE NORADRENALINE CONCENTRATE 2ml)",
-    strength: "2ML",
-    image: img16,
-    description:
-      "Used in emergency care to quickly stabilise blood pressure. Made under strict sterile conditions so hospitals can trust every vial.",
+      "Multivitamin complex for intravenous supplementation when oral nutrition is inadequate or not clinically suitable.",
   },
 ];
 
 const STATS = [
-  { icon: Boxes, value: "15+", label: "Formulations" },
+  { icon: Boxes, value: "15", label: "Core Formulations" },
   { icon: Users, value: "500+", label: "Hospitals & clinics served" },
   { icon: Award, value: "WHO-GMP", label: "Certified facility" },
   { icon: Truck, value: "Pan-India", label: "Delivery network" },
